@@ -540,11 +540,14 @@ var newreceiptsequence;
 		 {
 
 			this.generatefeeurl=sessionStorage.getItem("addrinfo")+"/reportfee-card";
-				var obj={"studid":"","schol":""}
+				var obj={"studid":"","schol":"","academic_year":""}
 				obj.studid=studid;
 				obj.schol=sessionStorage.getItem("sch");
+			  obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+
 				this.generatefeeparam=obj;
 				this.$.generatefeeajax.generateRequest();
+				alert(JSON.stringify(obj));
 		 },
 				zonefee:function(studid)
 		 {
@@ -557,15 +560,15 @@ var newreceiptsequence;
 				this.$.zonefeeajax.generateRequest();
 		 },
 		 zonefeeResponse:function(e)
-		 {
-
-				feeresult=e.detail.response.returnval;
+		 {alert('2');
+            feeresult=e.detail.response.returnval;
 			 document.querySelector('transportfee-service').zoneinstalltype();
 		 },
 		 generatefeeResponse:function(e)
 		 {
-
-				feeresult=e.detail.response.returnval;
+                  alert(1);
+			feeresult=e.detail.response.returnval;
+			alert(JSON.stringify(feeresult));
 			document.querySelector('transportfee-card').feearr=feeresult;
 			document.querySelector('transportfee-service').getinstalltype();
 		 },
@@ -573,16 +576,20 @@ var newreceiptsequence;
 		 {
 
 			this.getnameofstuurl=sessionStorage.getItem("addrinfo")+"/getnameofstu-card";
-			var obj={"schol":""}
-			obj.schol=sessionStorage.getItem("sch");
-			this.getnameofstuparam=obj;
+			var obj={"schol":"","academic_year":""}
+		   	obj.schol=sessionStorage.getItem("sch");
+		   	alert(localStorage.getItem("curr_sess_academicyear"));
+		    obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+            this.getnameofstuparam=obj;
+		   	alert(JSON.stringify(obj));
+
 			 this.$.getnameofstuajax.generateRequest();
 		 },
 		 getnameofstuResponse:function(e)
 		 {
 
 			var nameitem=e.detail.response.returnval;
-
+alert(JSON.stringify(nameitem));
 
 			document.querySelector('transportfee-card').autocompletename(nameitem);
 		 },
@@ -594,15 +601,15 @@ var newreceiptsequence;
 			this.receiptseqparam=obj;
 			this.$.receiptseqajax.generateRequest();
 			rpayfee=payfees;
-			//alert(JSON.stringify(rpayfee));
+		//	alert(JSON.stringify(rpayfee));
 			paycount=payfees.length;
+
 		 },
 		 payfeeResponse:function(e)
 		 {
 				var pay1success=e.detail.response.returnval;
 				if(pay1success=='success')
 				{  rcount++;
-						//alert("Paid Successfully");
 						if(rcount==paycount)
 						{
 							document.querySelector('transportfee-service').generatereceipt();
@@ -633,7 +640,7 @@ var newreceiptsequence;
 				 //alert(instaldate);
 				 var recdate=localStorage.getItem("localsess_receipt_date");
 				 var condate = new Date(recdate);
-				// alert(condate);
+				 //alert(condate);
 				if(condate.getDate()<10)
 				{
 						insdate="0"+condate.getDate();
@@ -644,7 +651,7 @@ var newreceiptsequence;
 					 }
 				 
 			 var insfromdate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+insdate;
-			 //alert(insfromdate);
+			// alert(insfromdate);
 				for(var i=0;i<rpayfee.length;i++)
 				{
 				if(rpayfee[i].paytype=="Cash"||rpayfee[i].paytype=="Transfer")
@@ -659,7 +666,6 @@ var newreceiptsequence;
 				obj.receiptno="REC16-17-"+receiptseq;
 				obj.fine=rpayfee[i].fineamount;
 				obj.instdate=insfromdate;
-				//obj.totalfee=parseInt(rpayfee[i].installamt)+parseInt(rpayfee[i].fineamount);
 				this.payfeeparam=obj;
 				receiptcreate.push(obj);
 				this.$.payfeeajax.generateRequest();
@@ -867,22 +873,23 @@ recobj1.title=title;
 			chedate=chequedate;
 			banknm=bankname;
 			this.chequedetailsurl=sessionStorage.getItem("addrinfo")+"/chequedetails";
-				var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":"","installtype":"","chequestatus":"","schol":""}
+				var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":"","installtype":"","chequestatus":"","schol":"","academic_year":""}
 				obj.studid=stdid;
 				obj.name=name;
 				obj.chequenum=chequenum;
 				obj.bankname=bankname;
 				obj.chequedate=chequedate;
-				obj.installtype=installtype;
-				obj.chequestatus="processing";
-				obj.schol=sessionStorage.getItem("sch");
+		        obj.installtype=installtype;
+		   	    obj.chequestatus="processing";
+			    obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+                obj.schol=sessionStorage.getItem("sch");
 				this.chequedetailsparam=obj;
-
-				chequearr.push(obj);
+               chequearr.push(obj);
 				this.$.chequedetailsajax.generateRequest();
-
-		 },
-
+        		 },
+   chequedetailsResponse:function(e){
+alert("Instalment Pay Successfully");
+},
 
 		 getfeedata:function(id)
 		 {
@@ -978,10 +985,11 @@ recobj1.title=title;
 		getinstalltype:function(){
 				this.getinstalltypeurl="../../configfile/installmenttype.json";
 				this.$.getinstalltypeajax.generateRequest();
-		},
+	 	},
 		zoneinstalltype:function(){
-				this.zoneinstalltypeurl="../../configfile/installmenttype.json";
-				this.$.zoneinstalltypeajax.generateRequest();
+		this.zoneinstalltypeurl="../../configfile/installmenttype.json";
+		this.$.zoneinstalltypeajax.generateRequest();
+		
 		},
 		getinstalltypeResponse:function(e){
 				var feepercent;
@@ -998,7 +1006,7 @@ recobj1.title=title;
 				var date1;
 				var date2;
 				var install1status;
-				var install2status;
+		  		var install2status;
 				var install1fine;
 				var install2fine;
 				var dadname;
@@ -1508,6 +1516,7 @@ for(var l=0;l<bouncechequearr.length;l++)
 				if(chqdetail[j].cheque_status=="cleared")
 				{  var insdate;
 					 var condate = new Date();
+					//     alert(condate);
 					 if(condate.getDate()<10)
 					 {
 						insdate="0"+condate.getDate();
@@ -1516,12 +1525,14 @@ for(var l=0;l<bouncechequearr.length;l++)
 					 {
 						insdate=condate.getDate();
 					 }
+			//		alert(insdate);
+				//	alert(condate);
 				 
 						var insfromdate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+insdate;
 						paidstatus="paid";   
 						newreceipt="REC16-17-"+newreceiptsequence;
 						newreceiptsequence=parseInt(newreceiptsequence)+1;
-						//alert('s'+newreceipt);
+					//	alert(insfromdate);
 						newreceiptdate=insfromdate;
 								}
 				else if(chqdetail[j].cheque_status=="bounce")

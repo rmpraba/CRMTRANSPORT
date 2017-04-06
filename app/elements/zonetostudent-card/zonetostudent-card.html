@@ -397,6 +397,8 @@ this.hidetransport=true;
       document.querySelector("#yearly").checked=true;
       document.querySelector("#twoway").checked=true;
        document.querySelector("#twoway1").checked=true;
+
+
     },
     setzonedate:function(zonefromdate,zonetodate)
     {
@@ -559,7 +561,7 @@ this.hidetransport=true;
           for(var i=0;i<item.length;i++)
           {
             var subval=((item[i].student_name).trim()).substring(0,backsubval.length);
-            if((item[i].student_name).toUpperCase().indexOf((this.value).toUpperCase())!=-1)
+            if((subval).toUpperCase()==(backsubval).toUpperCase())
             {
               var obj={"itemdes":""};
               obj.itemdes=item[i].student_name;
@@ -578,10 +580,9 @@ this.hidetransport=true;
         this.itemval = this.value +String.fromCharCode((e.keyCode));
         if(this.itemval.length>0)
         {
-          for(var i=0;i<item.length;i++)
-          {
+          for(var i=0;i<item.length;i++){
             var subval=((item[i].student_name).trim()).substring(0,this.itemval.length);
-            if((item[i].student_name).toUpperCase().indexOf((this.itemval).toUpperCase())!=-1)
+            if((subval).toUpperCase()==(this.itemval).toUpperCase())
             {
               var obj={"itemdes":""};
               obj.itemdes=item[i].student_name;
@@ -612,7 +613,6 @@ this.hidetransport=true;
 
      this.$.dad1.disabled=false;
      this.$.dad2.disabled=false;
-     //this.$.dad3.disabled=false;
      this.$.dad4.disabled=false;
      this.$.dad5.disabled=false;
      this.$.dad6.disabled=false;

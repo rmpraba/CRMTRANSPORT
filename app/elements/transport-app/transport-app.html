@@ -361,20 +361,23 @@
       document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
       document.querySelector('zonetostudent-card').FnClear();
       document.querySelector('zonetostudent-card').ready();
-       document.querySelector('zoneinstalltype-card').FnClear();
+      document.querySelector('accountsadmin-card').FnRefresh();
+      document.querySelector('zoneinstalltype-card').FnClear();
       document.querySelector('zoneinstalltype-card').ready();
+
       
     }
     if(currpage=="feereports"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
-      document.querySelector('feereports-card').FnClear();
+     document.querySelector('feereports-card').FnClear();
       document.querySelector('feereports-card').ready();
       
     }
     if(currpage=="transportfee"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+      document.querySelector('accountsadmin-card').FnRefresh();
       document.querySelector('transportfee-card').FnClear();
       document.querySelector('transportfee-card').ready();
       
@@ -434,55 +437,62 @@
     if(currpage=="mapstudenttopoint"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-      document.querySelector('mapstudenttopoint-card').FnClear();
+       document.querySelector('transportadmin-card').FnRefresh();
+       document.querySelector('mapstudenttopoint-card').FnClear();
       document.querySelector('mapstudenttopoint-card').ready();
-      
+   
     }
      if(currpage=="changepoint"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-      document.querySelector('changepoint-card').FnClear();
+       document.querySelector('transportadmin-card').FnRefresh();
+       document.querySelector('changepoint-card').FnClear();
       document.querySelector('changepoint-card').ready();
       
     }
      if(currpage=="mappointtoroute"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-      document.querySelector('mappointtoroute-card').FnClear();
-      document.querySelector('mappointtoroute-card').ready();
+       document.querySelector('transportadmin-card').FnRefresh();
+       document.querySelector('mappointtoroute-card').FnClear();
+       document.querySelector('mappointtoroute-card').ready();
       
     }
     if(currpage=="cancellation"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-      document.querySelector('cancellation-card').FnClear();
-      document.querySelector('cancellation-card').ready();
+       document.querySelector('transportadmin-card').FnRefresh();
+       document.querySelector('cancellation-card').FnClear();
+       document.querySelector('cancellation-card').ready();
       
     }
     if(currpage=="generateroutereport"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-      document.querySelector('routereport-card').FnClear();
-      document.querySelector('routereport-card').ready();
+       document.querySelector('transportadmin-card').FnRefresh();
+       document.querySelector('routereport-card').FnClear();
+       document.querySelector('routereport-card').ready();
     }
     if(currpage=="gradewiseroute"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-      document.querySelector('gradewiseroute-report').FnClear();
-      document.querySelector('gradewiseroute-report').ready(); 
+       document.querySelector('transportadmin-card').FnRefresh();
+       document.querySelector('gradewiseroute-report').FnClear();
+       document.querySelector('gradewiseroute-report').ready(); 
     }
    if(currpage=="pass"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-      document.querySelector('studentpass-card').FnClear();
-     document.querySelector('passtemplate-card').FnClear();
-      document.querySelector('studentpass-card').ready();
+       document.querySelector('transportadmin-card').FnRefresh();
+       document.querySelector('studentpass-card').FnClear();
+       document.querySelector('passtemplate-card').FnClear();
+       document.querySelector('studentpass-card').ready();
       
     }
     if(currpage=="addroute"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-      //document.querySelector('studentpass-card').FnClear();
+      document.querySelector('transportadmin-card').FnRefresh();
      document.querySelector('routecreate-card').FnClear();
       //document.querySelector('studentpass-card').ready();
       
@@ -490,82 +500,79 @@
     if(currpage=="bus"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-      //document.querySelector('studentpass-card').FnClear();
+       document.querySelector('transportadmin-card').FnRefresh();
       document.querySelector('bus-card').FnClear();
-      //document.querySelector('studentpass-card').ready();
       
     }
      if(currpage=="bustoroute"){
        document.querySelector('app-card').setPage("transportapp");
        document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-       //document.querySelector('studentpass-card').FnClear();
-      document.querySelector('bus-route-card').FnClear();
+       document.querySelector('transportadmin-card').FnRefresh();
+       document.querySelector('bus-route-card').FnClear();
       document.querySelector('bus-route-card').ready();
-       //document.querySelector('bus-route-item-card').FnClear();
-       //document.querySelector('studentpass-card').ready();
        
      }
     if(currpage=="driver"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-      //document.querySelector('studentpass-card').FnClear();
-      document.querySelector('driver-card').FnClear();
-      //document.querySelector('studentpass-card').ready();
+       document.querySelector('transportadmin-card').FnRefresh();
+       document.querySelector('driver-card').FnClear();
       
     }
     if(currpage=="attender"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-      //document.querySelector('studentpass-card').FnClear();
-      document.querySelector('attender-card').FnClear();
-      //document.querySelector('studentpass-card').ready();
+       document.querySelector('transportadmin-card').FnRefresh();
+       document.querySelector('attender-card').FnClear();
       
     }
     if(currpage=="busreport"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-      //document.querySelector('studentpass-card').FnClear();
-      document.querySelector('bus-report').FnClear();
-      //document.querySelector('studentpass-card').ready();
+       document.querySelector('transportadmin-card').FnRefresh();
+       document.querySelector('bus-report').FnClear();
       
     }
     if(currpage=="gradewiseroute"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-      //document.querySelector('studentpass-card').FnClear();
-      document.querySelector('gradewiseroute-report').FnClear();
-      //document.querySelector('studentpass-card').ready();
-      
+       document.querySelector('transportadmin-card').FnRefresh();
+       document.querySelector('gradewiseroute-report').FnClear();
     }
     if(currpage=="vehicleroute"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-      //document.querySelector('studentpass-card').FnClear();
-      document.querySelector('vehicleroute-card').FnClear();
+     document.querySelector('transportadmin-card').FnRefresh();
+       document.querySelector('vehicleroute-card').FnClear();
       //document.querySelector('studentpass-card').ready();
       
     }
     if(currpage=="attendance"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-      //document.querySelector('password-card').FnClear();
+       document.querySelector('transportadmin-card').FnRefresh();
+       document.querySelector('transportadmin-card').FnRefresh();
       document.querySelector('attendance-card').ready();
     }
     if(currpage=="addattendence"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+       document.querySelector('transportadmin-card').FnRefresh();
       document.querySelector('addattendence-card').FnClear();
       document.querySelector('addattendence-card').ready();
     }
     if(currpage=="staffalloc"){
+
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+       document.querySelector('transportadmin-card').FnRefresh();
       document.querySelector('staffallocation-card').ready();
     }
     if(currpage=="staffroute"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-      document.querySelector('staffroute-card').ready();
+       document.querySelector('transportadmin-card').FnRefresh();
+       document.querySelector('staffroute-card').ready();
     }
    }
     if(name=="Admin Manager")  {

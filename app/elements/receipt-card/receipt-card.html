@@ -274,9 +274,7 @@ var install2=[];
       },
       changemail:function()
       {
-        //this.flag=1;
-        //this.email=this.parentemail;
-
+    
     this.$.emaildialog.close();  
           var obj={"chequeno":"","chequedate":"","bank":"","receiptno":"","today":"","studname":"","classname":"","parentname":"","session":"","installtype":"","installfee":"","parentemail":"","paymode":"","word":"","title":""};
       obj.receiptno=this.receiptarr[0].receiptno;
@@ -330,7 +328,7 @@ var install2=[];
      obj1.title=install2[0].title;
      obj1.paymode=install2[0].paytype;
      obj1.word=install2[0].feeinword;
-obj1.parentemail=this.parentemail;
+    obj1.parentemail=this.parentemail;
      this.mailsendparam=obj1;
      this.mailsendurl=sessionStorage.getItem("addrinfo")+"/mailsend";
      this.$.mailsendajax.generateRequest();
