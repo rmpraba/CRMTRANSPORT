@@ -15,10 +15,10 @@
   <template>
     <style>
       .card {
-        margin:5% 0 0 27%;
-      }
+        margin:5% 0 0 21%;
+      } 
       .field{
-        width: 70%;
+        width: 49%;
       }
       .fields{
         width: 36%;
@@ -38,12 +38,25 @@
       .horizontalframes{
         @apply(--layout-horizontal);
         width: 100% !important;
+        margin-left: 10%;
       }
       .horizontal .field paper-input{
         width: 100%;
       }
       .button{
         margin:2% 0 0 27%;
+      }
+      .card
+      {
+        border-collapse: collapse;
+        border: 1px solid #6699ff;
+        padding: 5px;
+        width: 63%;
+      }
+      .btn2
+      {
+        margin-top: 4%;
+        margin-left: -6%;
       }
     </style>
     <div class="card">
@@ -57,39 +70,41 @@
       </div>
       <div class="horizontalframes">
         <div class="fields">
-          <paper-input label="Mobile No" value="{{mobile_no}}" id="mobile" allowed-pattern="[0-9]" required error-message="needs a name!"></paper-input>
+          <paper-input label="Mobile No" value="{{mobile_no}}" id="mobile" allowed-pattern="[0-9]" required error-message="needs a Mobile number!" max-length="10" ></paper-input>
         </div>
-      </div>
-      <div class="horizontal">
-        <div class="date" style="margin-left: -2%;">
+
+        <div class="date" style="margin-left: 1%;">
           <since-when-employed-card id="when_employed"></since-when-employed-card>
         </div>
       </div>
-      <div class="horizontal">
+      
+      <div class="horizontal" style="margin-left: 10%;">
         <div class="address">
           <paper-textarea value="{{address_1}}" id="address_1"  error-message="needs Address" label="Address Line 1" required ></paper-textarea>
         </div>
         <div class="address">
           <paper-textarea value="{{address_2}}" id="address_2"  error-message="needs Address" label="Address Line 2" required ></paper-textarea>
         </div>
-      </div>
-      <div class="horizontal">
-        <div class="address">
+
+         <div class="address">
           <paper-textarea value="{{address_3}}" id="address_3"  error-message="needs Address" label="Address Line 3" required ></paper-textarea>
         </div>
+      </div>
+      
+      <div class="horizontalframes">
         <div class="field">
           <paper-input label="City" value="{{city}}" id="city" allowed-pattern="[a-zA-Z]" required error-message="needs a city!"></paper-input>
         </div>
-      </div>
-      <div class="horizontalframes">
-        <div class="field">
+        <div class="field" style="margin-left: -8em">
           <paper-input label="Pincode" value="{{pincode}}" id="pincode" allowed-pattern="[0-9]" required error-message="needs a pincode!"></paper-input>
         </div>
       </div>
+
+      <div class="btn2">
+        <paper-button id="button" class="button" on-click="click">Submit</paper-button>
+      </div>
     </div>
-    <div class="button">
-      <paper-button id="button" class="button" on-click="click">Submit</paper-button>
-    </div>
+    
     <transport-service id="service"></transport-service>
   </template>
   <script>
@@ -102,16 +117,19 @@
 
       },
       click:function(){
-        if(this.first_name==""||this.last_name==""||this.mobile_no==""||this.address_1==""||this.address_2==""||this.address_3==""||this.city==""||this.pincode==""){
-          this.$.first_name.validate();
-          this.$.last_name.validate();
-          this.$.mobile_no.validate();
+        if(this.first_name==""||this.last_name==""||this.mobile_no==""||this.address_1==""||this.address_2==""||this.address_3==""||this.city==""||this.pincode=="")
+        {
+          this.$.fname.validate();
+          this.$.lname.validate();
+          this.$.mobile.validate();
           this.$.address_1.validate();
           this.$.address_2.validate();
           this.$.address_3.validate();
           this.$.city.validate();
           this.$.pincode.validate();
-        } else {
+        } 
+        else 
+        {
           this.when_employed = localStorage.getItem("localsess_since_when_employed");
           this.$.service.attender(this.first_name,this.last_name,this.mobile_no, this.address_1,this.address_2,this.address_3,this.city,this.pincode, this.when_employed);
         }
@@ -126,7 +144,9 @@
         this.city="";
         this.pincode="";
         this.$.when_employed.FnClear();
-      },
+      }
+
+      
     });
   })();
   </script>
