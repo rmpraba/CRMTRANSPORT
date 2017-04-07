@@ -124,7 +124,7 @@ app.post('/login-card',  urlencodedParser,function (req, res)
 app.post('/getroute' ,  urlencodedParser,function (req, res)
 {
     var schoolx={"school_id":req.query.schol};
-      connection.query('select * from route where ?',[schoolx],
+      connection.query('select * from route where ? and academic_year="'+req.query.academic_year+'"',[schoolx],
         function(err, rows)
         {
         if(!err)
@@ -178,7 +178,7 @@ app.post('/getroutedetail' ,  urlencodedParser,function (req, res)
   var trip={"trip":req.query.tripnos};
   var schoolx={"school_id":req.query.schol};
   //console.log('hello trip...'+trip);
-  connection.query('select * from point where route_id=(select id from route where ? and ?) and ?',[routename,schoolx,trip],
+  connection.query('select * from point where route_id=(select id from route where ? and ? and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and ? and academic_year="'+req.query.academic_year+'"',[routename,schoolx,trip],
     function(err, rows){
     if(!err){
       if(rows.length>0){
@@ -831,10 +831,12 @@ app.post('/selectnameforpoint',  urlencodedParser,function (req, res)
   });
 
 app.post('/selectnameforchpoint',  urlencodedParser,function (req, res)
-{ var schoolx={"school_id":req.query.schol};
+{
+   var qur1='SELECT id, student_name from student_details where id in(select student_id from student_fee where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and id  in (Select student_id from student_point) and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"';
 
-       connection.query('SELECT id, student_name from student_details where id in(select student_id from student_fee where ?) and id  in (Select student_id from student_point)',[schoolx],
-        function(err, rows)
+   console.log(qur1);
+
+       connection.query(qur1, function(err, rows)
         {
     if(!err)
     {
@@ -907,8 +909,9 @@ app.post('/chnamepick',  urlencodedParser,function (req, res)
   var id={"id":req.query.id};
   var req1={"transport_required":'yes'};
   var schoolx={"school_id":req.query.schol};
+  var academicyear={"academic_year":req.query.academic_year};
   console.log(req.query.schol);
-        connection.query('select id , student_name, school_type from student_details where  ? and ? and ?',[id,req1,schoolx],
+        connection.query('select id , student_name, school_type from student_details where  ? and ? and ? and ?',[id,req1,schoolx,academicyear],
           function(err, rows)
         {
     if(!err)
@@ -934,8 +937,9 @@ app.post('/chprevpick',  urlencodedParser,function (req, res)
 {
   var id={"student_id":req.query.studentid};
   var schoolx={"school_id":req.query.schol};
+   var academicyear={"academic_year":req.query.academic_year};
   console.log(req.query.schol);
-        connection.query('select * from student_point where  ? and ?',[id,schoolx],
+     connection.query('select * from student_point where ? and ? and ?',[id,schoolx,academicyear],
           function(err, rows)
         {
     if(!err)
@@ -998,7 +1002,7 @@ app.post('/routedroppoint',  urlencodedParser,function (req, res)
     var trip=req.query.schooltype;
     var schoolx=req.query.schol;
     var academic_year=req.query.academic_year;
-    
+
         connection.query('SELECT id, point_name from point where route_id=? and school_id=? and academic_year=? and distance_from_school<=(select maxdistance from md_distance where id=(select distance_id from md_zone where id=(select zone_id from student_fee where student_id=? and school_id=? and academic_year=?) and school_id=? and academic_year=?)) and trip=? and school_id=? and academic_year=?',[route_id,schoolx,academic_year,studid,schoolx,academic_year,schoolx,academic_year,trip,schoolx,academic_year],
         function(err, rows)
         {
@@ -1017,8 +1021,9 @@ app.post('/routedroppoint',  urlencodedParser,function (req, res)
 });
 app.post('/routepoint',  urlencodedParser,function (req, res)
 {
-    var schoolx={"school_id":req.query.schol};
-       connection.query('SELECT * from route where ?',[schoolx],
+      var schoolx={"school_id":req.query.schol};
+      var academicyear={"academic_year":req.query.academic_year};
+  connection.query('SELECT * from route where ? and ?',[schoolx,academicyear],
         function(err, rows)
         {
     if(!err)
@@ -1059,14 +1064,14 @@ app.post('/submiturl',  urlencodedParser,function (req, res)
 
 app.post('/submitupdateurl',  urlencodedParser,function (req, res)
 {
-    var studentid={"student_id":req.query.studentid};
-    var pickroute={"pickup_route_id":req.query.pickroute};
-    var pickpoint={"pickup_point":req.query.pickpoint};
-    var droproute={"drop_route_id":req.query.droproute};
-    var droppoint= {"drop_point":req.query.droppoint};
-    var schol={"school_id":req.query.schol};
-    //console.log(mappointtostudent);
-      connection.query('update student_point set ?,?,?,? where ? and ?',[pickroute,pickpoint,droproute,droppoint,studentid,schol],
+     var studentid={"student_id":req.query.studentid};
+     var pickroute={"pickup_route_id":req.query.pickroute};
+     var pickpoint={"pickup_point":req.query.pickpoint};
+     var droproute={"drop_route_id":req.query.droproute};
+     var droppoint= {"drop_point":req.query.droppoint};
+     var schol={"school_id":req.query.schol};
+     var academicyear={"academic_year":req.query.academic_year};
+      connection.query('update student_point set ?,?,?,? where ? and ? and ?',[pickroute,pickpoint,droproute,droppoint,studentid,schol,academicyear],
         function(err, rows)
         {
     if(!err)
@@ -1119,9 +1124,10 @@ app.post('/getrouteid' ,  urlencodedParser,function (req, res)
 
      var routen={"route_name":req.query.routename};
      var schoolx={"school_id":req.query.schol};
+     var academicyear={"academic_year":req.query.academic_year};
      //console.log('in server...');
      //console.log(routen);
-      connection.query('select * from route where ? and ?',[routen,schoolx],
+      connection.query('select * from route where ? and ?',[routen,schoolx,academicyear],
         function(err, rows)
         {
     if(!err)

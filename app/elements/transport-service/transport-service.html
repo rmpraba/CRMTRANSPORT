@@ -1120,8 +1120,9 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
        getroute:function()
       {
         this.getrouteurl=sessionStorage.getItem("addrinfo")+"/getroute";
-        var obj={"schol":""}
+        var obj={"schol":"","academic_year":""}
         obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.getrouteparam=obj;
         this.$.getrouteajax.generateRequest();
       },
@@ -1136,9 +1137,10 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       },
        getroutedetail:function(tripno)
       {
-        //alert('Hi  ...   '+routetrip);
+   
         this.getroutedetailurl=sessionStorage.getItem("addrinfo")+"/getroutedetail";
-        var obj={"routename":"","tripnos":"","schol":""};
+        var obj={"routename":"","tripnos":"","schol":"","academic_year":""};
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.schol=sessionStorage.getItem("sch");
         obj.routename=routetrip;
         obj.tripnos=tripno;
@@ -1534,7 +1536,7 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
         obj.schol=sessionStorage.getItem("sch");
         obj.triproute=routename;
         this.gettripparam=obj;
-        //alert(JSON.stringify(obj));
+
         this.$.gettripajax.generateRequest();
         this.getrouteidurl=sessionStorage.getItem("addrinfo")+"/getrouteid";
         var obj1={"routename":"","schol":""}

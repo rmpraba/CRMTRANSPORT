@@ -47,7 +47,7 @@
               </template>
             </paper-listbox>
           </div>
-      </div>
+      </div>  
       <div class="template">
         <app-service studentarr="{{studentarr}}"></app-service>
           <template  is="dom-repeat" items="{{studentarr}}">
@@ -67,9 +67,6 @@
       Polymer({
         is:"changepoint-card",
         ready:function(){
-           //this.$.maps.selectname();
-          //this.$.search.hidden=true;
-          //this.$.maps.selectclass();
           this.$.submitbutton.disabled=true;
         },
         FnClear:function()
@@ -179,8 +176,7 @@
         },
         FnItemSelected:function(e){
           this.studid= e.target.selectedItem.value;
-          var studname = (e.target.selectedItem.textContent).trim();
-          //alert(e.target.selectedItem.value);
+          var studname=(e.target.selectedItem.textContent).trim();
           this.value=studname;
           this.$.submitbutton.hidden=false;
           this.$.maps.namepick(this.studid);
