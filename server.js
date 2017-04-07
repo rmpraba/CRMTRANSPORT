@@ -3524,7 +3524,7 @@ app.post('/increaseattenderid' ,  urlencodedParser,function (req, res)
 app.post('/bus_count' ,  urlencodedParser,function (req, res)
 {
   var scho={"school_id":req.query.schol};
-  connection.query('select bus_count from sequence where ?',[scho],
+  connection.query('select bus_count from sequence_bus where ?',[scho],
     function(err, rows){
       if(!err){
         if(rows.length>0)
@@ -3543,8 +3543,9 @@ app.post('/bus_count' ,  urlencodedParser,function (req, res)
 app.post('/increasebusid' ,  urlencodedParser,function (req, res)
 {
   var scho={"school_id":req.query.schol};
-  var bus_id = {"bus_count":req.query.bus_id};
-  connection.query('update sequence set ? WHERE ?',[bus_id,scho],
+       var tempseq=parseInt(req.query.bus_id)+1;
+       
+  connection.query('update sequence_bus set bus_count=? WHERE ?',[tempseq,scho],
     function(err, rows)
     {
       if(!err)
@@ -3566,8 +3567,8 @@ app.post('/increasebusid' ,  urlencodedParser,function (req, res)
     });
 });
 app.post('/bus',  urlencodedParser,function (req, res){
-  var collection={school_id:req.query.schol,id:req.query.id,made_model:req.query.made,no_of_seats:req.query.no_of_seats,insurance_no:req.query.insurance_no, insurance_company:req.query.insurance_co,last_service_date:req.query.last_service,insurance_due_date:req.query.insurance_exp, next_service_date:req.query.next_service, make_year:req.query.make_year, bus_no:req.query.bus_no};
-  //console.log(collection);
+  var collection={school_id:req.query.schol,id:req.query.id,made_model:req.query.made,no_of_seats:req.query.no_of_seats,insurance_no:req.query.insurance_no, insurance_company:req.query.insurance_co,last_service_date:req.query.last_service,insurance_due_date:req.query.insurance_exp, next_service_date:req.query.next_service, make_year:req.query.make_year, bus_no:req.query.bus_no,academic_year:req.query.academic_year};
+  console.log(collection);
   connection.query('insert into bus set ?',[collection],
     function(err, rows){
 
