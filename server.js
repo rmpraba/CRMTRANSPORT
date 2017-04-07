@@ -6,7 +6,7 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
-  database : 'transport'
+  database : 'mlzstransport'
 });
 var bodyParser = require('body-parser');
  var app = express();
@@ -244,8 +244,6 @@ app.post('/routeid' ,  urlencodedParser,function (req, res)
     {
       console.log('No data Fetched'+err);
     }
-
-
 
 });
   });
@@ -4551,6 +4549,34 @@ app.post('/registrationfee',  urlencodedParser,function (req, res)
   });
 
 });
+
+
+
+ app.post('/FetchRoute-service' ,  urlencodedParser,function (req, res)
+{
+    var schoolidx={"school_id":req.query.schlidz};
+      connection.query('select * from route where ?',[schoolidx],
+        function(err, rows)
+        {
+        if(!err)
+    {
+      if(rows.length>0)
+      {
+        //console.log(rows);
+      res.status(200).json({'returnval': rows});
+      }
+      else
+      {
+      res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+      console.log('No data Fetched'+err);
+    }
+});
+  });
+
 
 function setvalue(){
   console.log("calling setvalue.....");

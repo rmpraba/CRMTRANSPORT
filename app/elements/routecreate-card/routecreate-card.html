@@ -19,20 +19,83 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
-     
+      
+     table
+     {
+        @apply(--layout-horizontal);
+         border-collapse: collapse;
+         border: 1px solid #6699ff;
+         padding: 5px;
+         margin-left: 56%;
+         width: 25%;
+         margin-top: -13% !important;
+     }
+     .routecreate
+     {
+        display: flex;
+        border-collapse: collapse;
+        border: 1px solid #6699ff;
+         padding: 5px;
+         width: 35%;
+         min-height: 170px;
+         margin-left: 5%;
+         margin-top: 6% !important;
+          
+    }
+    
     </style>
     <div class="routecreate">
+      <div class="center" style="margin-left: 7em;">
+        <label><b>CREATE NEW ROUTE</b></label>
+      </div>
     
-      <div class="left" style="margin-top: 2%;">
+      <div class="left" style="margin-top:8%;margin-left: -11em;">
             <paper-item>Route Name : </paper-item>
       </div>
-      <div class="center">
+      <div class="center" style="margin-left: -8%;margin-top: 3%;">
         <paper-input  class="field" value="{{routename}}"></paper-input>
       </div>
-      <div class="right" style="margin-top: 2%;margin-left: 8%;">
+      <div class="right" style="margin-top: 18%;margin-left: -5em;height: 60%;">
         <paper-button class="button" on-click="create">ADD</paper-button>
       </div>
     </div>
+
+
+  <!--    <div>
+       <label style="margin-left: 6%;"><b>CREATE NEW ROUTE</b></label>
+     </div>
+
+    <div class="routecreate">
+        <div class="left">
+          <paper-item>Route Name : </paper-item>
+        </div>
+        <div class="center" style="margin-top: -1%;margin-left: -4%;">  
+          <paper-input  class="field" value="{{routename}}"></paper-input>
+        </div>  
+        <div class="right" style="margin-top: 7%;margin-left: -6%;height: 60%;">
+          <paper-button class="button" on-click="create">ADD</paper-button>
+        </div>    
+    </div> -->
+
+    <div class="newcard1">
+      <table>
+        <tr>
+          <th><label><CENTER>CURRENT ROUTES</CENTER></th></label>
+          
+        </tr>
+
+        <template is="dom-repeat" items="{{newroutearr}}" as="rr">  
+          <tr>
+            <td colspan="4">
+              <route-display-card  routename="{{rr.route_name}}" routeid="{{rr.id}}" 
+               hiderouteinput="true" hiderouteitem="false">
+              </route-display-card>
+            </td>
+          </tr>
+        </template>
+      </table>        
+    </div>
+
     <mapstudenttopoint-service id="maps"></mapstudenttopoint-service>
   </template>
   <script>
@@ -42,14 +105,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'routecreate-card',
 
-      ready:function(){
-       
+      ready:function()
+      {
+         
       },
-      create:function(){
+      create:function()
+      {
         this.$.maps.createroute(this.routename);
       },
-      FnClear:function(){
+      FnClear:function()
+      {
         this.routename="";
+        this.$.maps.FetchRoute();
       }
 
 

@@ -824,12 +824,12 @@ margin-top: 6%;
 .add-student .button{
     margin: 3% 0% 0 13%;
 }
-.routecreate{
+/*.routecreate{
     @apply(--layout-horizontal);
     margin-left: 30%;
     margin-top: 10%;
     display: flex;
-}
+}*/
 .passtemp{
     @apply(--layout-horizontal-wrap);
     @apply(--layout-vertical-wrap);
