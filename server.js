@@ -3310,7 +3310,7 @@ app.post('/createroute' ,  urlencodedParser,function (req, res)
 app.post('/driver_count' ,  urlencodedParser,function (req, res)
 {
   var scho={"school_id":req.query.schol};
-  connection.query('select driver_count from sequence where ?',[scho],
+  connection.query('select driver_count from sequence_bus where ?',[scho],
       function(err, rows){
         if(!err){
           if(rows.length>0)
@@ -3417,7 +3417,7 @@ app.post('/getstudpoint',  urlencodedParser,function (req, res)
 
 app.post('/driver',  urlencodedParser,function (req, res){
   var collection={school_id:req.query.schol,id:req.query.id,first_name:req.query.first_name,last_name:req.query.last_name,mobile_no:req.query.mobile_no, licence_no:req.query.licence_no,address_1:req.query.address_1,address_2:req.query.address_2,
-    address_3:req.query.address_3, city:req.query.city, pincode:req.query.pincode,licence_exp_date:req.query.lic_exp, since_when_employed:req.query.since_when_employed};
+    address_3:req.query.address_3, city:req.query.city, pincode:req.query.pincode,licence_exp_date:req.query.lic_exp, since_when_employed:req.query.since_when_employed,academic_year:req.query.academic_year};
   //console.log(collection);
   connection.query('insert into driver set ?',[collection],
       function(err, rows){
@@ -3435,7 +3435,7 @@ app.post('/driver',  urlencodedParser,function (req, res){
 app.post('/attender_count' ,  urlencodedParser,function (req, res)
 {
   var scho={"school_id":req.query.schol};
-  connection.query('select attender_count from sequence where ?',[scho],
+  connection.query('select attender_count from sequence_bus where ?',[scho],
       function(err, rows){
         if(!err){
           if(rows.length>0)
@@ -3452,7 +3452,7 @@ app.post('/attender_count' ,  urlencodedParser,function (req, res)
 });
 
 app.post('/attender',  urlencodedParser,function (req, res){
-  var collection={school_id:req.query.schol,id:req.query.id,first_name:req.query.first_name,last_name:req.query.last_name,mobile_no:req.query.mobile_no, address_1:req.query.address_1,address_2:req.query.address_2,address_3:req.query.address_3, city:req.query.city, pincode:req.query.pincode,since_when_employed:req.query.since_when_employed};
+  var collection={school_id:req.query.schol,id:req.query.id,first_name:req.query.first_name,last_name:req.query.last_name,mobile_no:req.query.mobile_no, address_1:req.query.address_1,address_2:req.query.address_2,address_3:req.query.address_3, city:req.query.city, pincode:req.query.pincode,since_when_employed:req.query.since_when_employed,academic_year:req.query.academic_year};
   console.log(collection);
   connection.query('insert into attender set ?',[collection],
       function(err, rows){
@@ -3471,8 +3471,9 @@ app.post('/attender',  urlencodedParser,function (req, res){
 app.post('/increasedriverid' ,  urlencodedParser,function (req, res)
 {
   var scho={"school_id":req.query.schol};
-  var driver_id = {"driver_count":req.query.driver_id};
-  connection.query('update sequence set ? WHERE ?',[driver_id,scho],
+     var tempseq=parseInt(req.query.driver_id)+1;
+ 
+  connection.query('update sequence_bus set driver_count=? WHERE ?',[tempseq,scho],
     function(err, rows)
     {
       if(!err)
@@ -3497,8 +3498,9 @@ app.post('/increasedriverid' ,  urlencodedParser,function (req, res)
 app.post('/increaseattenderid' ,  urlencodedParser,function (req, res)
 {
   var scho={"school_id":req.query.schol};
-  var attender_id = {"attender_count":req.query.attender_id};
-  connection.query('update sequence set ? WHERE ?',[attender_id,scho],
+        var tempseq=parseInt(req.query.attender_id)+1;
+ 
+  connection.query('update sequence_bus set attender_count=? WHERE ?',[tempseq,scho],
     function(err, rows)
     {
       if(!err)

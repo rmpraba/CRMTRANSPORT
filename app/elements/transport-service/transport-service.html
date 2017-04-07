@@ -2822,32 +2822,31 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             var obj = {"schol":""};
             obj.schol=sessionStorage.getItem("sch");
             this.drivercountparam=obj;
-            //alert(JSON.stringify(obj));
             this.$.drivercountajax.generateRequest();
-        },
-        drivercountResponse:function(e){
+       },
+         drivercountResponse:function(e){
             driver_count = e.detail.response.returnval[0].driver_count;
-            //alert(JSON.stringify(driver_count));
-        },
+          },
         driver:function(first_name,last_name,mobile_no,licence_no,address_1,address_2,address_3,city,pincode,lic_exp, when_employed){
             this.driverurl = sessionStorage.getItem("addrinfo")+"/driver";
-            var  increase1 = driver_count +1;
+            var  increase1 = driver_count;
             var driver_id = "Driver "+increase1;
             //alert(driver_id);
-            var obj={"id":"","first_name":"","last_name":"","mobile_no":"","licence_no":"","address_1":"","address_2":"","address_3":"","city":"","pincode":"","lic_exp":"", "schol":"","since_when_employed":""};
+            var obj={"id":"","first_name":"","last_name":"","mobile_no":"","licence_no":"","address_1":"","address_2":"","address_3":"","city":"","pincode":"","lic_exp":"", "schol":"","since_when_employed":"","academic_year":""};
             obj.first_name=first_name;
             obj.last_name=last_name;
             obj.mobile_no=mobile_no;
             obj.licence_no=licence_no;
             obj.address_1=address_1;
             obj.schol=sessionStorage.getItem("sch");
+            obj.academic_year=localStorage.getItem("curr_sess_academicyear");
             obj.address_2=address_2;
             obj.address_3=address_3;
             obj.city=city;
             obj.pincode=pincode;
             obj.id = driver_id;
             obj.lic_exp=lic_exp;
-            obj.since_when_employed = when_employed;
+            obj.since_when_employed=when_employed;
             this.driverparam=obj;
             //alert(JSON.stringify(obj));
             this.$.driverajax.generateRequest();
@@ -2862,11 +2861,13 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
                 alert('Driver Details Added');
               this.increasedriveridurl=sessionStorage.getItem("addrinfo")+"/increasedriverid";
               var obj1={"driver_id":"","schol":""}
-              obj1.driver_id=driver_count + 1;
+              obj1.driver_id=driver_count;
               obj1.schol=sessionStorage.getItem("sch");
               this.increasedriveridparam=obj1;
               this.$.increasedriveridajax.generateRequest();
                 document.querySelector('driver-card').FnClear();
+               this.driver_count();
+     
             } else {
                 alert('Error! Driver Details Not Added');
             }
@@ -2877,22 +2878,25 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             var obj = {"schol":""};
             obj.schol=sessionStorage.getItem("sch");
             this.attendercountparam=obj;
-            //alert(JSON.stringify(obj));
+           alert(JSON.stringify(obj));
             this.$.attendercountajax.generateRequest();
         },
         attendercountResponse:function(e){
             attender_counts = e.detail.response.returnval[0].attender_count;
+                   alert(JSON.stringify(attender_counts))
         },
         attender:function(first_name,last_name,mobile_no,address_1,address_2,address_3,city,pincode,when_employed){
             this.attenderurl = sessionStorage.getItem("addrinfo")+"/attender";
-            var  increase1 = attender_counts +1;
+            var  increase1 = attender_counts;
             var attender_id = "Attender "+increase1;
-            var obj={"id":"","first_name":"","last_name":"","mobile_no":"","address_1":"","address_2":"","address_3":"","city":"","pincode":"", "schol":"","since_when_employed":""};
+            var obj={"id":"","first_name":"","last_name":"","mobile_no":"","address_1":"","address_2":"","address_3":"","city":"","pincode":"", "schol":"","since_when_employed":"","academic_year":""};
             obj.first_name=first_name;
             obj.last_name=last_name;
             obj.mobile_no=mobile_no;
             obj.address_1=address_1;
             obj.schol=sessionStorage.getItem("sch");
+               obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+    
             obj.address_2=address_2;
             obj.address_3=address_3;
             obj.city=city;
@@ -2912,11 +2916,12 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
                 alert('Attender Details Added');
                 this.increaseattenderidurl=sessionStorage.getItem("addrinfo")+"/increaseattenderid";
                 var obj1={"attender_id":"","schol":""}
-                obj1.attender_id=attender_counts + 1;
+                obj1.attender_id=attender_counts;
                 obj1.schol=sessionStorage.getItem("sch");
                 this.increaseattenderidparam=obj1;
                 this.$.increaseattenderidajax.generateRequest();
                 document.querySelector('attender-card').FnClear();
+                this.attender_count();
             } else {
                 alert('Error! Attender Details Not Added');
             }
@@ -3029,9 +3034,11 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
           alert('Bus to Route Allocated');
           document.querySelector('bus-route-card').FnClear();
           document.querySelector('bus-route-item-card').FnClear();
-        } else {
-          alert('Error! Bus to Route Not Allocated');
         }
+        else
+           {
+            alert('Error! Bus to Route Not Allocated');
+           }
       },
       busreport:function(){
         this.busreporturl = sessionStorage.getItem("addrinfo")+"/busreport";
@@ -3076,18 +3083,15 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
       bustodriverResponse:function(e){
         var bustodriver = e.detail.response.returnval;
         document.querySelector('vehicleroute-card').bustodriver=bustodriver;
-        //alert(JSON.stringify(this.bustodriver));
       },
       bustoattenderResponse:function(e){
         var bustoattender = e.detail.response.returnval;
         document.querySelector('vehicleroute-card').bustoattender=bustoattender;
-        //alert(JSON.stringify(this.bustoattender));
       },
       mapbustoroute:function(route,bus,driver,attender,val){
         var dat2=new Date();
             var today = dat2.getFullYear()+"/"+(dat2.getMonth()+1)+"/"+dat2.getDate();
-
-        this.mapbustorouteurl = sessionStorage.getItem("addrinfo")+"/mapbustoroute";
+      this.mapbustorouteurl = sessionStorage.getItem("addrinfo")+"/mapbustoroute";
         var obj = {"schol":"","route":"","bus":"","driver":"","attender":"","trip":"","updatedby":"","updateon":""};
         obj.schol=sessionStorage.getItem("sch");
         obj.route=route;
