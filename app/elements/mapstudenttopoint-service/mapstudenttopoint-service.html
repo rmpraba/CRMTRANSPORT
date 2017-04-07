@@ -306,8 +306,9 @@
     updaterouteseqResponse:function(e){
       //alert('update response');
         var seq=pointcount;
-        var obj={"id":"","routes":"","schol":""}
+        var obj={"id":"","routes":"","schol":"","academic_year":""}
         obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.id="r"+seq;
         obj.routes=routenamez;
         this.createrouteparam=obj;
@@ -368,8 +369,9 @@
       {        
         //alert(11);
         this.FetchRouteurl=sessionStorage.getItem("addrinfo")+"/FetchRoute-service";
-        var obj={"schlidz":""}
+        var obj={"schlidz":"","academic_year":""}
         obj.schlidz=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.FetchRouteparams=obj;
         //alert(JSON.stringify(obj));
         this.$.FetchRouteajax.generateRequest();
@@ -377,6 +379,7 @@
       FetchRouteResponse:function(e)
       {
         var res=e.detail.response.returnval;
+        //alert(res.length);
         //alert(JSON.stringify(res));
         document.querySelector('routecreate-card').newroutearr=res;
 

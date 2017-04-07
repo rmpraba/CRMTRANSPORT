@@ -71,7 +71,8 @@
 
     is: "transportadmin-card",
  
-    FnSelectacademicyear:function(e){ 
+    FnSelectacademicyear:function(e)
+    { 
  
         transacademicyr=e.target.selectedItem.value.trim();
         localStorage.setItem("curr_sess_academicyear",transacademicyr);
@@ -112,7 +113,8 @@
             else if(localStorage.getItem('curr_sess_acadmic')=="addroute") 
          {
              document.querySelector('transport-app').setPage("addroute","Add Route");
-      }
+             this.$.maps.FetchRoute();
+         }
          else if(localStorage.getItem('curr_sess_acadmic')=="bus") 
          {
            document.querySelector('transport-app').setPage("bus","Add Bus Details");
@@ -212,13 +214,12 @@
               this.$.transcdialog.toggle();
          },
       addroute:function()
-      {
-        document.querySelector('transport-app').setPage("addroute","Add Route");
-        document.querySelector('routecreate-card').FnClear();
-      
+      {      
         localStorage.setItem('curr_sess_acadmic','addroute');
+              //this.$.maps.FetchRoute();
               this.$.transportservice.callAcademicService();
               this.$.transcdialog.toggle();
+              
          },
       bus:function()
       {
