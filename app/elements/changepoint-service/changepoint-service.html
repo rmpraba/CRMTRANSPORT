@@ -20,12 +20,12 @@
   <iron-ajax
     auto
     method="post"
-    id="selectnameajax"
-    url="{{selectnameurl}}"
-    params="{{selectnameparam}}"
+    id="selectname1ajax"
+    url="{{selectname1url}}"
+    params="{{selectname1param}}"
     handle-as="json"
     content-type="application/json"
-    on-response="selectnameResponse"
+    on-response="selectname1Response"
     debounce-duration="300"
   >
   </iron-ajax>
@@ -157,9 +157,9 @@
         this.selectclassurl = sessionStorage.getItem("addrinfo")+"/selectclass";
         var obj={"schol":""}
         obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.selectclassparam=obj;
         this.$.selectclassajax.generateRequest();
-        school=sessionStorage.getItem("sch");
       },
       FnClear:function(){
         len=0;
@@ -168,22 +168,27 @@
         var classdetail=e.detail.response.returnval;
         document.querySelector('changepoint-card').classarr=classdetail;
       },
-      selectname:function(){
-        this.selectnameurl = sessionStorage.getItem("addrinfo")+"/selectnameforchpoint";
-        var obj={"schol":""}
-        obj.schol=sessionStorage.getItem("sch");;
-        this.selectnameparam=obj;
-        this.$.selectnameajax.generateRequest();
+      selectname1:function(){
+        this.selectname1url=sessionStorage.getItem("addrinfo")+"/selectnameforchpoint";
+        var obj={"schol":"","academic_year":""}
+        obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+        this.selectname1param=obj;
+         alert(JSON.stringify(obj));
+        this.$.selectname1ajax.generateRequest();
       },
-      selectnameResponse:function(e){;
+      selectname1Response:function(e){
+        alert('1');
         var nameitem=e.detail.response.returnval;
+        alert(JSON.stringify(nameitem));
         document.querySelector('changepoint-card').autocompletename(nameitem);
       },
       namepick:function(cla){
         //alert(cla);
         this.namepickurl = sessionStorage.getItem("addrinfo")+"/chnamepick";
-        var obj={"id":"","schol":""}
+        var obj={"id":"","schol":"","academic_year":""}
         obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.id=cla;
         this.namepickparam=obj;
         //alert(JSON.stringify(obj));
@@ -210,13 +215,15 @@
       submit:function(itemarr){
           len=itemarr.length;
           for(var i=0;i<itemarr.length;i++){
-            var obj={"studentid":"","class_id":"","pickroute":"","droproute":"","pickpoint":"","droppoint":"","flag":"","schol":""};
+            var obj={"studentid":"","class_id":"","pickroute":"","droproute":"","pickpoint":"","droppoint":"","flag":"","schol":"","academic_year":""};
             obj.studentid=itemarr[i].studentid;
             obj.class_id=itemarr[i].class_id;
             obj.pickroute=itemarr[i].pickroute;
             obj.droproute=itemarr[i].droproute;
             obj.pickpoint=itemarr[i].pickpoint;
             obj.droppoint=itemarr[i].droppoint;
+            obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+   
             obj.flag=1;
             obj.schol=sessionStorage.getItem("sch");;
             this.studentpointurl=sessionStorage.getItem("addrinfo")+"/submitupdateurl";

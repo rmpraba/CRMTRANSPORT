@@ -1,5 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">     
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
@@ -13,7 +13,7 @@
 <link rel="import" href="../studenttopoint-item-card/studenttopoint-item-card.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
 <dom-module id="mapstudenttopoint-card">
-  <template>
+  <template>   
   <style>
   .card{
    @apply(--layout-center);
@@ -64,7 +64,7 @@
               <template is="dom-repeat" items="{{itemArray}}" as="item">
                 <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
               </template>
-            </paper-listbox>
+            </paper-listbox>  
           </div>
       </div>
       <div class="template">
@@ -75,7 +75,7 @@
           <div class="button" style="margin-left: 47%;margin-top: 3%; height: 40% !important;">
             <paper-button raised id="submitbutton" class="custom indigo" on-click="click">Submit</paper-button>
           </div>
-        </div>
+        </div>  
       </div>
       <paper-dialog id="spin">
         <paper-spinner id="spinner"></paper-spinner>
@@ -90,7 +90,7 @@
         is:"mapstudenttopoint-card",
         ready:function(){
           this.$.submitbutton.hidden=true;
-          this.$.search.hidden=true;
+          this.$.search.hidden=true;  
           //this.$.maps.selectclass();
           this.$.submitbutton.disabled=true;
         },
@@ -127,7 +127,7 @@
           this.$.spinner.active=false;
           document.querySelector('#spin').close();
         },
-        classes1:function(e){
+        classes1:function(e){  
           this.studentarr=[];
           this.class = (e.target.selectedItem.value);
           this.$.maps.classpick(this.class);
@@ -206,7 +206,7 @@
           this.studid= e.target.selectedItem.value;
           var studname = (e.target.selectedItem.textContent).trim();
           //alert(e.target.selectedItem.value);
-          this.value=studname;
+          this.value=studname;  
           this.$.submitbutton.hidden=false;
           this.$.maps.namepick(this.studid);
           this.itemArray=[];
@@ -217,8 +217,8 @@
           itemarray=[];
           document.querySelector('#gradeselect').selected=-1;
           this.value="";
-          // this.$.submitbutton.hidden=true;
-        },
+          this.$.maps.selectname();
+         },
         FnGetItemsz:function(studentid,pickroute,droproute,pickpoint,droppoint,schtype)
            {
             var trip;

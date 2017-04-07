@@ -150,11 +150,11 @@
         droproute=pickroute;
         this.selectid=pickroute;
         this.selectpointurl = sessionStorage.getItem("addrinfo")+"/pickpoints";
-        var obj={"routept":"","studid":"","schol":"","schooltype":""};
+    var obj={"routept":"","studid":"","schol":"","schooltype":"","academic_year":""};
         obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.routept=pickroute;
         obj.studid=this.studentid;
-
         scholtype=this.schooltype;
         if(scholtype=='Primary')
         {
@@ -163,19 +163,19 @@
         else {
           obj.schooltype=2;
         }
-
-        this.routepickpointparam=obj;
+        alert(JSON.stringify(obj));
+          this.routepickpointparam=obj;
         this.$.selectpointajax.generateRequest();
       },
       droproute:function(e){
         droproute = (e.target.selectedItem.value);
         this.routedroppointurl = sessionStorage.getItem("addrinfo")+"/routedroppoint";
-        var obj={"routedroppt":"","studid":"","schol":"","schooltype":""};
+        var obj={"routedroppt":"","studid":"","schol":"","schooltype":"","academic_year":""};
         obj.schol=sessionStorage.getItem("sch");
         obj.routedroppt=droproute;
         obj.studid=this.studentid;
-
-        scholtype=this.schooltype;
+       obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+         scholtype=this.schooltype;
         if(scholtype=='Primary')
         {
           obj.schooltype=1;

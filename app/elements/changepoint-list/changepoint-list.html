@@ -157,22 +157,27 @@
       is: "changepoint-list",
       ready:function(){
         this.routepointurl =sessionStorage.getItem("addrinfo")+"/routepoint";
-        var obj={"schol":""}
-        obj.schol=sessionStorage.getItem("sch");
+        var obj={"schol":"","academic_year":""}
+         obj.schol=sessionStorage.getItem("sch");
+         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.routepointparam=obj;
+        // alert(JSON.stringify(obj));
         this.$.routepoint.generateRequest();
         this.$.selectbox.disabled=true;
         this.prevpickurl=sessionStorage.getItem("addrinfo")+"/chprevpick";
-         var obj1={"schol":"","studentid":""}
-        obj1.schol=sessionStorage.getItem("sch");
-        obj1.studentid=this.studentid;
-        this.prevpickparam=obj1;
+         var obj1={"schol":"","studentid":"","academic_year":""}
+         obj1.schol=sessionStorage.getItem("sch");
+         obj1.academic_year=localStorage.getItem("curr_sess_academicyear");
+         obj1.studentid=this.studentid;
+         this.prevpickparam=obj1;
+      //   alert("ee");
+        //alert(JSON.stringify(obj1));
+    
         this.$.prevpickajax.generateRequest();
-        //alert(this.studentid);
       },
       prevpickResponse:function(e)
       {
-// alert(JSON.stringify(e.detail.response.returnval));
+  //alert(JSON.stringify(e.detail.response.returnval));
  this.selectproute=e.detail.response.returnval[0].pickup_route_id;
  this.selectpick=e.detail.response.returnval[0].pickup_point;
  this.selectid=e.detail.response.returnval[0].drop_route_id;
@@ -184,12 +189,12 @@
       },
       pickroute:function(e){
         pickroute = (e.target.selectedItem.value);
-
-        droproute=pickroute;
+     droproute=pickroute;
         this.selectid=pickroute;
         this.selectpointurl = sessionStorage.getItem("addrinfo")+"/pickpoints";
-        var obj={"routept":"","studid":"","schol":"","schooltype":""};
+      var obj={"routept":"","studid":"","schol":"","schooltype":"","academic_year":""};
         obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.routept=pickroute;
         obj.studid=this.studentid;
 
@@ -200,7 +205,7 @@
         }
         else {
           obj.schooltype=2;
-        }
+         }
 
         this.routepickpointparam=obj;
         this.$.selectpointajax.generateRequest();
@@ -208,7 +213,8 @@
       droproute:function(e){
         droproute = (e.target.selectedItem.value);
         this.routedroppointurl = sessionStorage.getItem("addrinfo")+"/routedroppoint";
-        var obj={"routedroppt":"","studid":"","schol":"","schooltype":""};
+   var obj={"routedroppt":"","studid":"","schol":"","schooltype":"","academic_year":""};
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.schol=sessionStorage.getItem("sch");
         obj.routedroppt=droproute;
         obj.studid=this.studentid;

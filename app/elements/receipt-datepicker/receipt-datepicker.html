@@ -44,6 +44,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   ready:function()
   {
     this.showdate=moment(new Date()).format('L');
+    //alert(this.showdate);
+    
     localStorage.setItem("localsess_receipt_date",this.showdate);
   },
   FnShowDialog:function(){
