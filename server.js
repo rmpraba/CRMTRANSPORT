@@ -197,7 +197,7 @@ app.post('/getroutedetail' ,  urlencodedParser,function (req, res)
 app.post('/insertpoint' ,  urlencodedParser,function (req, res)
 {
 
-    var rouname={"id":req.query.id,"point_name":req.query.points,"route_id":req.query.routes,"trip":req.query.trip,"pickup_time":req.query.pick,"drop_time":req.query.drop,"distance_from_school":req.query.distance,"school_id":req.query.schol};
+    var rouname={"id":req.query.id,"point_name":req.query.points,"route_id":req.query.routes,"trip":req.query.trip,"pickup_time":req.query.pick,"drop_time":req.query.drop,"distance_from_school":req.query.distance,"school_id":req.query.schol,"academic_year":req.query.academic_year};
     //console.log('in server...'+routename);
     //console.log(rouname);
       connection.query('insert into point set ?',[rouname],
