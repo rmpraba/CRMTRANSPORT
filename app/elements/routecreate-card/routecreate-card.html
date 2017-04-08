@@ -61,22 +61,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
 
 
-  <!--    <div>
-       <label style="margin-left: 6%;"><b>CREATE NEW ROUTE</b></label>
-     </div>
-
-    <div class="routecreate">
-        <div class="left">
-          <paper-item>Route Name : </paper-item>
-        </div>
-        <div class="center" style="margin-top: -1%;margin-left: -4%;">  
-          <paper-input  class="field" value="{{routename}}"></paper-input>
-        </div>  
-        <div class="right" style="margin-top: 7%;margin-left: -6%;height: 60%;">
-          <paper-button class="button" on-click="create">ADD</paper-button>
-        </div>    
-    </div> -->
-
     <div class="newcard1">
       <table>
         <tr>
@@ -115,8 +99,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       FnClear:function()
       {
+        //this.$.maps.FetchRoute();
         this.routename="";
-        this.$.maps.FetchRoute();
       }
 
 

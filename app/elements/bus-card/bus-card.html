@@ -36,11 +36,12 @@
       .card .field{
       }
       .card .address paper-textarea{
-        width: 70%;
+        width: 80%;
       }
       .horizontalframes{
         @apply(--layout-horizontal);
         width: 100% !important;
+        margin-left: 15%;
       }
       .horizontalframes .date{
         width: 35%;
@@ -52,6 +53,19 @@
       .button{
         margin:2% 0 0 27%;
       }
+      .card
+      {
+        border-collapse: collapse;
+       border: 1px solid #6699ff;
+       padding: 5px;
+       width: 45%;
+      }
+      .btn1
+      {
+        margin-top: 4%;
+        margin-left: 4%;
+      }
+
     </style>
     <div class="card">
       <div class="horizontalframes">
@@ -64,7 +78,7 @@
       </div>
       <div class="horizontalframes">
         <div class="fields">
-          <paper-input label="Bus Number" value="{{bus_no}}" id="bus_no" allowed-pattern="[a-zA-Z0-9 ]" required error-message="needs a name!"></paper-input>
+          <paper-input label="Bus Number" value="{{bus_no}}" id="bus_no" allowed-pattern="[a-zA-Z0-9 ]" required error-message="needs a Bus Number!"></paper-input>
         </div>
         <div class="fields">
           <paper-input label="Number of Seats" value="{{no_of_seats}}" id="no_of_seats" allowed-pattern="[0-9]" required error-message="need bus number!"></paper-input>
@@ -79,22 +93,24 @@
         </div>
       </div>
       <div class="horizontalframes">
-        <div class="date">
+        <div class="date" style="margin-left: -2%;width: 50%">
           <last_service_datepicker-card id="last_service"></last_service_datepicker-card>
         </div>
-        <div class="date">
+        <div class="date" style="width: 50%;margin-left: -6em">
           <next_service_datepicker-card id="next_service"></next_service_datepicker-card>
         </div>
       </div>
       <div class="horizontalframes">        
-        <div class="date">
+        <div class="date" style="width: 50%;margin-left: -2%;">
           <insurance_datepicker-card id="insurance"></insurance_datepicker-card>
         </div>
       </div>
+
+        <div class="btn1">
+          <paper-button id="button" class="button" on-click="click">Submit</paper-button>
+        </div>
     </div>
-    <div class="button">
-      <paper-button id="button" class="button" on-click="click">Submit</paper-button>
-    </div>
+    
     <transport-service id="service"></transport-service>
   </template>
   <script>
@@ -125,7 +141,8 @@
         this.insurance_exp=localStorage.getItem("localsess_insurance_exp_date");
         this.last_service=localStorage.getItem("localsess_last_service");
         if(this.made==""||this.no_of_seats==""||this.insurance_no==""||this.insurance_co==""||this.last_service==""||this
-            .insurance_exp==""||this.next_service==""||this.make_year==""||this.bus_no==""){
+            .insurance_exp==""||this.next_service==""||this.make_year==""||this.bus_no=="")
+        {
           this.$.made.validate();
           this.$.no_of_seats.validate();
           this.$.insurance_no.validate();
@@ -135,7 +152,9 @@
           this.$.next_service.validate();
           this.$.make_year.validate();
           this.$.bus_no.validate();
-        } else {
+        } 
+        else 
+        {
           this.$.service.bus(this.made,this.no_of_seats,this.insurance_no, this.insurance_co,this.last_service,this.insurance_exp,this.next_service,this.make_year,this.bus_no);
                this.$.service.bus_count();
       

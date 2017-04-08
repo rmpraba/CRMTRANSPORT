@@ -3285,7 +3285,7 @@ app.post('/changepassword',  urlencodedParser,function (req, res){
 
 app.post('/createroute' ,  urlencodedParser,function (req, res)
 {
-    var scho={"school_id":req.query.schol,"id":req.query.id,"route_name":req.query.routes};
+    var scho={"school_id":req.query.schol,"id":req.query.id,"route_name":req.query.routes,"academic_year":req.query.academic_year};
     //console.log(' in  route create'+scho);
       connection.query('insert into route set ?',[scho],
         function(err, rows)
@@ -4586,26 +4586,28 @@ app.post('/registrationfee',  urlencodedParser,function (req, res)
 
  app.post('/FetchRoute-service' ,  urlencodedParser,function (req, res)
 {
-    var schoolidx={"school_id":req.query.schlidz};
-      connection.query('select * from route where ?',[schoolidx],
+    //var schoolidx={"school_id":req.query.schlidz};
+    //var accyear={"academic_year":req.query.academic_year};
+      //connection.query('select * from route where ?',[schoolidx,accyear],
+      connection.query("SELECT * from route where school_id='"+req.query.schlidz+"' and academic_year='"+req.query.academic_year+"'",
         function(err, rows)
         {
         if(!err)
-    {
-      if(rows.length>0)
+        {
+          if(rows.length>0)
+          {
+            //console.log(rows);
+          res.status(200).json({'returnval': rows});
+          }
+          else
+          {
+          res.status(200).json({'returnval': 'invalid'});
+          }
+        }
+       else
       {
-        //console.log(rows);
-      res.status(200).json({'returnval': rows});
+         console.log('No data Fetched'+err);
       }
-      else
-      {
-      res.status(200).json({'returnval': 'invalid'});
-      }
-    }
-    else
-    {
-      console.log('No data Fetched'+err);
-    }
 });
   });
 
