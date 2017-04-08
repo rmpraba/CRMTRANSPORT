@@ -134,8 +134,10 @@
       is: "studenttopoint-item-card",
       ready:function(){
         this.routepointurl =sessionStorage.getItem("addrinfo")+"/routepoint";
-        var obj={"schol":""}
+        var obj={"schol":"","academic_year":""}
         obj.schol=sessionStorage.getItem("sch");
+             obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+   
         this.routepointparam=obj;
         this.$.routepoint.generateRequest();
         this.$.selectbox.disabled=true;

@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
-  database : 'mlzstransport'
+  database : 'demo11'
 
 });
 var bodyParser = require('body-parser');
@@ -120,7 +120,7 @@ app.post('/login-card',  urlencodedParser,function (req, res)
 });
   });
 
-//select the route
+//select the route  
 
 app.post('/getroute' ,  urlencodedParser,function (req, res)
 {
@@ -132,7 +132,6 @@ app.post('/getroute' ,  urlencodedParser,function (req, res)
     {
       if(rows.length>0)
       {
-        //console.log(rows);
       res.status(200).json({'returnval': rows});
       }
       else
@@ -598,14 +597,13 @@ app.post('/getzonechangename' ,  urlencodedParser,function (req, res)
     {
       console.log('No data Fetched'+err);
     }
-});
+    });
   });
-
-app.post('/stupassgetname' ,  urlencodedParser,function (req, res)
-{
+ app.post('/stupassgetname' ,  urlencodedParser,function (req, res)
+   {
     var schoolx={"school_id":req.query.schol};
     var trans_req={"transport_required":"yes"};
-      connection.query('select student_name from student_details where id in (select student_id from student_point)and ? and ?',[trans_req,schoolx],
+      connection.query('select student_name from student_details where id in (select student_id from student_point)and ? and ? and academic_year="'+req.query.academic_year+'"',[trans_req,schoolx],
         function(err, rows)
         {
         if(!err)
@@ -3605,7 +3603,7 @@ app.post('/bustoroute' ,  urlencodedParser,function (req, res)
 app.post('/routetobus' ,  urlencodedParser,function (req, res)
 {
   var scho={"school_id":req.query.schol};
-  connection.query('select  id, made_model, no_of_seats from bus where ?',[scho],
+  connection.query('select  id, made_model, no_of_seats from bus where ? and academic_year="'+req.query.academic_year+'"',[scho],
     function(err, rows){
       if(!err){
         if(rows.length>0)
@@ -3623,7 +3621,7 @@ app.post('/routetobus' ,  urlencodedParser,function (req, res)
 app.post('/bustodriver' ,  urlencodedParser,function (req, res)
 {
   var scho={"school_id":req.query.schol};
-  connection.query('select id, first_name,last_name from driver where ?',[scho],
+  connection.query('select id, first_name,last_name from driver where ? and academic_year="'+req.query.academic_year+'"',[scho],
     function(err, rows){
       if(!err){
         if(rows.length>0)
@@ -3641,7 +3639,7 @@ app.post('/bustodriver' ,  urlencodedParser,function (req, res)
 app.post('/bustoattender' ,  urlencodedParser,function (req, res)
 {
   var scho={"school_id":req.query.schol};
-  connection.query('select id, first_name, last_name from attender where ?',[scho],
+  connection.query('select id, first_name, last_name from attender where ? and academic_year="'+req.query.academic_year+'"',[scho],
     function(err, rows){
       if(!err){
         if(rows.length>0)
@@ -3696,7 +3694,7 @@ app.post('/noofstudentsinroute',  urlencodedParser,function (req, res){
   var schoolx={"school_id":req.query.schol};
         var pickuproute_id={"pickup_route_id":req.query.routeid};
         var droproute_id={"drop_route_id":req.query.routeid};
-    connection.query('SELECT student_id from student_point where ? or ? and ?',[pickuproute_id,droproute_id,schoolx],
+    connection.query('SELECT student_id from student_point where ? or ? and ? and academic_year="'+req.query.academic_year+'"',[pickuproute_id,droproute_id,schoolx],
     function(err, rows){
     if(!err){
       if(rows.length>0){
@@ -3715,7 +3713,7 @@ app.post('/noofseats',  urlencodedParser,function (req, res){
   var schoolx={"school_id":req.query.schol};
   var bus = {"id":req.query.bus};
   //console.log("in server");
-    connection.query('SELECT no_of_seats from bus where ? and ?',[schoolx, bus],
+    connection.query('SELECT no_of_seats from bus where ? and ? and academic_year="'+req.query.academic_year+'"',[schoolx, bus],
     function(err, rows){
     if(!err){
       if(rows.length>0){
@@ -4084,7 +4082,7 @@ app.post('/zonechangeinsta1cash',  urlencodedParser,function (req, res)
 }); 
 
 app.post('/mapbustoroute',  urlencodedParser,function (req, res){
-  var schoolx={"school_id":req.query.schol,"route_id":req.query.route,"bus_id":req.query.bus,"driver_id":req.query.driver,"attender_id":req.query.attender,"trip":req.query.trip,"updated_by":req.query.updatedby,"updated_date":req.query.updateon};
+  var schoolx={"school_id":req.query.schol,"route_id":req.query.route,"bus_id":req.query.bus,"driver_id":req.query.driver,"attender_id":req.query.attender,"trip":req.query.trip,"updated_by":req.query.updatedby,"updated_date":req.query.updateon,"academic_year":req.query.academic_year};
     connection.query('insert into route_bus set ?',[schoolx],
         function(err, rows){
     if(!err){

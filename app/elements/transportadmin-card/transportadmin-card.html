@@ -16,7 +16,7 @@
     text-align: center;
     width: 100%;
  }
- .iconbutton
+ .iconbutton  
  {
 
     top:35%;
@@ -53,8 +53,8 @@
          <paper-dropdown-menu id="transacademicyr" label="Select Academic Year" disabled="{{read}}" required>
             <paper-menu id="transacademicyrwww" class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
               <template is="dom-repeat" items="{{academicarr}}">
-                <paper-item value="{{item.year}}">{{item.year}}</paper-item>                               
-              </template>
+                <paper-item value="{{item.year}}">{{item.year}}</paper-item>
+                </template>
             </paper-menu>
           </paper-dropdown-menu>
       </paper-dialog>
@@ -65,7 +65,7 @@
    <transport-service id="transportservice"></transport-service>
    <changepoint-service id="chpoint"></changepoint-service>
 </template>
-<script>
+<script>   
  var transacademicyr;
   Polymer({
 
@@ -102,10 +102,9 @@
        }
            else if(localStorage.getItem('curr_sess_acadmic')=="stpass") 
          {
-      
+        document.querySelector('transport-app').setPage("pass","Student Bus Pass");
          this.$.maps.selectclass();
          this.$.transportservice.stupassgetname();
-        document.querySelector('transport-app').setPage("pass","Student Bus Pass");
       
 
          }
@@ -146,7 +145,7 @@
         {
     document.querySelector('transport-app').setPage("vehicleroute","Map Bus to Route");
          this.$.transportservice.getroute();
-      }
+      }  
             else if(localStorage.getItem('curr_sess_acadmic')=="routereport") 
          {
       this.$.transportservice.generateroutereport();
