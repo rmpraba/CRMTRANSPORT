@@ -33,7 +33,7 @@
       .card .field{
       }
       .card .address paper-textarea{
-        width: 70%;
+        width: 100%;
       }
       .horizontalframes{
         @apply(--layout-horizontal);
@@ -58,6 +58,7 @@
         margin-top: 4%;
         margin-left: -6%;
       }
+      
     </style>
     <div class="card">
       <div class="horizontalframes">
@@ -73,12 +74,12 @@
           <paper-input label="Mobile No" value="{{mobile_no}}" id="mobile" allowed-pattern="[0-9]" required error-message="needs a Mobile number!" max-length="10" ></paper-input>
         </div>
 
-        <div class="date" style="margin-left: 1%;">
+        <div class="date" style="margin-left: 1%;width: 50%;">
           <since-when-employed-card id="when_employed"></since-when-employed-card>
         </div>
       </div>
       
-      <div class="horizontal" style="margin-left: 10%;">
+      <div class="horizontal" style="margin-left: 10%;width: 70%">
         <div class="address">
           <paper-textarea value="{{address_1}}" id="address_1"  error-message="needs Address" label="Address Line 1" required ></paper-textarea>
         </div>

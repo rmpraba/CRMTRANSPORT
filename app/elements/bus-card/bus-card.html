@@ -20,7 +20,7 @@
       .card {
         margin:5% 0 0 27%;
       }
-      . field{
+      .field{
         width: 70%;
       }
       .fields{
@@ -92,16 +92,16 @@
           <paper-input label="Insurance Company" value="{{insurance_co}}" id="insurance_co" allowed-pattern="[a-zA-Z ]" required error-message="needs a name!"></paper-input>
         </div>
       </div>
-      <div class="horizontalframes" col-sm-12>
-        <div class="date" col-sm-6>
+      <div class="horizontalframes">
+        <div class="date" style="margin-left: -2%;width: 50%">
           <last_service_datepicker-card id="last_service"></last_service_datepicker-card>
         </div>
-        <div class="date" col-sm-6>
+        <div class="date" style="width: 50%;margin-left: -6em">
           <next_service_datepicker-card id="next_service"></next_service_datepicker-card>
         </div>
       </div>
-      <div class="horizontalframes" col-sm-6>        
-        <div class="date">
+      <div class="horizontalframes">        
+        <div class="date" style="width: 50%;margin-left: -2%;">
           <insurance_datepicker-card id="insurance"></insurance_datepicker-card>
         </div>
       </div>

@@ -1875,7 +1875,7 @@
           oneway=temp[0].oneway;
 
           val=(yearlyfee/100)*oneway;
-   alert('222');
+   //alert('222');
       document.querySelector('zonetostudent-card').fee=val;
       },
       onecus:function(){
@@ -1890,7 +1890,7 @@
 
               val=(cusfee/100)*oneway;
          document.querySelector('zonetostudent-card').fee=val;
-      alert('333');
+     // alert('333');
       },
       twoway:function(){
       val=yearlyfee;
@@ -2881,12 +2881,12 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             var obj = {"schol":""};
             obj.schol=sessionStorage.getItem("sch");
             this.attendercountparam=obj;
-           alert(JSON.stringify(obj));
+          // alert(JSON.stringify(obj));
             this.$.attendercountajax.generateRequest();
         },
         attendercountResponse:function(e){
             attender_counts = e.detail.response.returnval[0].attender_count;
-                   alert(JSON.stringify(attender_counts))
+                   //alert(JSON.stringify(attender_counts))
         },
         attender:function(first_name,last_name,mobile_no,address_1,address_2,address_3,city,pincode,when_employed){
             this.attenderurl = sessionStorage.getItem("addrinfo")+"/attender";
