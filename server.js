@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
-  database : 'demo11'
+  database : 'transportdb'
 
 });
 var bodyParser = require('body-parser');
