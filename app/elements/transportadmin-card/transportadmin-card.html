@@ -26,27 +26,34 @@
  </style>
   <body style="height:auto;">
     <div class="frontpage">
-      <paper-icon-button class="iconbutton" src="../../images/points.png" on-click="pointallocation"></paper-icon-button>
-       <paper-icon-button class="iconbutton" src="../../images/changepoints.png" on-click="changepointallocation"></paper-icon-button>
-      <paper-icon-button class="iconbutton" src="../../images/allocation.png" on-click="routeallocation"></paper-icon-button>
+        <paper-icon-button class="iconbutton" hidden$="{{addroute}}" src="../../images/addroute.png" on-click="addroute"></paper-icon-button>
+          <paper-icon-button class="iconbutton" hidden$="{{routeallocation}}" src="../../images/allocation.png" on-click="routeallocation"></paper-icon-button>
+           <paper-icon-button class="iconbutton" hidden$="{{pointallocation}}" src="../../images/points.png" on-click="pointallocation"></paper-icon-button>
+           <paper-icon-button class="iconbutton" hidden$="{{staffroute}}" src="../../images/staff_route.png" on-click="staffroute"></paper-icon-button>
+            <paper-icon-button class="iconbutton" hidden$="{{changepoints}}" src="../../images/changepoints.png" on-click="changepointallocation"></paper-icon-button>
+       <paper-icon-button class="iconbutton" hidden$="{{busroute}}" src="../../images/busroute.png" on-click="busroute"></paper-icon-button>
+      <paper-icon-button class="iconbutton" hidden$="{{stupass}}"  src="../../images/pass.png" on-click="stpass"></paper-icon-button>
       
-       <paper-icon-button class="iconbutton" src="../../images/bus.png" on-click="bus"></paper-icon-button>
-        <paper-icon-button class="iconbutton" src="../../images/attender.png" on-click="attender"></paper-icon-button>
-      <paper-icon-button class="iconbutton" src="../../images/driver.png" on-click="driver"></paper-icon-button>
-       <paper-icon-button class="iconbutton" src="../../images/addroute.png" on-click="addroute"></paper-icon-button>
-       <paper-icon-button class="iconbutton" src="../../images/busroute.png" on-click="busroute"></paper-icon-button>
-      <paper-icon-button class="iconbutton" src="../../images/pass.png" on-click="stpass"></paper-icon-button>
+      
+       <paper-icon-button class="iconbutton" hidden$="{{bus}}" src="../../images/bus.png"  on-click="bus"></paper-icon-button>
+        <paper-icon-button class="iconbutton" hidden$="{{attender}}" src="../../images/attender.png" on-click="attender"></paper-icon-button>
+      <paper-icon-button class="iconbutton" hidden$="{{driver}}" src="../../images/driver.png" on-click="driver"></paper-icon-button>
+      
+      <paper-icon-button class="iconbutton" hidden$="{{busreport}}" src="../../images/bus_report.png" on-click="busreport"></paper-icon-button>
+      <paper-icon-button class="iconbutton" hidden$="{{routereport}}" src="../../images/route_reports.png" on-click="routereport"></paper-icon-button>
      
      
         
       <!-- <paper-icon-button class="iconbutton" src="../../images/bus_route.png" on-click="bustoroute"></paper-icon-button> -->
-      <paper-icon-button class="iconbutton" src="../../images/bus_report.png" on-click="busreport"></paper-icon-button>
       
-       <paper-icon-button class="iconbutton" src="../../images/add_attendance.png" on-click="addattendence"></paper-icon-button>
-       <paper-icon-button class="iconbutton" src="../../images/route_reports.png" on-click="routereport"></paper-icon-button>
-       <paper-icon-button class="iconbutton" src="../../images/gradewise-route-report.png" on-click="gradewisereport"></paper-icon-button>
-       <paper-icon-button class="iconbutton" src="../../images/staff_route.png" on-click="staffroute"></paper-icon-button>
-        <paper-icon-button class="iconbutton" src="../../images/staffreport.png" on-click="stfreport"></paper-icon-button>
+      
+       <paper-icon-button class="iconbutton" hidden$="{{addattendence}}" src="../../images/add_attendance.png" on-click="addattendence"></paper-icon-button>
+      
+       <paper-icon-button class="iconbutton" hidden$="{{gradewisereport}}" src="../../images/gradewise-route-report.png" on-click="gradewisereport"></paper-icon-button>
+       
+        <paper-icon-button class="iconbutton" hidden$="{{stfreport}}" src="../../images/staffreport.png" on-click="stfreport"></paper-icon-button>
+        <paper-icon-button class="iconbutton"  hidden$="{{distancetozone}}" src="../../images/distancezone.jpg" on-click="distancetozone"></paper-icon-button>
+
     </div>
      <div class="transcdialog">      
       <paper-dialog id="transcdialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" modal>
@@ -70,6 +77,26 @@
   Polymer({
 
     is: "transportadmin-card",
+
+    ready:function()
+    {
+      this.addroute=false;
+      this.routeallocation=false;
+      this.pointallocation=false;
+      this.staffroute=false;
+      this.changepoints=false;
+      this.busroute=false;
+      this.stupass=false;
+      this.bus=true;
+      this.attender=false;
+      this.driver=true;
+      this.busreport=false;
+      this.routereport=false;
+      this.addattendence=true;
+      this.gradewisereport=false;
+      this.stfreport=false;
+      this.distancetozone=true;
+    },
  
     FnSelectacademicyear:function(e)
     { 
@@ -173,6 +200,10 @@
          this.$.transportservice.getroute();
        document.querySelector('transport-app').setPage("staffroute","Staff Route Report");
     
+         }
+         else if(localStorage.getItem('curr_sess_acadmic')=="distancetozone")
+         {
+          document.querySelector('transport-app').setPage("distancezone","Distance to Zone");
          }
        this.$.transcdialog.close();
     },
@@ -298,7 +329,13 @@
         localStorage.setItem('curr_sess_acadmic','stfreport');
                this.$.transportservice.callAcademicService();
                  this.$.transcdialog.toggle();
- }
+     },
+     distancetozone:function()
+     {
+       localStorage.setItem('curr_sess_acadmic','distancetozone');
+               this.$.transportservice.callAcademicService();
+                 this.$.transcdialog.toggle();
+     }
   });
 </script>
 </dom-module>

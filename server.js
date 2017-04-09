@@ -4611,6 +4611,12 @@ app.post('/registrationfee',  urlencodedParser,function (req, res)
 });
   });
 
+ 
+
+
+
+
+
 
 function setvalue(){
   console.log("calling setvalue.....");

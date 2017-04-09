@@ -52,6 +52,7 @@
 <link rel="import" href="../transportcancel-report/transportcancel-report.html">
 <link rel="import" href="../registration-card/registration-card.html">
 <link rel="import" href="../registration-receipt-card/registration-receipt-card.html">
+<link rel="import" href="../zonedistance-card/zonedistance-card.html">
 
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
@@ -238,6 +239,9 @@
           </section>
           <section data-category="registrationreceipt">
           <registration-receipt-card></registration-receipt-card>
+          </section>
+          <section data-category="distancezone">
+          <zonedistance-card></zonedistance-card>
           </section>
           </iron-pages>
        </div>
@@ -573,6 +577,12 @@
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
        document.querySelector('transportadmin-card').FnRefresh();
        document.querySelector('staffroute-card').ready();
+    }
+    if(currpage=="distancezone")
+    {
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+      document.querySelector('transportadmin-card').FnRefresh();
     }
    }
     if(name=="Admin Manager")  {
