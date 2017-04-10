@@ -1032,10 +1032,53 @@
         debounce-duration="300"
     >
     
-   
+   <iron-ajax
+      method="post"
+      id="newdistanceajax"
+      url="{{newdistanceurl}}"
+      params="{{newdistanceparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="newdistanceResponse"
+      debounce-duration="300"
+      >
+      
 
+    <iron-ajax
+      method="post"
+      id="fetchdistanceseqajax"
+      url="{{fetchdistancesequrl}}"
+      params="{{fetchdistanceseqparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="fetchdistanceseqResponse"
+      debounce-duration="300"
+      >
 
+      
+      <iron-ajax
+          method="post"
+          id="fetchzoneseqajax"
+          url="{{fetchzonesequrl}}"
+          params="{{fetchzoneseqparam}}"
+          handle-as="json"
+          content-type="application/json"
+          on-response="fetchzoneseqResponse"
+          debounce-duration="300"
+      >
+
+      <iron-ajax
+          method="post"
+          id="fnnewzoneajax"
+          url="{{fnnewzoneurl}}"
+          params="{{fnnewzoneparam}}"
+          handle-as="json"
+          content-type="application/json"
+          on-response="fnnewzoneResponse"
+          debounce-duration="300"
+      >
     </iron-ajax>
+
     </template>
   <script>
   (function() {
@@ -3383,15 +3426,80 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
     deletechequeResponse:function(e)
     {
         document.querySelector('editcheque-card').FnClear();
-    }
+    },
     
+     fnnewdistance:function(distanceid,mindistance,maxdistance,fee)   
+      {        
+        //alert(11);
+        this.newdistanceurl=sessionStorage.getItem("addrinfo")+"/newdistance";
+        var obj={"schlidz":"","distanceid":"","mindistance":"","maxdistance":"","fee":"",
+        "academic_year":""}
+        obj.schlidz=sessionStorage.getItem("sch");
+        obj.distanceid=distanceid;
+        obj.mindistance=mindistance;
+        obj.maxdistance=maxdistance;
+        obj.fee=fee;
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+        this.newdistanceparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.newdistanceajax.generateRequest();
+      },
+      newdistanceResponse:function(e)
+      {
+        var res=e.detail.response.returnval;
+        alert(JSON.stringify(res));
+    
+      },
 
+      fetchdistanceseq:function()
+      {
+        //alert("distance seq");
+        this.fetchdistancesequrl=sessionStorage.getItem("addrinfo")+"/fetchdistanceseq";
+        this.$.fetchdistanceseqajax.generateRequest();
+      },
+      
+      fetchdistanceseqResponse:function(e)
+      {
+        var res=e.detail.response.returnval;
+        //alert("disttt");
+        //alert(JSON.stringify(res));
+        document.querySelector('zonedistance-card').distanceid=res[0].distance_prefix+res[0].distance_seq;
+      },
+
+      fetchzoneseq:function()
+      {
+        //alert("zone seq");
+        this.fetchzonesequrl=sessionStorage.getItem("addrinfo")+"/fetchzoneseq";
+        this.$.fetchzoneseqajax.generateRequest();
+      },
+      fetchzoneseqResponse:function(e)
+      {
+        var res=e.detail.response.returnval;
+        //alert("zoneee");
+        //alert(JSON.stringify(res));      
+        document.querySelector('zonedistance-card').zoneid=res[0].zone_prefix+res[0].zone_seq;
+      },
+
+      fnnewzone:function(zonename,zoneid,distanceid)
+      {
+        //alert(222);
+        this.fnnewzoneurl=sessionStorage.getItem("addrinfo")+"/fnnewzone";
+        var obj={"scholid":"","zoneid":"","zonename":"","distanceid":"","academic_year":""}
+        obj.scholid=sessionStorage.getItem("sch");
+        obj.zoneid=zoneid;
+        obj.zonename=zonename;
+        obj.distanceid=distanceid;
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+        this.fnnewzoneparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.fnnewzoneajax.generateRequest();
+      },
+      fnnewzoneResponse:function(e)
+      {
+        var res=e.detail.response.returnval;
+        alert(JSON.stringify(res));
+      }
      
-
-    
-
-    
-
     });
  })();
 </script>

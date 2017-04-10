@@ -27,7 +27,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin:5% 0 0 21%;
       }
       .field{
-        width: 70%;
+        /*width: 70%;*/
+        margin-left: 30%;
       }
       .fields{
         width: 37%;
@@ -52,29 +53,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .btn11
       {
-        margin-top: 5%;
+        margin-top: 6%;
         margin-left: 28%;
       }
       paper-dropdown-menu
       {
         width: 50%;
       }
+      label
+      {
+        font-size: 19px;
+      }
 
     </style>
+
     <div class="card">
-    <div class="drop-down" style="margin-left: 30%;">
-      <paper-dropdown-menu label=" Select School" id="schoolz" required  errorMessage ="Please Select the School">
-        <paper-menu id="schoolmenu" class="dropdown-content" on-iron-select="schoolnamezz" valueattr="value" >
-          <template  is="dom-repeat" items="{{schoolnamearr}}" as="view">
-            <paper-item value="{{view.id}}">{{view.name}}</paper-item>
-          </template>
-        </paper-menu>
-      </paper-dropdown-menu>
+
+
+    <div class="field">
+        <label><b>{{schoolname}}</b></label>
     </div>
-    
-    <div class="drop-down" style="margin-left: 30%;">  
-      <paper-dropdown-menu id="newzone" label="Select The Zone">
-        <paper-menu id="newzoneid" class="dropdown-content" on-iron-select="fnselectnewzone" attr-for-selected="value" required>
+
+      <paper-input hidden value={{zoneid}}></paper-input>
+
+      <div class="drop-down" style="margin-left: 30%;">  
+        <paper-dropdown-menu id="newzone" label="Select The Zone">
+          <paper-menu id="newzoneid" class="dropdown-content" on-iron-select="fnselectnewzone" attr-for-selected="value" required>
                  <paper-item value="zone1">Zone 1</paper-item>
                  <paper-item value="zone2">Zone 2</paper-item>
                  <paper-item value="zone3">Zone 3</paper-item>
@@ -85,13 +89,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                  <paper-item value="zone8">Zone 8</paper-item>
                  <paper-item value="zone9">Zone 9</paper-item>
                  <paper-item value="zone10">Zone 10</paper-item>
-        </paper-menu>
-      </paper-dropdown-menu>
-    </div>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </div>
+
     
-    <div class="drop-down" style="margin-left: 30%;"> 
-      <paper-dropdown-menu id="mindistance" label="Select Minimum Distance">
-        <paper-menu id="mindistid" class="dropdown-content" on-iron-select="fnselectmindistance" attr-for-selected="value" required>
+      <div class="drop-down" style="margin-left: 30%;"> 
+        <paper-dropdown-menu id="mindistance" label="Select Minimum Distance">
+          <paper-menu id="mindistid" class="dropdown-content" on-iron-select="fnselectmindistance" attr-for-selected="value" required>
                  <paper-item value="min0">0</paper-item>
                  <paper-item value="min1">1</paper-item>
                  <paper-item value="min2">2</paper-item>
@@ -113,21 +118,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                  <paper-item value="min18">18</paper-item>
                  <paper-item value="min19">19</paper-item>
                  <paper-item value="min20">20</paper-item>
-        </paper-menu>
-      </paper-dropdown-menu>
-    </div>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </div>
     
-    <div class="drop-down" style="margin-left: 30%;">  
-      <paper-dropdown-menu id="macdistance" label="Select Maximum Distance">
-        <paper-menu id="mindistid" class="dropdown-content" on-iron-select="fnselectmaxdistance" attr-for-selected="value" required>
+      <div class="drop-down" style="margin-left: 30%;">  
+        <paper-dropdown-menu id="macdistance" label="Select Maximum Distance">
+          <paper-menu id="maxdistid" class="dropdown-content" on-iron-select="fnselectmaxdistance"  attr-for-selected="value" required>
                  <paper-item value="max0">0</paper-item>
                  <paper-item value="max1">1</paper-item>
                  <paper-item value="max2">2</paper-item>
-                 <paper-item value="mmax">3</paper-item>
-                 <paper-item value="mmax">4</paper-item>
-                 <paper-item value="mmax">5</paper-item>
-                 <paper-item value="mmax">6</paper-item>
-                 <paper-item value="mmax">7</paper-item>
+                 <paper-item value="max3">3</paper-item>
+                 <paper-item value="max4">4</paper-item>
+                 <paper-item value="max5">5</paper-item>
+                 <paper-item value="max6">6</paper-item>
+                 <paper-item value="max7">7</paper-item>
                  <paper-item value="max8">8</paper-item>
                  <paper-item value="max9">9</paper-item>
                  <paper-item value="max10">10</paper-item>
@@ -141,13 +146,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                  <paper-item value="max18">18</paper-item>
                  <paper-item value="max19">19</paper-item>
                  <paper-item value="max20">20</paper-item>
-        </paper-menu>
-      </paper-dropdown-menu>
-    </div>  
+          </paper-menu>
+        </paper-dropdown-menu>
+      </div>  
+
+      <paper-item hidden>{{distanceid}}</paper-item>
 
       <div class="fields" style="margin-left: 30%;">
-          <paper-input label="Enter Fee" value="{{fee}}" id="fee" allowed-pattern="[0-9]" required error-message="needs Fee!"></paper-input>
+          <paper-input label="Enter Fee" value="{{fee}}" id="feez" allowed-pattern="[0-9]" required error-message="needs Fee!"></paper-input>
       </div>
+
 
       <div class="btn1">
         <paper-button id="button" class="button" on-click="fnsubmit">Submit</paper-button>
@@ -160,22 +168,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
-    var schoolname;
     var zonename="";
     var min_distance="";
     var max_distance="";
     Polymer({
       is: 'zonedistance-card',
-
       ready:function()
       {
+        //this.schoolname=sessionStorage.getItem("schoolname");
       },
-      schoolnamezz:function(e)
+      fnclear:function()
       {
-        schoolname=e.target.selectedItem.textContent.trim();
+        this.fee=""; 
+        document.querySelector('#newzoneid').selected=-1;
+        document.querySelector('#mindistid').selected=-1;
+        document.querySelector('#maxdistid').selected=-1;
       },
+      
       fnselectnewzone:function(e)
-      {
+      { 
         zonename=e.target.selectedItem.textContent.trim();
       },
       fnselectmindistance:function(e)
@@ -184,12 +195,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       fnselectmaxdistance:function(e)
       {
-        max_distance=e.target.selectedItem.textContent.trim();
+        max_distance=e.target.selectedItem.textContent.trim(); 
+
+        if(min_distance>max_distance)
+        {
+          //alert(min_distance+" "+max_distance);
+          alert("Please Select Maximum distance");
+          this.$.feez.disabled=true;
+        }
+        else
+        {
+          this.$.feez.disabled=false;
+        }
       },
       fnsubmit:function()
       {
-        this.$.service.fnnewzone();
-        this.$.service.fnnewdistance();
+        if(this.fee="")
+        {
+          this.$.fee.validate();
+        }
+        else
+        {
+          //alert(zonename+" "+this.zoneid+" "+this.distanceid);
+        this.$.service.fnnewzone(zonename,this.zoneid,this.distanceid);
+        this.$.service.fnnewdistance(this.distanceid,min_distance,max_distance,this.fee);
+        this.fnclear();
+        }
+        
       }
 
      
