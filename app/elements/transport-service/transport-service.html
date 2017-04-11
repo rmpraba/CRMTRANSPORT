@@ -1031,6 +1031,24 @@
         on-response="academicResponse"
         debounce-duration="300"
     >
+     <iron-ajax        
+        id="zone1ajax"
+        url="../../configfile/zone.json"
+        params="{{zone1param}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="zone1Response"
+        debounce-duration="300"
+    >
+     <iron-ajax        
+        id="zone11ajax"
+        url="../../configfile/zonemax.json"
+        params="{{zone11param}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="zone11Response"
+        debounce-duration="300"
+    >
     
    <iron-ajax
       method="post"
@@ -1075,6 +1093,19 @@
           handle-as="json"
           content-type="application/json"
           on-response="fnnewzoneResponse"
+          debounce-duration="300"
+      >
+    </iron-ajax>
+    
+
+    <iron-ajax
+          method="post"
+          id="fetchzoneajax"
+          url="{{fetchzoneurl}}"
+          params="{{fetchzoneparam}}"
+          handle-as="json"
+          content-type="application/json"
+          on-response="fetchzoneResponse"
           debounce-duration="300"
       >
     </iron-ajax>
@@ -1159,11 +1190,32 @@
     callAcademicService:function(){
         this.$.academicajax.generateRequest();
       },
-      academicResponse:function(e){
+      academicResponse:function(e)
+      {
       document.querySelector('accountsadmin-card').academicarr=e.detail.response; 
       document.querySelector('transportadmin-card').academicarr=e.detail.response; 
    
       },
+      zonesercdzsd:function(){
+            this.$.zone1ajax.generateRequest();
+    
+      },
+      zone1Response:function(e){
+
+        //alert(JSON.stringify(e.detail.response));
+         document.querySelector('zonedistance-card').mindesarrr=e.detail.response; 
+          
+        },
+
+        zoneminmax:function()
+        {
+            this.$.zone11ajax.generateRequest();
+        },
+        zone11Response:function(e)
+        {
+            //alert(JSON.stringify(e.detail.response));
+            document.querySelector('zonedistance-card').maxdesarrr=e.detail.response;
+        },
        getroute:function()
       {
         this.getrouteurl=sessionStorage.getItem("addrinfo")+"/getroute";
@@ -3448,6 +3500,16 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
       {
         var res=e.detail.response.returnval;
         alert(JSON.stringify(res));
+
+        if(res=='Already Exit')
+        {
+            alert("This Maximum and Minimum distace are already exited ")
+        }
+        else
+        {
+            alert("Inserted");
+        }
+        
     
       },
 
@@ -3497,7 +3559,41 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
       fnnewzoneResponse:function(e)
       {
         var res=e.detail.response.returnval;
-        alert(JSON.stringify(res));
+        //alert(JSON.stringify(res));
+        if('Inserted!')
+        {
+            alert("Inserted");
+        }
+      },
+      fetchzone:function(zonename)
+      {
+        //alert(333);
+        this.fetchzoneurl=sessionStorage.getItem("addrinfo")+"/fetchzone";
+        var obj={"schoolid":"","academic_year":"","zonename":""}
+        obj.schoolid=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+        obj.zonename=zonename;
+        this.fetchzoneparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.fetchzoneajax.generateRequest();
+      },
+      fetchzoneResponse:function(e)
+      {
+
+        var res=e.detail.response.returnval;
+        if(res=='no rows')
+        {
+            
+            document.querySelector('zonedistance-card').fnrefresh();
+        }
+        else
+        {
+             //alert(JSON.stringify(res));
+            document.querySelector('zonedistance-card').fnmaxdist(res);
+            document.querySelector('zonedistance-card').fnmindist(res);
+            document.querySelector('zonedistance-card').fee=res[0].fee;
+        }
+       
       }
      
     });

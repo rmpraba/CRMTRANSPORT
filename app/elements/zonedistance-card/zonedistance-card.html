@@ -77,75 +77,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-input hidden value={{zoneid}}></paper-input>
 
       <div class="drop-down" style="margin-left: 30%;">  
-        <paper-dropdown-menu id="newzone" label="Select The Zone">
-          <paper-menu id="newzoneid" class="dropdown-content" on-iron-select="fnselectnewzone" attr-for-selected="value" required>
-                 <paper-item value="zone1">Zone 1</paper-item>
-                 <paper-item value="zone2">Zone 2</paper-item>
-                 <paper-item value="zone3">Zone 3</paper-item>
-                 <paper-item value="zone4">Zone 4</paper-item>
-                 <paper-item value="zone5">Zone 5</paper-item>
-                 <paper-item value="zone6">Zone 6</paper-item>
-                 <paper-item value="zone7">Zone 7</paper-item>
-                 <paper-item value="zone8">Zone 8</paper-item>
-                 <paper-item value="zone9">Zone 9</paper-item>
-                 <paper-item value="zone10">Zone 10</paper-item>
+        <paper-dropdown-menu id="newzone" label="Select Zone">
+          <paper-menu id="newzoneiddz" class="dropdown-content" on-iron-select="fnselectnewzone" attr-for-selected="value" required>
+                 <paper-item value="zone1">1</paper-item>
+                 <paper-item value="zone2">2</paper-item>
+                 <paper-item value="zone3">3</paper-item>
+                 <paper-item value="zone4">4</paper-item>
+                 <paper-item value="zone5">5</paper-item>
+                 <paper-item value="zone6">6</paper-item>
+                 <paper-item value="zone7">7</paper-item>
+                 <paper-item value="zone8">8</paper-item>
+                 <paper-item value="zone9">9</paper-item>
+                 <paper-item value="zone10">10</paper-item>
           </paper-menu>
         </paper-dropdown-menu>
       </div>
 
     
-      <div class="drop-down" style="margin-left: 30%;"> 
-        <paper-dropdown-menu id="mindistance" label="Select Minimum Distance">
-          <paper-menu id="mindistid" class="dropdown-content" on-iron-select="fnselectmindistance" attr-for-selected="value" required>
-                 <paper-item value="min0">0</paper-item>
-                 <paper-item value="min1">1</paper-item>
-                 <paper-item value="min2">2</paper-item>
-                 <paper-item value="min3">3</paper-item>
-                 <paper-item value="min4">4</paper-item>
-                 <paper-item value="min5">5</paper-item>
-                 <paper-item value="min6">6</paper-item>
-                 <paper-item value="min7">7</paper-item>
-                 <paper-item value="min8">8</paper-item>
-                 <paper-item value="min9">9</paper-item>
-                 <paper-item value="min10">10</paper-item>
-                 <paper-item value="min11">11</paper-item>
-                 <paper-item value="min12">12</paper-item>
-                 <paper-item value="min13">13</paper-item>
-                 <paper-item value="min14">14</paper-item>
-                 <paper-item value="min15">15</paper-item>
-                 <paper-item value="min16">16</paper-item>
-                 <paper-item value="min17">17</paper-item>
-                 <paper-item value="min18">18</paper-item>
-                 <paper-item value="min19">19</paper-item>
-                 <paper-item value="min20">20</paper-item>
+      
+   
+    <div class="drop-down" style="margin-left: 30%;">   
+       <paper-dropdown-menu id="minidistance" label="Select Minimum Distance">
+          <paper-menu id="newmindistz" class="dropdown-content" on-iron-select="fnselectmindistance" selected="{{mindistz}}" attr-for-selected="value" >
+              <template  is="dom-repeat" items="{{mindesarrr}}" as="view">
+                <paper-item value="{{view.id}}">{{view.id}}</paper-item>
+              </template>
           </paper-menu>
-        </paper-dropdown-menu>
-      </div>
-    
+     </paper-dropdown-menu>
+    </div>
       <div class="drop-down" style="margin-left: 30%;">  
-        <paper-dropdown-menu id="macdistance" label="Select Maximum Distance">
-          <paper-menu id="maxdistid" class="dropdown-content" on-iron-select="fnselectmaxdistance"  attr-for-selected="value" required>
-                 <paper-item value="max0">0</paper-item>
-                 <paper-item value="max1">1</paper-item>
-                 <paper-item value="max2">2</paper-item>
-                 <paper-item value="max3">3</paper-item>
-                 <paper-item value="max4">4</paper-item>
-                 <paper-item value="max5">5</paper-item>
-                 <paper-item value="max6">6</paper-item>
-                 <paper-item value="max7">7</paper-item>
-                 <paper-item value="max8">8</paper-item>
-                 <paper-item value="max9">9</paper-item>
-                 <paper-item value="max10">10</paper-item>
-                 <paper-item value="max11">11</paper-item>
-                 <paper-item value="max12">12</paper-item>
-                 <paper-item value="max13">13</paper-item>
-                 <paper-item value="max14">14</paper-item>
-                 <paper-item value="max15">15</paper-item>
-                 <paper-item value="max16">16</paper-item>
-                 <paper-item value="max17">17</paper-item>
-                 <paper-item value="max18">18</paper-item>
-                 <paper-item value="max19">19</paper-item>
-                 <paper-item value="max20">20</paper-item>
+        <paper-dropdown-menu id="macxidistance" label="Select Maximum Distance">
+          <paper-menu id="newmaxdistz" class="dropdown-content" on-iron-select="fnselectmaxdistance"  selected="{{maxdistz}}" attr-for-selected="value" required>
+             <template  is="dom-repeat" items="{{maxdesarrr}}" as="view">
+                <paper-item value="{{view.maxid}}">{{view.maxid}}</paper-item>
+              </template>    
           </paper-menu>
         </paper-dropdown-menu>
       </div>  
@@ -169,9 +134,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   (function() {
     'use strict';
     var zonename="";
-    var min_distance="";
-    var max_distance="";
-    Polymer({
+    var mindistance="";
+    var maxdistance="";
+    var newzone="Zone";
+   Polymer({
       is: 'zonedistance-card',
       ready:function()
       {
@@ -180,49 +146,73 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       fnclear:function()
       {
         this.fee=""; 
-        document.querySelector('#newzoneid').selected=-1;
-        document.querySelector('#mindistid').selected=-1;
-        document.querySelector('#maxdistid').selected=-1;
+        document.querySelector('#newzoneiddz').selected=-1;
+        document.querySelector('#newmindistz').selected=-1;
+        document.querySelector('#newmaxdistz').selected=-1;
       },
       
       fnselectnewzone:function(e)
       { 
-        zonename=e.target.selectedItem.textContent.trim();
+        zonename="Zone"+" "+e.target.selectedItem.textContent.trim();
+        this.$.service.fetchzone(zonename);
+
       },
       fnselectmindistance:function(e)
       {
-        min_distance=e.target.selectedItem.textContent.trim();
+        mindistance=e.target.selectedItem.textContent.trim();
       },
       fnselectmaxdistance:function(e)
       {
-        max_distance=e.target.selectedItem.textContent.trim(); 
-
-        if(min_distance>max_distance)
+        maxdistance=e.target.selectedItem.textContent.trim(); 
+        alert(maxdistance+" "+mindistance);
+        if(parseInt(maxdistance)< parseInt(mindistance))
         {
-          //alert(min_distance+" "+max_distance);
-          alert("Please Select Maximum distance");
+
+          alert("Please Select the Maximum value");
           this.$.feez.disabled=true;
         }
         else
         {
           this.$.feez.disabled=false;
         }
+
       },
       fnsubmit:function()
       {
-        if(this.fee="")
+        if(this.fee=="")
         {
           this.$.fee.validate();
         }
         else
         {
           //alert(zonename+" "+this.zoneid+" "+this.distanceid);
+          //alert(this.fee);
         this.$.service.fnnewzone(zonename,this.zoneid,this.distanceid);
-        this.$.service.fnnewdistance(this.distanceid,min_distance,max_distance,this.fee);
+        this.$.service.fnnewdistance(this.distanceid,mindistance,maxdistance,this.fee);
         this.fnclear();
         }
         
+      },
+
+     fnmindist:function(e)
+     {
+      this.mindistz=e[0].min;
+      //alert(this.mindistz);
+     },
+     fnmaxdist:function(e)
+      {
+        this.maxdistz=e[0].max;
+        //alert(this.maxdistz);
+      },
+
+      fnrefresh:function()
+      {
+        this.fee="";
+        document.querySelector('#newmindistz').selected=-1;
+        document.querySelector('#newmaxdistz').selected=-1;
+
       }
+
 
      
     });
