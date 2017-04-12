@@ -23,8 +23,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="pending-card">
   <template>
     <style>
+
     </style>
-      <div class="pending-card">
+    <div class="collapse1">
       <div class="headtabs">
         <paper-tabs selected="0">
           <paper-tab>ID</paper-tab>
@@ -34,14 +35,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-tab>Pending Fee</paper-tab>
         </paper-tabs>
       </div>
+    </div>
+    <div class="collapse1">  
       <template  is="dom-repeat" items="{{pendingarr}}" as="view">
         <pending-item-card student_id="{{view.student_id}}" student_name="{{view.student_name}}" fees="{{view.fees}}" paid="{{view.paid}}" pending="{{view.pending}}"></pending-item-card>
       </template>
       <div id="button">
         <paper-button class="button" style="margin-top: 0%; height: 35px;" id="print" on-click="print">Print</paper-button>
       </div>
+    </div>
       <transportfee-service id="service"></transportfee-service>
-      </div>
   </template>
   <script>
   (function() {

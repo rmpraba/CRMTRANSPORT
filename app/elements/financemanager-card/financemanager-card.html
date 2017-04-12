@@ -100,7 +100,8 @@
 
          document.querySelector('transport-app').setPage("chequedetail","Cheque Detail");
          document.querySelector('chequedetail-card').refreshchequedetail();
-
+               document.querySelector('fchequedatepicker-card').ready();
+         document.querySelector('tchequedatepicker-card').ready();
       },
        bouncecheque:function()
       {
@@ -135,6 +136,11 @@
       excelreport:function(){
         //this.$.transportservice.getchequedetailsbyname();
         document.querySelector('transport-app').setPage("excelreport","Excel Report");
+        document.querySelector('excelreport-card').ready();
+        document.querySelector('excelreport-card').FnRefresh();
+        document.querySelector('exceldatepicker-card').ready();
+        document.querySelector('exceldatepickerfrom-card').ready();
+
       },
       summary:function(){
         //this.$.transportservice.getchequedetailsbyname();

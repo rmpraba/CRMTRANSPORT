@@ -22,38 +22,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .centerbutton
       {
         
-        margin: 0 auto;
+        margin-left: 45%;
+        margin-top:4%;
       }
       
       .horizontalframe
-  {
-
+      {
         @apply(--layout-horizontal);
-        padding-left: 35%;
+        margin-left: 26%;
+        margin-top: 4%;
 
-  }
+      }
+      .horizontalframe
+      {
+         width:50%;
+        height:150px;
+        border: solid 1px #555; 
+        background-color: white; 
+        box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); 
+      }
+      
 
     </style>
     <div class="horizontalframe">
      <div><fchequedatepicker-card id="dp"></fchequedatepicker-card></div>
      <div><tchequedatepicker-card></tchequedatepicker-card></div>
-     <paper-button style="height: 100px;margin-top: 3%;"  id="but" class="button" on-click="search">Search</paper-button>
+     <paper-button class="button" style="margin-top: 5%;" on-click="search">Search</paper-button>
    <div class="hrspace">
-      <p style="margin:30px 0 0 30px;">OR</p>
+      <p style="margin:40px 0 0 36px;">OR</p>
    </div>
-    <div class="hrspace" style="margin:30px 0 0 30px;">
+    <div class="hrspace" style="margin:40px 0 0 34px;">
       <paper-checkbox id="selectbox" on-change="changeHandler">Select by Name</paper-checkbox>
     </div>
     </div>
     <div id="search">
-            <paper-input label="Enter Student ID Or Class ID or Student Name" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
+            <paper-input label="Enter Student ID/Class ID/Student Name" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
             <paper-listbox id="itemlist" class="dropdown-content" on-iron-select="FnItemSelected">
               <template is="dom-repeat" items="{{itemArray}}" as="item">
                 <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
               </template>
             </paper-listbox>
           </div>
-    <div class="collapse1">
+    <div class="collapse1" hidden$="{{hideheadinfo}}">
           <paper-tabs>
             <paper-tab >ID</paper-tab>
             <paper-tab>Name</paper-tab>
@@ -63,7 +73,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-tab>Cheque Cleared</paper-tab>
           </paper-tabs>
       </div>
-      <div class="collapse1">
+      <div class="collapse1" hidden$="{{hidestudentinfo}}">
      <template  is="dom-repeat" items="{{chequearr}}" as="view">
       <chequedetail-list studid="{{view.studid}}" name="{{view.sname}}" chequeno="{{view.chequeno}}" bankname="{{view.bankname}}" cdate="{{view.cdate}}" cstatus="{{view.cstatus}}" installtype="{{view.installtype}}"></chequedetail-list>
     </template>
@@ -78,7 +88,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var chqdetail=[];
     var fromdate;
     var todate;
-var namearr;
+    var namearr;
     Polymer({
       is: 'chequedetail-card',
 ready:function()
@@ -86,6 +96,8 @@ ready:function()
   this.$.search.hidden=true;
   this.$.button.hidden=true;
   this.$.service.generateseq();
+  this.hidestudentinfo=true;
+  this.hideheadinfo=true;
   //this.$.service.checkchequedetails();
 },
 refreshchequedetail:function()
@@ -94,6 +106,8 @@ refreshchequedetail:function()
           this.chequearr=[];
           this.$.button.hidden=true;
           this.value="";
+           this.hidestudentinfo=true;
+          this.hideheadinfo=true;
 //this.$.service.checkchequedetails();
 },
 showfromcheque:function(showdate1)
@@ -109,6 +123,8 @@ showtocheque:function(showdate2)
 // alert('1');
  this.$.service.checkchequedetails(fromdate,todate);
  this.$.button.hidden=false;
+ this.hidestudentinfo=false;
+ this.hideheadinfo=false;
  },
 Fnchequedetail:function(chequedetail)
 {
@@ -231,6 +247,8 @@ changeHandler:function(e){
         FnItemSelected:function(e1)
         {
           this.$.button.hidden=false;
+          this.hidestudentinfo=false;
+          this.hideheadinfo=false;
           this.studid= e1.target.selectedItem.value;
           var studname = (e1.target.selectedItem.textContent).trim();
           this.value=studname;
@@ -239,7 +257,7 @@ changeHandler:function(e){
           this.itemArray=[];
           this.querySelector('paper-listbox').selected=-1;
         },
- accept:function()
+     accept:function()
       {
         alert('Cheque Details are Updated Sucessfully');
         this.$.service.updatechequedetail(chqdetail);
