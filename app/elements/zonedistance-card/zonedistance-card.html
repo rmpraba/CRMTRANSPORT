@@ -154,6 +154,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       fnselectnewzone:function(e)
       { 
         zonename="Zone"+" "+e.target.selectedItem.textContent.trim();
+        alert(zonename);
         this.$.service.fetchzone(zonename);
 
       },
@@ -164,7 +165,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       fnselectmaxdistance:function(e)
       {
         maxdistance=e.target.selectedItem.textContent.trim(); 
-        alert(maxdistance+" "+mindistance);
+        //alert(maxdistance+" "+mindistance);
         if(parseInt(maxdistance)< parseInt(mindistance))
         {
 
@@ -179,16 +180,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       fnsubmit:function()
       {
-        if(this.fee=="")
+        if(this.fee==""|| this.fee==null)
         {
+          alert("Please Enter All Fields");
           this.$.fee.validate();
         }
         else
         {
           //alert(zonename+" "+this.zoneid+" "+this.distanceid);
           //alert(this.fee);
-        this.$.service.fnnewzone(zonename,this.zoneid,this.distanceid);
-        this.$.service.fnnewdistance(this.distanceid,mindistance,maxdistance,this.fee);
+     //   this.$.service.fnnewzone(zonename,this.zoneid,this.distanceid);
+        this.$.service.fnnewdistance(this.distanceid,mindistance,maxdistance,this.fee,zonename,this.zoneid);
         this.fnclear();
         }
         
@@ -196,11 +198,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
      fnmindist:function(e)
      {
+      //alert("mini");
       this.mindistz=e[0].min;
       //alert(this.mindistz);
      },
      fnmaxdist:function(e)
       {
+        //alert("maxi");
         this.maxdistz=e[0].max;
         //alert(this.maxdistz);
       },

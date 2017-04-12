@@ -1110,6 +1110,7 @@
       >
     </iron-ajax>
 
+
     </template>
   <script>
   (function() {
@@ -1157,6 +1158,9 @@
     var int=1;
     var lenx;
     var zonefeechange;
+    var zoneid1;
+    var zonename1;
+    var distanceid1;
     Polymer({
       is: "transport-service",
 
@@ -3480,38 +3484,62 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         document.querySelector('editcheque-card').FnClear();
     },
     
-     fnnewdistance:function(distanceid,mindistance,maxdistance,fee)   
+     fnnewdistance:function(distanceid,mindistance,maxdistance,fee,zoneid,zonename)   
       {        
-        //alert(11);
+         zoneid1=zoneid;
+         zonename1=zonename; 
+         distanceid1=distanceid;
+
         this.newdistanceurl=sessionStorage.getItem("addrinfo")+"/newdistance";
-        var obj={"schlidz":"","distanceid":"","mindistance":"","maxdistance":"","fee":"",
+        var obj={"schlidz":"","distanceid1":"","mindistance":"","maxdistance":"","fee":"",
         "academic_year":""}
         obj.schlidz=sessionStorage.getItem("sch");
-        obj.distanceid=distanceid;
+        obj.distanceid1=distanceid;
         obj.mindistance=mindistance;
         obj.maxdistance=maxdistance;
         obj.fee=fee;
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.newdistanceparam=obj;
+        //alert(distanceid1);
         //alert(JSON.stringify(obj));
         this.$.newdistanceajax.generateRequest();
       },
       newdistanceResponse:function(e)
       {
         var res=e.detail.response.returnval;
-        alert(JSON.stringify(res));
+        //alert(JSON.stringify(res));
 
         if(res=='Already Exit')
         {
-            alert("This Maximum and Minimum distace are already exited ")
+            alert("This Maximum and Minimum distace are already exits");
+
         }
+
         else
         {
-            alert("Inserted");
-        }
-        
+            //alert("zone insert");
+        this.fnnewzoneurl=sessionStorage.getItem("addrinfo")+"/fnnewzone";
+        var obj={"scholid":"","zoneid1":"","zonename1":"","distanceid1":"","academic_year":""}
+        obj.scholid=sessionStorage.getItem("sch");
+        obj.zoneid1=zoneid1;
+        obj.zonename1=zonename1;
+        obj.distanceid1=distanceid1;
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+        this.fnnewzoneparam=obj;
+        //alert(distanceid1+""+zoneid1);
+        //alert(JSON.stringify(obj));
+        this.$.fnnewzoneajax.generateRequest();
+
+        }    
     
       },
+      fnnewzoneResponse:function(e)
+      {
+        var res=e.detail.response.returnval;
+        alert(JSON.stringify(res));
+        
+      },
+     
 
       fetchdistanceseq:function()
       {
@@ -3524,8 +3552,10 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
       {
         var res=e.detail.response.returnval;
         //alert("disttt");
-        //alert(JSON.stringify(res));
+
         document.querySelector('zonedistance-card').distanceid=res[0].distance_prefix+res[0].distance_seq;
+        //alert(JSON.stringify(distanceid));  
+
       },
 
       fetchzoneseq:function()
@@ -3542,37 +3572,17 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         document.querySelector('zonedistance-card').zoneid=res[0].zone_prefix+res[0].zone_seq;
       },
 
-      fnnewzone:function(zonename,zoneid,distanceid)
-      {
-        //alert(222);
-        this.fnnewzoneurl=sessionStorage.getItem("addrinfo")+"/fnnewzone";
-        var obj={"scholid":"","zoneid":"","zonename":"","distanceid":"","academic_year":""}
-        obj.scholid=sessionStorage.getItem("sch");
-        obj.zoneid=zoneid;
-        obj.zonename=zonename;
-        obj.distanceid=distanceid;
-        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
-        this.fnnewzoneparam=obj;
-        //alert(JSON.stringify(obj));
-        this.$.fnnewzoneajax.generateRequest();
-      },
-      fnnewzoneResponse:function(e)
-      {
-        var res=e.detail.response.returnval;
-        //alert(JSON.stringify(res));
-        if('Inserted!')
-        {
-            alert("Inserted");
-        }
-      },
+     
+      
       fetchzone:function(zonename)
       {
+        zonename1=zonename;
         //alert(333);
         this.fetchzoneurl=sessionStorage.getItem("addrinfo")+"/fetchzone";
-        var obj={"schoolid":"","academic_year":"","zonename":""}
+        var obj={"schoolid":"","academic_year":"","zonename1":""}
         obj.schoolid=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
-        obj.zonename=zonename;
+        obj.zonename1=zonename;
         this.fetchzoneparam=obj;
         //alert(JSON.stringify(obj));
         this.$.fetchzoneajax.generateRequest();
@@ -3581,18 +3591,19 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
       {
 
         var res=e.detail.response.returnval;
+        //alert(JSON.stringify(res));
         if(res=='no rows')
         {
-            
-            document.querySelector('zonedistance-card').fnrefresh();
+            document.querySelector('zonedistance-card').fnrefresh(); 
         }
+        
         else
         {
-             //alert(JSON.stringify(res));
             document.querySelector('zonedistance-card').fnmaxdist(res);
             document.querySelector('zonedistance-card').fnmindist(res);
             document.querySelector('zonedistance-card').fee=res[0].fee;
         }
+            
        
       }
      

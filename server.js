@@ -4636,10 +4636,10 @@ app.post('/registrationfee',  urlencodedParser,function (req, res)
   app.post('/newdistance' ,  urlencodedParser,function (req, res)
   {  
     var response={"school_id":req.query.schlidz,
-    "id":req.query.distanceid,"mindistance":req.query.mindistance,"maxdistance":req.query.maxdistance,"fees":req.query.fee,"academic_year":req.query.academic_year}; 
+    "id":req.query.distanceid1,"mindistance":req.query.mindistance,"maxdistance":req.query.maxdistance,"fees":req.query.fee,"academic_year":req.query.academic_year}; 
    console.log(response);
 
-    var qqq="SELECT * FROM md_distance WHERE school_id='"+req.query.schlidz+"' and academic_year='"+req.query.academic_year+"' and id='"+req.query.distanceid+"' or mindistance='"+req.query.mindistance+"' and maxdistance='"+req.query.maxdistance+"'";
+    var qqq="SELECT * FROM md_distance WHERE school_id='"+req.query.schlidz+"' and academic_year='"+req.query.academic_year+"' and id='"+req.query.distanceid1+"' or mindistance='"+req.query.mindistance+"' and maxdistance='"+req.query.maxdistance+"'";
      console.log(qqq);
      
     connection.query(qqq,
@@ -4652,7 +4652,7 @@ app.post('/registrationfee',  urlencodedParser,function (req, res)
           {
             if(!err)
             {
-              var tempseq=parseInt((req.query.distanceid).substring(2))+1;
+              var tempseq=parseInt((req.query.distanceid1).substring(2))+1;
               console.log(tempseq);
               connection.query("UPDATE sequence_bus  SET distance_seq='"+tempseq+"' where school_id='"+req.query.schlidz+"'", 
                 function (err,result)
@@ -4702,14 +4702,14 @@ app.post('/registrationfee',  urlencodedParser,function (req, res)
   app.post('/fnnewzone' ,  urlencodedParser,function (req, res)
   {  
     var response={"school_id":req.query.scholid,
-    "id":req.query.zoneid,"distance_id":req.query.distanceid,"zone_name":req.query.zonename,
+    "id":req.query.zonename1,"distance_id":req.query.distanceid1,"zone_name":req.query.zoneid1,
     "academic_year":req.query.academic_year}; 
-    //console.log(response);
+    console.log(response);
 
 
-    var qq1="SELECT school_id,id,zone_name,distance_id,(select id from md_distance where id=distance_id) from md_zone where school_id='"+req.query.scholid+"' and academic_year='"+req.query.academic_year+"' and id='"+req.query.zoneid+"' or distance_id='"+req.query.distanceid+"'";
+    var qq1="SELECT school_id,id,zone_name,distance_id,(select id from md_distance where id=distance_id) from md_zone where school_id='"+req.query.scholid+"' and academic_year='"+req.query.academic_year+"' and distance_id='"+req.query.distanceid1+"' and id='"+req.query.zonename1+"' ";
 
-     //console.log(qq1);
+     console.log(qq1);
      
 
     connection.query(qq1,
@@ -4722,7 +4722,7 @@ app.post('/registrationfee',  urlencodedParser,function (req, res)
           {
             if(!err)
             {
-              var tempseq=parseInt((req.query.zoneid).substring(2))+1;
+              var tempseq=parseInt((req.query.zonename1).substring(2))+1;
               connection.query("UPDATE sequence_bus  SET zone_seq='"+tempseq+"' where school_id='"+req.query.scholid+"'", 
                 function (err,result)
                 {
@@ -4748,9 +4748,9 @@ app.post('/registrationfee',  urlencodedParser,function (req, res)
 
   app.post('/fetchzone',  urlencodedParser,function (req, res)
   {
-    var qur="SELECT distance_id,zone_name,(select mindistance from md_distance where distance_id=id  and school_id =  '"+req.query.schoolid+"' AND academic_year =  '"+req.query.academic_year+"')as min,(select maxdistance from md_distance where distance_id=id  and school_id =  '"+req.query.schoolid+"' AND academic_year =  '"+req.query.academic_year+"')as max,(select fees from md_distance where distance_id=id  and school_id =  '"+req.query.schoolid+"' AND academic_year =  '"+req.query.academic_year+"')as fee FROM md_zone WHERE school_id =  '"+req.query.schoolid+"'AND academic_year = '"+req.query.academic_year+"'and zone_name='"+req.query.zonename+"'";
+    var qur="SELECT distance_id,zone_name,(select mindistance from md_distance where distance_id=id  and school_id =  '"+req.query.schoolid+"' AND academic_year = '"+req.query.academic_year+"')as min,(select maxdistance from md_distance where distance_id=id  and school_id =  '"+req.query.schoolid+"' AND academic_year =  '"+req.query.academic_year+"')as max,(select fees from md_distance where distance_id=id  and school_id = '"+req.query.schoolid+"' AND academic_year = '"+req.query.academic_year+"')as fee FROM md_zone WHERE school_id = '"+req.query.schoolid+"' AND academic_year = '"+req.query.academic_year+"'and zone_name='"+req.query.zonename1+"'";
 
-  //console.log(qur);
+  console.log(qur);
   connection.query(qur,
     function(err, rows)
     {
@@ -4773,6 +4773,7 @@ app.post('/registrationfee',  urlencodedParser,function (req, res)
       }
     });
 });
+
 
 
 function setvalue(){
