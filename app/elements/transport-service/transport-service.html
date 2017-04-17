@@ -1069,7 +1069,7 @@
     var studentname;
     var feeparent;
     var editchequedetail;
-    var driver_count;
+    var driver_counts;
     var attender_counts;
     var bus_counts;
     var bustoroute;
@@ -1118,6 +1118,7 @@
       academicResponse:function(e){
       document.querySelector('accountsadmin-card').academicarr=e.detail.response; 
       document.querySelector('transportadmin-card').academicarr=e.detail.response; 
+      document.querySelector('financemanager-card').academicarr=e.detail.response; 
    
       },
        getroute:function()
@@ -1131,7 +1132,9 @@
       },
       getrouteResponse:function(e1)
       {
+
         var a2=e1.detail.response.returnval;
+       //  alert(JSON.stringify(a2));
         document.querySelector('mappointtoroute-card').routearr=a2;
         document.querySelector('vehicleroute-card').routes=a2;
         document.querySelector('staffallocation-card').routearr=a2;
@@ -1258,14 +1261,16 @@
          obj.academic_year=localStorage.getItem("curr_sess_academicyear");
          obj.grade=grade;
          this.gettermdateparam=obj;
-       //  alert(JSON.stringify(obj));
+        alert(JSON.stringify(obj));
         this.$.gettermdateajax.generateRequest();
-      },
+      },  
          gettermdateResponse:function(e1)
           {
+            alert(JSON.stringify(e1.detail.response.returnval));
+
             var fromdate1=e1.detail.response.returnval[0].start_date;
             var todate1=e1.detail.response.returnval[0].end_date;
-         //   alert(fromdate1);
+          alert(fromdate1);
             document.querySelector('zonetostudent-card').zfromdate=fromdate1;
             document.querySelector('zonetostudent-card').ztodate=todate1;
             document.querySelector('zonetostudent-card').setzonedate(fromdate1,todate1);
@@ -1336,7 +1341,7 @@
         this.stufeegetnameparam=obj;
         this.$.stufeegetnameajax.generateRequest();
       },
-      getnameResponse:function(e1)
+      getnameResponse:function(e1)  
           {
             var iditem=e1.detail.response.returnval;
             //document.querySelector('zonetostudent-card').studentidarr=iditem;
@@ -1412,7 +1417,7 @@
         var obj={"studid":"","schol":""}
         obj.studid=studid;
         obj.schol=schol=sessionStorage.getItem("sch");
-        this.genereportparam=obj;
+        this.genereportparam=obj;  
         this.$.genereportajax.generateRequest();
       },
       genereportResponse:function(e){
@@ -1422,7 +1427,9 @@
       },
       generateroutereport:function(){
         this.generateroutereporturl=sessionStorage.getItem("addrinfo")+"/generateroutereport";
-        var obj={"schol":""}
+        var obj={"schol":"","academic_year":""}
+         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+       
         obj.schol=sessionStorage.getItem("sch");
         this.generateroutereportparam=obj;
         this.$.generateroutereportajax.generateRequest();
@@ -1451,8 +1458,9 @@
       {
         if(pickordrop=="Pickup"){
         this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickroute-report-card";
-        var obj={"routeid":"","tripid":"","schol":""}
+        var obj={"routeid":"","tripid":"","schol":"","academic_year":""}
         obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.routeid=routeid;
         obj.tripid=tripid;
         this.studentpickroutereportparam=obj;
@@ -1476,8 +1484,9 @@
       {
         if(pickordrop=="Pickup"){
         this.gradewisepickroutereporturl=sessionStorage.getItem("addrinfo")+"/gradewisepickroute-report-card";
-        var obj={"routeid":"","tripid":"","schol":"","grade":""}
+        var obj={"routeid":"","tripid":"","schol":"","grade":"","academic_year":""}
         obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.routeid=routeid;
         obj.tripid=tripid;
         obj.grade=grade;
@@ -1488,8 +1497,9 @@
         this.$.gradewisepickroutereportajax.generateRequest();
       } else {
         this.gradewisedroproutereporturl=sessionStorage.getItem("addrinfo")+"/gradewisedroproute-report-card";
-        var obj={"routeid":"","tripid":"","schol":"","grade":""}
+        var obj={"routeid":"","tripid":"","schol":"","grade":"","academic_year":""}
         obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.routeid=routeid;
         obj.tripid=tripid;
         obj.grade=grade;
@@ -1501,9 +1511,9 @@
       {
         var routereportresult=e.detail.response.returnval;
         var no_of_student = routereportresult.length;
-        document.querySelector('gradewiseroute-report').reportarr=routereportresult;
+        alert(JSON.stringify(routereportresult));
+       document.querySelector('gradewiseroute-report').reportarr=routereportresult;
         document.querySelector('gradewiseroute-report').no_of_student=no_of_student;
-        //alert(JSON.stringify(e.detail.response.returnval));
       },
        gradewisedroproutereportResponse:function(e)
       {
@@ -1653,6 +1663,7 @@
       proceedcancelResponse:function(e){
         var reportresult=e.detail.response.returnval;
         if(reportresult=='success'){
+            
           alert('Cancellation Request is Sent Successfully');
               var obj={"student_id":"","schol":""}
               obj.schol=sessionStorage.getItem("sch");
@@ -1699,7 +1710,7 @@
       nameResponse:function(e){
         var nameitem=e.detail.response.returnval;
         document.querySelector('cancellation-card').autocompletename(nameitem);
-      },
+      },   
       transportrequiredstatusResponse:function(e){
 
       },
@@ -1709,14 +1720,15 @@
        obj.schol=sessionStorage.getItem("sch");
        this.generatereportbynameparam=obj;
        this.$.generatereportbynameajax.generateRequest();
-      },
+      },  
        generatenameforcheque:function(){
        this.generatenameforchequeurl=sessionStorage.getItem("addrinfo")+"/generatenameforcheque";
        var obj={"schol":""}
-       obj.schol=sessionStorage.getItem("sch");
-       this.generatenameforchequeparam=obj;
-       this.$.generatenameforchequeajax.generateRequest();
-      },
+           obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+           obj.schol=sessionStorage.getItem("sch");
+           this.generatenameforchequeparam=obj;
+           this.$.generatenameforchequeajax.generateRequest();
+        },
       generatereportbynameResponse:function(e){
         var nameitem=e.detail.response.returnval;
         document.querySelector('genestureport-card').autocompletename(nameitem);
@@ -1785,10 +1797,10 @@
         document.querySelector('approvediscount-card').freshappr();
       },
       getapprovalverify:function(){
-
         this.getapprovalverifyurl=sessionStorage.getItem("addrinfo")+"/getapprovalverify";
-        var obj={"schol":""}
-        obj.schol=sessionStorage.getItem("sch");;
+        var obj={"schol":"","academic_year":""}
+        obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.getapprovalverifyparam=obj;
         this.$.getapprovalverifyajax.generateRequest();
       },
@@ -1953,9 +1965,10 @@
       },
       getpassdetail:function(studid){
           this.getpassnameurl=sessionStorage.getItem("addrinfo")+"/getpassname";
-              var obj={"stid":"","schol":""}
+              var obj={"stid":"","schol":"","academic_year":""}
               obj.stid=studid;
               obj.schol=sessionStorage.getItem("sch");
+            obj.academic_year=localStorage.getItem("curr_sess_academicyear");
               this.getpassnameparam=obj;
               //alert(JSON.stringify(obj));
               this.$.getpassnameajax.generateRequest();
@@ -1975,9 +1988,10 @@
 
       getzonedetail:function(studid){
         this.getzonedetailurl=sessionStorage.getItem("addrinfo")+"/getzonedetail";
-        var obj={"stid":"","schol":""}
+        var obj={"stid":"","schol":"","academic_year":""}
         obj.stid=studid;
         obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.getzonedetailparam=obj;
         this.$.getzonedetailajax.generateRequest();
       },
@@ -2583,8 +2597,10 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
           document.querySelector('studentpass-card').sid=idst;
           //alert('st d '+idst);
           this.getpassdetailurl=sessionStorage.getItem("addrinfo")+"/getpassdetail";
-          var obj={"stid":"","schol":""}
+          var obj={"stid":"","schol":"","academic_year":""}
           obj.stid=idst;
+             obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+         
           obj.schol=sessionStorage.getItem("sch");
           this.getpassdetailparam=obj;
           this.$.getpassdetailajax.generateRequest();
@@ -2610,30 +2626,34 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         var droprou = e.detail.response.returnval[0].drop_route_id;
 
           this.getppnameurl=sessionStorage.getItem("addrinfo")+"/getpointname";
-              var obj={"point":"","schol":""}
+              var obj={"point":"","schol":"","academic_year":""}
               obj.point=pp;
+              obj.academic_year=localStorage.getItem("curr_sess_academicyear");
               obj.schol=sessionStorage.getItem("sch");
              this.getppnameparam=obj;
               this.$.getppnameajax.generateRequest();
 
           this.getdpnameurl=sessionStorage.getItem("addrinfo")+"/getpointname";
-          var obj2={"point":"","schol":""}
+          var obj2={"point":"","schol":"","academic_year":""}
           obj2.point=dp;
-          obj2.schol=sessionStorage.getItem("sch");
+            obj2.academic_year=localStorage.getItem("curr_sess_academicyear");
+            obj2.schol=sessionStorage.getItem("sch");
           this.getdpnameparam=obj2;
           this.$.getdpnameajax.generateRequest();
 
           this.getpickrouurl=sessionStorage.getItem("addrinfo")+"/getroutename";
-          var obj3={"route":"","schol":""}
+          var obj3={"route":"","schol":"","academic_year":""}
           obj3.route=pickrou;
-          obj3.schol=sessionStorage.getItem("sch");
+           obj3.academic_year=localStorage.getItem("curr_sess_academicyear");
+           obj3.schol=sessionStorage.getItem("sch");
           this.getpickrouparam=obj3;
 
           this.$.getpickrouajax.generateRequest();
 
           this.getdroprouurl=sessionStorage.getItem("addrinfo")+"/getroutename";
-          var obj4={"route":"","schol":""}
+          var obj4={"route":"","schol":"","academic_year":""}
           obj4.route=droprou;
+       obj4.academic_year=localStorage.getItem("curr_sess_academicyear");
           obj4.schol=sessionStorage.getItem("sch");
           this.getdroprouparam=obj4;
           //alert(JSON.stringify(obj4));
@@ -2830,11 +2850,12 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             this.$.drivercountajax.generateRequest();
        },
          drivercountResponse:function(e){
-            driver_count = e.detail.response.returnval[0].driver_count;
-          },
+            driver_counts = e.detail.response.returnval[0].driver_count;
+              alert(JSON.stringify(driver_counts));
+           },
         driver:function(first_name,last_name,mobile_no,licence_no,address_1,address_2,address_3,city,pincode,lic_exp, when_employed){
             this.driverurl = sessionStorage.getItem("addrinfo")+"/driver";
-            var  increase1 = driver_count;
+            var  increase1 = driver_counts;
             var driver_id = "Driver "+increase1;
             //alert(driver_id);
             var obj={"id":"","first_name":"","last_name":"","mobile_no":"","licence_no":"","address_1":"","address_2":"","address_3":"","city":"","pincode":"","lic_exp":"", "schol":"","since_when_employed":"","academic_year":""};
@@ -2853,7 +2874,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             obj.lic_exp=lic_exp;
             obj.since_when_employed=when_employed;
             this.driverparam=obj;
-            //alert(JSON.stringify(obj));
+         //   alert(JSON.stringify(obj));
             this.$.driverajax.generateRequest();
 
         },
@@ -2866,13 +2887,15 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
                 alert('Driver Details Added');
               this.increasedriveridurl=sessionStorage.getItem("addrinfo")+"/increasedriverid";
               var obj1={"driver_id":"","schol":""}
-              obj1.driver_id=driver_count;
+              obj1.driver_id=driver_counts;
               obj1.schol=sessionStorage.getItem("sch");
               this.increasedriveridparam=obj1;
               this.$.increasedriveridajax.generateRequest();
-                document.querySelector('driver-card').FnClear();
-               this.driver_count();
+              alert('1');
+                 this.driver_count();
      
+                document.querySelector('driver-card').FnClear();
+            
             } else {
                 alert('Error! Driver Details Not Added');
             }
@@ -3046,9 +3069,10 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
            }
       },
       busreport:function(){
-        this.busreporturl = sessionStorage.getItem("addrinfo")+"/busreport";
-        var obj = {"schol":""};
-        obj.schol=sessionStorage.getItem("sch");
+        this.busreporturl=sessionStorage.getItem("addrinfo")+"/busreport";
+        var obj = {"scho":"","academic_year":""};
+        obj.scho=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.busreportparam=obj;
         //alert(JSON.stringify(obj));
         this.$.busreportajax.generateRequest();
@@ -3187,8 +3211,9 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
       getstudentsforattendance:function(route,trip,pickupordrop){
       if(pickupordrop=="Pickup"){
         this.getstudentsforattendancepickupurl=sessionStorage.getItem("addrinfo")+"/getstudentsforattendancepickup";
-        var obj={"routeid":"","tripid":"","schol":""}
-        obj.schol=sessionStorage.getItem("sch");
+        var obj={"routeid":"","tripid":"","schol":"","academic_year":""}
+       obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.routeid=route;
         obj.tripid=trip;
         this.getstudentsforattendancepickupparam=obj;
@@ -3198,11 +3223,11 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         this.$.getstudentsforattendancepickupajax.generateRequest();
       } else {
         this.getstudentsforattendancedropurl=sessionStorage.getItem("addrinfo")+"/getstudentsforattendancedrop";
-        var obj={"routeid":"","tripid":"","schol":""}
-        obj.schol=sessionStorage.getItem("sch");
-        obj.routeid=route;
-        obj.tripid=trip;
-        //alert(JSON.stringify(obj));
+        var obj={"routeid":"","tripid":"","schol":"","academic_year":""}
+         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+         obj.schol=sessionStorage.getItem("sch");
+         obj.routeid=route;
+         obj.tripid=trip;
         this.getstudentsforattendancedropparam=obj;
         this.$.getstudentsforattendancedropajax.generateRequest();
       }
@@ -3210,19 +3235,18 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
       getstudentsforattendancepickupResponse:function(e)
       {
         var result=e.detail.response.returnval;
-        //alert(JSON.stringify(result));
-        if(JSON.stringify(result) == 'invalid'){
+        if(result=='invalid'){
+
             alert('Error! Attendance marked for this trip or No students Mapped');
         } else {
-            //alert(JSON.stringify(result));
+            alert(JSON.stringify(result));
             document.querySelector('addattendence-card').attendancearr=result;
         }
       },
       getstudentsforattendancedropResponse:function(e)
       {
         var result=e.detail.response.returnval;
-        //alert(JSON.stringify(result));
-        if(JSON.stringify(result) == 'invalid'){
+        if(result=='invalid'){
             alert('Error! Attendance marked for this trip or No students Mapped');
         } else {
             document.querySelector('addattendence-card').attendancearr=result;
