@@ -13,9 +13,27 @@
 <link rel="import" href="../transport-service/transport-service.html">
 <dom-module id="mappointtoroute-card">
   <template>  
+    <style>
+      .card
+      {
+        width:50%;
+        height:150px;
+        margin-left: 14%;
+        border: solid 1px #555; 
+        background-color: white; 
+        box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); 
+      }
+      
+      paper-dropdown-menu
+      {
+       margin-left: 9%;
+        margin-top: 3%; 
+      }
+
+    </style>
     <body>
       <div class="dupframe">
-        <div class="drop-down">
+        <div class="card">
           <paper-dropdown-menu label="Route" id="route" required  errorMessage ="please select the route" >
             <paper-menu id="routemenu" class="dropdown-content" on-iron-select="rootname" valueattr="value" >
               <template  is="dom-repeat" items="{{routearr}}" as="view">

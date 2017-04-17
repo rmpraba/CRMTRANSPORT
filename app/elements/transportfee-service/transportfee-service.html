@@ -547,7 +547,7 @@ var newreceiptsequence;
 
 				this.generatefeeparam=obj;
 				this.$.generatefeeajax.generateRequest();
-				alert(JSON.stringify(obj));
+				//alert(JSON.stringify(obj));
 		 },
 				zonefee:function(studid)
 		 {
@@ -560,15 +560,16 @@ var newreceiptsequence;
 				this.$.zonefeeajax.generateRequest();
 		 },
 		 zonefeeResponse:function(e)
-		 {alert('2');
+		 {
+		 	//alert('2');
             feeresult=e.detail.response.returnval;
 			 document.querySelector('transportfee-service').zoneinstalltype();
 		 },
 		 generatefeeResponse:function(e)
 		 {
-                  alert(1);
+                  //alert(1);
 			feeresult=e.detail.response.returnval;
-			alert(JSON.stringify(feeresult));
+			//alert(JSON.stringify(feeresult));
 			document.querySelector('transportfee-card').feearr=feeresult;
 			document.querySelector('transportfee-service').getinstalltype();
 		 },
@@ -578,10 +579,10 @@ var newreceiptsequence;
 			this.getnameofstuurl=sessionStorage.getItem("addrinfo")+"/getnameofstu-card";
 			var obj={"schol":"","academic_year":""}
 		   	obj.schol=sessionStorage.getItem("sch");
-		   	alert(localStorage.getItem("curr_sess_academicyear"));
+		   //	alert(localStorage.getItem("curr_sess_academicyear"));
 		    obj.academic_year=localStorage.getItem("curr_sess_academicyear");
             this.getnameofstuparam=obj;
-		   	alert(JSON.stringify(obj));
+		   	//alert(JSON.stringify(obj));
 
 			 this.$.getnameofstuajax.generateRequest();
 		 },
@@ -589,7 +590,7 @@ var newreceiptsequence;
 		 {
 
 			var nameitem=e.detail.response.returnval;
-alert(JSON.stringify(nameitem));
+			//alert(JSON.stringify(nameitem));
 
 			document.querySelector('transportfee-card').autocompletename(nameitem);
 		 },
