@@ -1,4 +1,4 @@
-<!--
+{<!--
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
@@ -51,6 +51,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </template>
                         </paper-listbox>
                     </div>
+                  <div class="field1">
+                     <paper-input id="text" class="field" label="Type a Staff Name" is="" value="{{value}}" on-keydown="FnInputChanged" style="width: 72%; text-align: center;"></paper-input>
+     <paper-listbox class="dropdown-content" id="fetchname" on-iron-select="FnItemSelected">
+        <template is="dom-repeat" items="{{itemArray}}" as="item">
+          <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
+        </template>
+      </paper-listbox>
+                  </div>
                     <div class="field">
                       <paper-dropdown-menu  label="PickUp Trip">
                         <paper-menu id="sets01" class="dropdown-content" on-iron-select="tripzxc" >

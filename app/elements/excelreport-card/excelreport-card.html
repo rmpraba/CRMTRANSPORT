@@ -186,11 +186,10 @@ var tableToExcel = (function() {
         this.hide2=true;
       },
 
-      FnRefresh:function()
-      {
-        document.querySelector('#modemenu').selected=-1;
-        document.querySelector('#instalmenu').selected=-1;
-
+FnRefresh:function()  
+{
+document.querySelector('#modemenu').selected=-1;
+document.querySelector('#instalmenu').selected=-1;
       },
     installment:function(e){
       installment = (e.target.selectedItem.textContent).trim();

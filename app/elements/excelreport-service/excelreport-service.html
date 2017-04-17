@@ -115,40 +115,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if(installment == "Installment 1"){
           if(modeofpayment == "Cash"){
             this.valuesinsta1cashurl=sessionStorage.getItem("addrinfo")+"/valuesinsta1cash";
-            var obj={"fromdate":"","dates":"","schol":"","modeofpayment":""}
+        var obj={"fromdate":"","dates":"","schol":"","modeofpayment":"","academic_year":""}
             obj.dates=todate;
             obj.fromdate=fromdat;
             obj.schol=sessionStorage.getItem("sch");
-            obj.modeofpayment = "Cash";
+            obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+           obj.modeofpayment = "Cash";
             this.valuesinsta1cashparam=obj;
             this.$.valuesinsta1cashajax.generateRequest();
           } else {
             this.valuesinsta1chequeurl=sessionStorage.getItem("addrinfo")+"/valuesinsta1cheque";
-            var obj={"fromdate":"","dates":"","schol":"","modeofpayment":""}
+            var obj={"fromdate":"","dates":"","schol":"","modeofpayment":"","academic_year":""};
             obj.dates=todate;
             obj.fromdate=fromdat;
             obj.schol=sessionStorage.getItem("sch");
-            obj.modeofpayment = "Cheque";
+             obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+             obj.modeofpayment = "Cheque";
             this.valuesinsta1chequeparam=obj;
             this.$.valuesinsta1chequeajax.generateRequest();
           }
         } else {
           if(modeofpayment == "Cash"){
             this.valuesinsta2cashurl=sessionStorage.getItem("addrinfo")+"/valuesinsta2cash";
-            var obj={"fromdate":"","dates":"","schol":"","modeofpayment":""}
+            var obj={"fromdate":"","dates":"","schol":"","modeofpayment":"","academic_year":""}
             obj.dates=todate;
             obj.fromdate=fromdat;
             obj.schol=sessionStorage.getItem("sch");
-            obj.modeofpayment = modeofpayment;
+            obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+             obj.modeofpayment = modeofpayment;
             this.valuesinsta2cashparam=obj;
             this.$.valuesinsta2cashajax.generateRequest();
           } else{
             this.valuesinsta2chequeurl=sessionStorage.getItem("addrinfo")+"/valuesinsta2cheque";
-            var obj={"fromdate":"","dates":"","schol":"","modeofpayment":""}
+            var obj={"fromdate":"","dates":"","schol":"","modeofpayment":"","academic_year":""}
             obj.dates=todate;
             obj.fromdate=fromdat;
             obj.schol=sessionStorage.getItem("sch");
-            obj.modeofpayment = "Cheque";
+            obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+                obj.modeofpayment = "Cheque";
             this.valuesinsta2chequeparam=obj;
             this.$.valuesinsta2chequeajax.generateRequest();
           }
@@ -168,10 +172,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           if(modeofpay == "Cash")
           {
             this.zonechangeinsta1cashurl=sessionStorage.getItem("addrinfo")+"/zonechangeinsta1cash";
-            var obj={"fromdate":"","dates":"","schol":"","modeofpayment":""}
+            var obj={"fromdate":"","dates":"","schol":"","modeofpayment":"","academic_year":""}
             obj.dates=todate;
             obj.fromdate=fromdat;
             obj.schol=sessionStorage.getItem("sch");
+            obj.academic_year=localStorage.getItem("curr_sess_academicyear");
             obj.modeofpayment = "Cash";
             this.zonechangeinsta1cashparam=obj;
             this.$.zonechangeinsta1cashajax.generateRequest();
@@ -202,10 +207,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if(modeofpay == "Cash")
         {
             this.zonechangeinsta2cashurl=sessionStorage.getItem("addrinfo")+"/zonechangeinsta2cash";
-            var obj={"fromdate":"","dates":"","schol":"","modeofpayment":""}
+            var obj={"fromdate":"","dates":"","schol":"","modeofpayment":"","academic_year":""}
             obj.dates=todate;
             obj.fromdate=fromdat;
             obj.schol=sessionStorage.getItem("sch");
+            obj.academic_year=localStorage.getItem("curr_sess_academicyear");
             obj.modeofpayment = modeofpay;
             this.zonechangeinsta2cashparam=obj;
             this.$.zonechangeinsta2cashajax.generateRequest();
