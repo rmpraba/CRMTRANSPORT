@@ -22,8 +22,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         
         margin: 0 auto;
       }
+      #btn
+      {
+       
+      }
     </style>
-    <div class="collapse1">
+    <div class="collapse1" style="margin-top: 3%;">
           <paper-tabs>
             <paper-tab >ID</paper-tab>
             <paper-tab>Amount</paper-tab>
@@ -47,7 +51,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </tr>
       </template>
       </table>
-        <input type="button" id="btn1" onclick="tableToExcel('bounceTable1', 'Bounce report')" value="Export to Excel">
+      <div class="excelbtn" style="margin-top: 3%;margin-left: 45%;">
+         <input type="button" id="btn1" onclick="tableToExcel('bounceTable1', 'Bounce report')" value="Export to Excel">
+      </div>
+       
     <transportfee-service id="service"></transportfee-service>
   </template>
    <script type="text/javascript">

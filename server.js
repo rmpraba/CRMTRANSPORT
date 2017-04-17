@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
-  database : 'scorecardmaster'
+  database : 'mlztransportnew'
 
 });
 var bodyParser = require('body-parser');
@@ -4655,6 +4655,170 @@ app.post('/registrationfee',  urlencodedParser,function (req, res)
       }
 });
   });
+    
+ app.post('/fetchdistanceseq',  urlencodedParser,function (req,res)
+ {  
+  
+  var qur="SELECT * FROM sequence_bus ";
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      //console.log(JSON.stringify(rows));   
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      //console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+      
+
+  app.post('/newdistance' ,  urlencodedParser,function (req, res)
+  {  
+    var response={"school_id":req.query.schlidz,
+    "id":req.query.distanceid1,"mindistance":req.query.mindistance,"maxdistance":req.query.maxdistance,"fees":req.query.fee,"academic_year":req.query.academic_year}; 
+   console.log(response);
+
+    var qqq="SELECT * FROM md_distance WHERE school_id='"+req.query.schlidz+"' and academic_year='"+req.query.academic_year+"' and id='"+req.query.distanceid1+"' or mindistance='"+req.query.mindistance+"' and maxdistance='"+req.query.maxdistance+"'";
+     console.log(qqq);
+     
+    connection.query(qqq,
+    function(err, rows)
+    {
+    if(rows.length==0)
+    {
+        connection.query("INSERT INTO md_distance SET ?",[response],
+          function(err, rows)
+          {
+            if(!err)
+            {
+              var tempseq=parseInt((req.query.distanceid1).substring(2))+1;
+              console.log(tempseq);
+              connection.query("UPDATE sequence_bus  SET distance_seq='"+tempseq+"' where school_id='"+req.query.schlidz+"'", 
+                function (err,result)
+                {
+                  if(result.affectedRows>0)
+                    res.status(200).json({'returnval': 'Inserted!'});
+              });
+            }
+              else
+              {
+              //console.log(err);
+              res.status(200).json({'returnval': 'Not Inserted!'});
+              }
+            });
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'Already Exit'});
+    }
+  });
+});
+
+  
+  app.post('/fetchzoneseq',  urlencodedParser,function (req,res)
+ {  
+  
+  var qur="SELECT * FROM sequence_bus";
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      //console.log(JSON.stringify(rows));   
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      //console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+  
+
+  app.post('/fnnewzone' ,  urlencodedParser,function (req, res)
+  {  
+    var response={"school_id":req.query.scholid,
+    "id":req.query.zonename1,"distance_id":req.query.distanceid1,"zone_name":req.query.zoneid1,
+    "academic_year":req.query.academic_year}; 
+    console.log(response);
+
+
+    var qq1="SELECT school_id,id,zone_name,distance_id,(select id from md_distance where id=distance_id) from md_zone where school_id='"+req.query.scholid+"' and academic_year='"+req.query.academic_year+"' and distance_id='"+req.query.distanceid1+"' and id='"+req.query.zonename1+"' ";
+
+     console.log(qq1);
+     
+
+    connection.query(qq1,
+    function(err, rows)
+    {
+    if(rows.length==0)
+    {
+        connection.query("INSERT INTO md_zone SET ?",[response],
+          function(err, rows)
+          {
+            if(!err)
+            {
+              var tempseq=parseInt((req.query.zonename1).substring(2))+1;
+              connection.query("UPDATE sequence_bus  SET zone_seq='"+tempseq+"' where school_id='"+req.query.scholid+"'", 
+                function (err,result)
+                {
+                  if(result.affectedRows>0)
+                    res.status(200).json({'returnval': 'Inserted!'});
+              });
+            }
+              else
+              {
+              //console.log(err);
+              res.status(200).json({'returnval': 'Not Inserted!'});
+              }
+            });
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'Already Exit'});
+    }
+  });
+});
+
+ 
+
+  app.post('/fetchzone',  urlencodedParser,function (req, res)
+  {
+    var qur="SELECT distance_id,zone_name,(select mindistance from md_distance where distance_id=id  and school_id =  '"+req.query.schoolid+"' AND academic_year = '"+req.query.academic_year+"')as min,(select maxdistance from md_distance where distance_id=id  and school_id =  '"+req.query.schoolid+"' AND academic_year =  '"+req.query.academic_year+"')as max,(select fees from md_distance where distance_id=id  and school_id = '"+req.query.schoolid+"' AND academic_year = '"+req.query.academic_year+"')as fee FROM md_zone WHERE school_id = '"+req.query.schoolid+"' AND academic_year = '"+req.query.academic_year+"'and zone_name='"+req.query.zonename1+"'";
+
+  console.log(qur);
+  connection.query(qur,
+    function(err, rows)
+    {
+      if(!err)
+      {
+        if(rows.length>0)
+        {
+          console.log(JSON.stringify(rows));
+          res.status(200).json({'returnval': rows});
+        } 
+        else 
+        {
+          console.log(err);
+          res.status(200).json({'returnval': 'no rows'});
+        }
+      } 
+      else 
+      {
+        console.log(err);
+      }
+    });
+});
+
 
 
 function setvalue(){

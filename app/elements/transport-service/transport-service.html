@@ -1031,10 +1031,86 @@
         on-response="academicResponse"
         debounce-duration="300"
     >
+     <iron-ajax        
+        id="zone1ajax"
+        url="../../configfile/zone.json"
+        params="{{zone1param}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="zone1Response"
+        debounce-duration="300"
+    >
+     <iron-ajax        
+        id="zone11ajax"
+        url="../../configfile/zonemax.json"
+        params="{{zone11param}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="zone11Response"
+        debounce-duration="300"
+    >
+    
+   <iron-ajax
+      method="post"
+      id="newdistanceajax"
+      url="{{newdistanceurl}}"
+      params="{{newdistanceparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="newdistanceResponse"
+      debounce-duration="300"
+      >
+      
 
+    <iron-ajax
+      method="post"
+      id="fetchdistanceseqajax"
+      url="{{fetchdistancesequrl}}"
+      params="{{fetchdistanceseqparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="fetchdistanceseqResponse"
+      debounce-duration="300"
+      >
+
+      
+      <iron-ajax
+          method="post"
+          id="fetchzoneseqajax"
+          url="{{fetchzonesequrl}}"
+          params="{{fetchzoneseqparam}}"
+          handle-as="json"
+          content-type="application/json"
+          on-response="fetchzoneseqResponse"
+          debounce-duration="300"
+      >
+
+      <iron-ajax
+          method="post"
+          id="fnnewzoneajax"
+          url="{{fnnewzoneurl}}"
+          params="{{fnnewzoneparam}}"
+          handle-as="json"
+          content-type="application/json"
+          on-response="fnnewzoneResponse"
+          debounce-duration="300"
+      >
+    </iron-ajax>
     
 
+    <iron-ajax
+          method="post"
+          id="fetchzoneajax"
+          url="{{fetchzoneurl}}"
+          params="{{fetchzoneparam}}"
+          handle-as="json"
+          content-type="application/json"
+          on-response="fetchzoneResponse"
+          debounce-duration="300"
+      >
     </iron-ajax>
+
+
     </template>
   <script>
   (function() {
@@ -1082,6 +1158,9 @@
     var int=1;
     var lenx;
     var zonefeechange;
+    var zoneid1;
+    var zonename1;
+    var distanceid1;
     Polymer({
       is: "transport-service",
 
@@ -1115,12 +1194,33 @@
     callAcademicService:function(){
         this.$.academicajax.generateRequest();
       },
-      academicResponse:function(e){
+      academicResponse:function(e)
+      {
       document.querySelector('accountsadmin-card').academicarr=e.detail.response; 
       document.querySelector('transportadmin-card').academicarr=e.detail.response; 
       document.querySelector('financemanager-card').academicarr=e.detail.response; 
    
       },
+      zonesercdzsd:function(){
+            this.$.zone1ajax.generateRequest();
+    
+      },
+      zone1Response:function(e){
+
+        //alert(JSON.stringify(e.detail.response));
+         document.querySelector('zonedistance-card').mindesarrr=e.detail.response; 
+          
+        },
+
+        zoneminmax:function()
+        {
+            this.$.zone11ajax.generateRequest();
+        },
+        zone11Response:function(e)
+        {
+            //alert(JSON.stringify(e.detail.response));
+            document.querySelector('zonedistance-card').maxdesarrr=e.detail.response;
+        },
        getroute:function()
       {
         this.getrouteurl=sessionStorage.getItem("addrinfo")+"/getroute";
@@ -3406,8 +3506,131 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
     deletechequeResponse:function(e)
     {
         document.querySelector('editcheque-card').FnClear();
-    }
+    },
+    
+     fnnewdistance:function(distanceid,mindistance,maxdistance,fee,zoneid,zonename)   
+      {        
+         zoneid1=zoneid;
+         zonename1=zonename; 
+         distanceid1=distanceid;
 
+        this.newdistanceurl=sessionStorage.getItem("addrinfo")+"/newdistance";
+        var obj={"schlidz":"","distanceid1":"","mindistance":"","maxdistance":"","fee":"",
+        "academic_year":""}
+        obj.schlidz=sessionStorage.getItem("sch");
+        obj.distanceid1=distanceid;
+        obj.mindistance=mindistance;
+        obj.maxdistance=maxdistance;
+        obj.fee=fee;
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+        this.newdistanceparam=obj;
+        //alert(distanceid1);
+        //alert(JSON.stringify(obj));
+        this.$.newdistanceajax.generateRequest();
+      },
+      newdistanceResponse:function(e)
+      {
+        var res=e.detail.response.returnval;
+        //alert(JSON.stringify(res));
+
+        if(res=='Already Exit')
+        {
+            alert("This Maximum and Minimum distace are already exits");
+
+        }
+
+        else
+        {
+            //alert("zone insert");
+        this.fnnewzoneurl=sessionStorage.getItem("addrinfo")+"/fnnewzone";
+        var obj={"scholid":"","zoneid1":"","zonename1":"","distanceid1":"","academic_year":""}
+        obj.scholid=sessionStorage.getItem("sch");
+        obj.zoneid1=zoneid1;
+        obj.zonename1=zonename1;
+        obj.distanceid1=distanceid1;
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+        this.fnnewzoneparam=obj;
+        //alert(distanceid1+""+zoneid1);
+        //alert(JSON.stringify(obj));
+        this.$.fnnewzoneajax.generateRequest();
+
+        }    
+    
+      },
+      fnnewzoneResponse:function(e)
+      {
+        var res=e.detail.response.returnval;
+        alert(JSON.stringify(res));
+        
+      },
+     
+
+      fetchdistanceseq:function()
+      {
+        //alert("distance seq");
+        this.fetchdistancesequrl=sessionStorage.getItem("addrinfo")+"/fetchdistanceseq";
+        this.$.fetchdistanceseqajax.generateRequest();
+      },
+      
+      fetchdistanceseqResponse:function(e)
+      {
+        var res=e.detail.response.returnval;
+        //alert("disttt");
+
+        document.querySelector('zonedistance-card').distanceid=res[0].distance_prefix+res[0].distance_seq;
+        //alert(JSON.stringify(distanceid));  
+
+      },
+
+      fetchzoneseq:function()
+      {
+        //alert("zone seq");
+        this.fetchzonesequrl=sessionStorage.getItem("addrinfo")+"/fetchzoneseq";
+        this.$.fetchzoneseqajax.generateRequest();
+      },
+      fetchzoneseqResponse:function(e)
+      {
+        var res=e.detail.response.returnval;
+        //alert("zoneee");
+        //alert(JSON.stringify(res));      
+        document.querySelector('zonedistance-card').zoneid=res[0].zone_prefix+res[0].zone_seq;
+      },
+
+     
+      
+      fetchzone:function(zonename)
+      {
+        zonename1=zonename;
+        //alert(333);
+        this.fetchzoneurl=sessionStorage.getItem("addrinfo")+"/fetchzone";
+        var obj={"schoolid":"","academic_year":"","zonename1":""}
+        obj.schoolid=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+        obj.zonename1=zonename;
+        this.fetchzoneparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.fetchzoneajax.generateRequest();
+      },
+      fetchzoneResponse:function(e)
+      {
+
+        var res=e.detail.response.returnval;
+        //alert(JSON.stringify(res));
+        if(res=='no rows')
+        {
+            document.querySelector('zonedistance-card').fnrefresh(); 
+        }
+        
+        else
+        {
+            document.querySelector('zonedistance-card').fnmaxdist(res);
+            document.querySelector('zonedistance-card').fnmindist(res);
+            document.querySelector('zonedistance-card').fee=res[0].fee;
+        }
+            
+       
+      }
+     
     });
  })();
 </script>
