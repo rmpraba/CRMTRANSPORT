@@ -23,8 +23,20 @@
   {
     padding: 1%;
   }
+
+  .card
+      {
+        width:68%;
+        height:420px;
+        margin-top: 1%;
+        border: solid 1px #555; 
+        background-color: white; 
+        box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); 
+      }
+
     </style>
    <div class="layframe">
+    <div class="card">
         <div class="horizontalframe">
     <div class="hrspace">
             <paper-input label="Student Id" value="{{student_id}}" id="stdid" on-change="verify" required error-message="needs a student id!"></paper-input>
@@ -97,9 +109,10 @@
           </div>
          
         </div>
-      <div class="button">
+      <div class="btn11" style="margin-left: 26%;">
         <paper-button id="button" class="button" on-click="click">Submit</paper-button>
       </div>
+     </div> 
     </div>
     <transport-service id="service"></transport-service>
   </template>

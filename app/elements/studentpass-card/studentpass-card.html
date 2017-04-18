@@ -1,12 +1,3 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
@@ -41,18 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   @media print {
     .itemcards:nth-child(even){page-break-after: always;}
   }
-  /*.itemcards:nth-child(odd){
-    margin-top: 1.5%;
-  }
-  .itemcards:nth-child(2){
-    margin-top: -1%;
-    
-  }*/
-  /*.itemcards{
-    margin-top: 10%;
-    height:40%;
-  }*/
-</style>
+ </style>
 <dom-module id="studentpass-card">
   <template  style="margin-top:-0.5% !important;">
   <div class="student-image" >
@@ -170,10 +150,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'studentpass-card',
     ready:function(){
-     // alert('hi');
         this.schoolname=sessionStorage.getItem("schoolname");
         this.schooladdr=sessionStorage.getItem("schooladdr");
-        //this.$.root.stupassgetname();
         this.querySelector('paper-listbox').style.visibility='hidden';
         this.$.selectclass.hidden=true;
         this.$.passtemp.hidden=true;
@@ -183,7 +161,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.numberreadajax.generateRequest();
       },
       numberreadResponse:function(e){
-        //alert(JSON.stringify(e.detail.response));
         var no=e.detail.response
         this.coorno=no[0].conumber;
       },
@@ -314,7 +291,7 @@ this.$.selectclass.hidden=true;
         this.zone="";
         this.pickuprout="";
         this.droprout="";
-    },
+       },
      FnItemSelected:function(e)
    {
        this.querySelector('paper-listbox').style.visibility='hidden';

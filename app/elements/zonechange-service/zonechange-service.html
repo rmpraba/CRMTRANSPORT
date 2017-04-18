@@ -161,8 +161,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             content-type="application/json"
             on-response="deletepointResponse"
             debounce-duration="300"
+            > 
+               <iron-ajax
+            method="post"
+            id="checkdelajax"
+            url="{{checkdelurl}}"
+            params="{{checkdelparam}}"
+            handle-as="json"
+            content-type="application/json"
+            on-response="checkdelResponse"
+            debounce-duration="300"
             >
+
+
         </iron-ajax>
+        
   </template>
 
   <script>
@@ -186,19 +199,24 @@ var mon;
 var previouszone;
 var prevzonefee;
 var zid;
+var zstuname;
     Polymer({
       is:'zonechange-service',
         getzonechangename:function()
       {
         this.getzonechangenameurl=sessionStorage.getItem("addrinfo")+"/getzonechangename";
-        var obj={"schol":""}
-        obj.schol=sessionStorage.getItem("sch");
+        var obj={"schol":"","academic_year":""}
+         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+         obj.schol=sessionStorage.getItem("sch");
         this.getzonechangenameparam=obj;
+       // alert(JSON.stringify(obj));
         this.$.getzonechangenameajax.generateRequest();
       },
        getzonechangenameResponse:function(e1)
       {
             var iditem=e1.detail.response.returnval;
+           //       alert(JSON.stringify(e1.detail.response.returnval));
+  
             document.querySelector('zonechange-card').autocompletearr(iditem);      
       },
       getzonechangestudetail:function(studid)
@@ -206,15 +224,18 @@ var zid;
         studentid=studid;
 
         this.fetchstuzonedetailurl=sessionStorage.getItem("addrinfo")+"/fetchstuzonedetail";
-        var obj={"studid":"","schol":""};
+        var obj={"studid":"","schol":"","academic_year":""};
+
         obj.studid=studid;
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.schol=sessionStorage.getItem("sch");
         this.fetchstuzonedetailparam=obj;
         this.$.fetchstuzonedetailajax.generateRequest();
         this.getzonechangestudetailurl=sessionStorage.getItem("addrinfo")+"/getzonechangestudetail";
-        var obj={"studid":"","schol":""};
+        var obj={"studid":"","schol":"","academic_year":""};
         obj.studid=studid;
         obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.getzonechangestudetailparam=obj;
         this.$.getzonechangestudetailajax.generateRequest();
         this.zonechangeparentnameurl=sessionStorage.getItem("addrinfo")+"/getzonechangeparentname";
@@ -230,14 +251,13 @@ zinstall2=e.detail.response.returnval[0].installment_2;
 zfee=e.detail.response.returnval[0].fees;
 zid=e.detail.response.returnval[0].zone_id;
  this.getzonenamedetailurl=sessionStorage.getItem("addrinfo")+"/getzonenamedetail";
-        var obj={"zoneid":"","schol":""};
-        obj.zoneid=zid;
-        obj.schol=sessionStorage.getItem("sch");
+        var obj={"zoneid":"","schol":"","academic_year":""};
+         obj.zoneid=zid;
+         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+         obj.schol=sessionStorage.getItem("sch");
         this.getzonenamedetailparam=obj;
         this.$.getzonenamedetailajax.generateRequest();
- //document.querySelector('zonechange-card').prevzone=previouszone;
- document.querySelector('zonechange-card').prevzonefee=zfee;
-//alert(zfee);
+    document.querySelector('zonechange-card').prevzonefee=zfee;
       },
       getzonenamedetailResponse:function(e)
       {
@@ -245,7 +265,7 @@ document.querySelector('zonechange-card').prevzone=e.detail.response.returnval[0
       },
       calculatedays:function(selectdate)
       {
-    // alert(fromdate1+''+selectdate);
+ //  alert(fromdate1+''+selectdate);
  var startdate=new Date(fromdate1);
  var selectdat=new Date(selectdate);
 
@@ -258,16 +278,18 @@ document.querySelector('zonechange-card').prevremainfee=remainfee;
  }
  else
  {
+
               var monfee=(selectdat.getFullYear()-startdate.getFullYear())*12;
              mon-=startdate.getMonth()+1;
              mon+=selectdat.getMonth()+1;
              var mm=mon+2;
-             //alert(mm);
+         //    alert(mm);
              document.querySelector('zonechange-card').prevmonth=mm;
 
              prevzonefee=(zfee/10);
              usedfee=prevzonefee*mm;
-             document.querySelector('zonechange-card').prevusedfee=usedfee;
+             mon=0;
+              document.querySelector('zonechange-card').prevusedfee=usedfee;
              remainfee=(parseInt(zinstall1)+parseInt(zinstall2))-parseInt(usedfee);
              document.querySelector('zonechange-card').prevremainfee=remainfee;
            }
@@ -308,31 +330,34 @@ document.querySelector('zonechange-card').prevremainfee=remainfee;
        getchangezone:function()
       {
         this.getchangezoneurl=sessionStorage.getItem("addrinfo")+"/getchangezone";
-        var obj={"schol":""}
+     var obj={"schol":"","academic_year":""}
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.schol=sessionStorage.getItem("sch");
         this.getchangezoneparam=obj;
         this.$.getchangezoneajax.generateRequest();
       },
       getchangezoneResponse:function(e1)
-          {
+          {  
             var zoneitem=e1.detail.response.returnval;
             document.querySelector('zonechange-card').itemarr=zoneitem;
-      },
+         },
        getzonechangefee:function(zone)
-      {
-        //alert('s');
+        {
         this.getzonechangefeeurl = sessionStorage.getItem("addrinfo")+"/getzonechangefee";
-        var obj={"zone":"","schol":""}
+        var obj={"zone":"","schol":"","academic_year":""}
         obj.zone=zone;
         obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.getzonechangefeeparam=obj;
+      //  alert(JSON.stringify(obj));
         this.$.getzonechangefeeajax.generateRequest();
       },
       getzonechangefeeResponse:function(e)
       {
-        //alert(remainfee);
+       // alert(JSON.stringify(e.detail.response.returnval));
+
           totalfee=e.detail.response.returnval[0].fees;
-          //alert(totalfee);
+        //  alert(totalfee);
           var actualfee=totalfee-remainfee;
           if(actualfee>0)
            {
@@ -347,10 +372,13 @@ document.querySelector('zonechange-card').prevremainfee=remainfee;
        getzonechangetermdate:function(grade)
        {
          this.getzonechangetermdateurl=sessionStorage.getItem("addrinfo")+"/getzonechangetermdate";
-         var obj={"grade":"","schol":""}
+         var obj={"grade":"","schol":"","academic_year":""}
+            obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+     
          obj.schol=sessionStorage.getItem("sch");
          obj.grade=grade;
          this.getzonechangetermdateparam=obj;
+        // alert(JSON.stringify(obj));
         this.$.getzonechangetermdateajax.generateRequest();
       },
        calc:function(values)
@@ -363,7 +391,7 @@ document.querySelector('zonechange-card').prevremainfee=remainfee;
       },
          getzonechangetermdateResponse:function(e1)
           {
-
+       //   alert(JSON.stringify(e1.detail.response.returnval));
              fromdate1=e1.detail.response.returnval[0].start_date;
              todate1=e1.detail.response.returnval[0].end_date;
             document.querySelector('zonechange-card').zfromdate=fromdate1;
@@ -444,9 +472,8 @@ document.querySelector('zonechange-card').prevremainfee=remainfee;
       },
  setzonechange:function(studid,zone,fee,fromdatez,todatez,modez,namex,todayx,statusx,stuname)
       {
-        //zstuname=stuname;
        
-        var obj={"studid":"","zone":"","fee":"","fromdate":"","todate":"","mode":"","name":"","today":"","status":"","schol":""};
+        var obj={"studid":"","zone":"","fee":"","fromdate":"","todate":"","mode":"","name":"","today":"","status":"","schol":"","academic_year":""};
         obj.schol=sessionStorage.getItem("sch");
         obj.studid=studid;
         obj.zone=zone;
@@ -455,28 +482,37 @@ document.querySelector('zonechange-card').prevremainfee=remainfee;
         obj.todate=todatez;
         obj.mode=modez;
         obj.name=namex;
-        obj.today=todayx; this.setzonechangeurl = sessionStorage.getItem("addrinfo")+"/setzonechange";
+        obj.today=todayx; 
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+        this.setzonechangeurl=sessionStorage.getItem("addrinfo")+"/setzonechange";
         obj.status=statusx;
         this.setzonechangeparam=obj;
-       // alert(JSON.stringify(obj));
+        // alert(JSON.stringify(obj));
         this.$.setzonechangeajax.generateRequest();
-
- this.previouszonedetailurl = sessionStorage.getItem("addrinfo")+"/previouszonedetails";
- this.previouszonedetailparam=previouszone;
+        this.previouszonedetailurl = sessionStorage.getItem("addrinfo")+"/previouszonedetails";
+        this.previouszonedetailparam=previouszone;
         this.$.previouszonedetailajax.generateRequest();
-
-
-      },
+          zstuname=idz;
+     
+   },
       setzonechangeResponse:function()
       {
         alert('Zone Change Successfully');
        document.querySelector('zonechange-card').FnClear();
         this.deletepointurl = sessionStorage.getItem("addrinfo")+"/deletepoint";
-        var obj={"studid":"","schol":""}
-        obj.studid=studid;
-        obj.schol=sessionStorage.getItem("sch");
+         var obj={"studid":"","schol":"","academic_year":""}
+         obj.studid=zstuname;
+       //  alert(studentid);
+         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+         obj.schol=sessionStorage.getItem("sch");
          this.deletepointparam=obj;
-        this.$.deletepointajax.generateRequest();
+         this.$.deletepointajax.generateRequest();
+
+         this.checkdelurl = sessionStorage.getItem("addrinfo")+"/checkdel-service";
+          this.checkdelparam=obj;
+       //   alert(JSON.stringify(obj));
+          this.$.checkdelajax.generateRequest();
+
 
       }
 

@@ -165,6 +165,18 @@
       debounce-duration="300"
     >
     </iron-ajax>
+    <!-- to take current routes from table -->
+     <iron-ajax
+      method="post"
+      id="FetchRouteajax"
+      url="{{FetchRouteurl}}"
+      params="{{FetchRouteparams}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="FetchRouteResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
   </template>
   <script>
   (function() {
@@ -218,8 +230,9 @@
       },
       namepickResponse:function(e)
       {
-        //alert(e.detail.response.returnval);
+        
         var student=e.detail.response.returnval;
+        //alert(JSON.stringify(student));
         document.querySelector('mapstudenttopoint-card').studentarr=student;
       },
       classpick:function(cla){
@@ -234,7 +247,7 @@
       },
       classpickResponse:function(e){
         var student=e.detail.response.returnval;
-      //  alert(JSON.stringify(student));
+        //alert(JSON.stringify(student));
         document.querySelector('mapstudenttopoint-card').studentarr=student;
       },
       submit:function(itemarr){
@@ -293,8 +306,9 @@
     updaterouteseqResponse:function(e){
       //alert('update response');
         var seq=pointcount;
-        var obj={"id":"","routes":"","schol":""}
+        var obj={"id":"","routes":"","schol":"","academic_year":""}
         obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.id="r"+seq;
         obj.routes=routenamez;
         this.createrouteparam=obj;
@@ -307,11 +321,13 @@
       //alert(resd);
       if(resd=='success'){
           alert('The new route is created');
+          this.FetchRoute();
       }
       else{
           alert('Route creation failed');
       }
       document.querySelector('routecreate-card').FnClear();
+      
     },
     getgradedata:function(temp){
     this.getclasspassurl = sessionStorage.getItem("addrinfo")+"/getclasspass";
@@ -347,6 +363,26 @@
       dropdetailResponse:function(e){
         var droparr=e.detail.response.returnval;
         document.querySelector('routestudent-card').dropdetailarr=droparr;
+      },
+
+       FetchRoute:function()   
+      {        
+        //alert(11);
+        this.FetchRouteurl=sessionStorage.getItem("addrinfo")+"/FetchRoute-service";
+        var obj={"schlidz":"","academic_year":""}
+        obj.schlidz=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+        this.FetchRouteparams=obj;
+        //alert(JSON.stringify(obj));
+        this.$.FetchRouteajax.generateRequest();
+      },
+      FetchRouteResponse:function(e)
+      {
+        var res=e.detail.response.returnval;
+        //alert(res.length);
+        //alert(JSON.stringify(res));
+        document.querySelector('routecreate-card').newroutearr=res;
+
       }
     });
   })();

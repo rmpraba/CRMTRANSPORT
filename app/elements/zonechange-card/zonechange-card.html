@@ -10,7 +10,7 @@
        <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
        <link rel="import" href="../bower_components/paper-input-autocomplete/paper-input-autocomplete.html">
        <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
-       <link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
+       <link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">   
        <link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
         <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
     <link rel="import" href="../transport-service/transport-service.html">
@@ -62,7 +62,7 @@
       <paper-input  label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
       <paper-listbox class="dropdown-content" id="zonechangeinput" on-iron-select="FnItemSelected">
         <template is="dom-repeat" items="{{itemArray}}" as="item">
-          <paper-item>{{item.itemdes}}</paper-item>
+          <paper-item value="{{item.id}}">{{item.itemdes}}</paper-item>
         </template>
       </paper-listbox>
     </div>
@@ -91,7 +91,7 @@
   <paper-input  label="Previous Zone Fee" is="" id="dad2" readonly value="{{prevzonefee}}"></paper-input></div>
 <div><zonechangedatepicker-card></zonechangedatepicker-card></div>
 
-</div>
+</div>   
 <div class="horizontalframe">
    <div class="hrspace">
      <paper-input  label="Used Month" is="" readonly id="dad4" value="{{prevmonth}}"></paper-input></div>
@@ -564,8 +564,10 @@ this.hidetransport=true;
             var subval=((item[i].student_name).trim()).substring(0,backsubval.length);
             if((subval).toUpperCase()==(backsubval).toUpperCase())
             {
-              var obj={"itemdes":""};
+              var obj={"itemdes":"","id":""};
               obj.itemdes=item[i].student_name;
+                obj.id=item[i].id;
+        
               arr.push(obj);
             }
           }
@@ -585,9 +587,10 @@ this.hidetransport=true;
             var subval=((item[i].student_name).trim()).substring(0,this.itemval.length);
             if((subval).toUpperCase()==(this.itemval).toUpperCase())
             {
-              var obj={"itemdes":""};
+              var obj={"itemdes":"","id":""};
               obj.itemdes=item[i].student_name;
-              arr.push(obj);
+               obj.id=item[i].id;
+            arr.push(obj);
             }
           }
           if(arr.length>0)
@@ -606,6 +609,8 @@ this.hidetransport=true;
    {
        this.querySelector('paper-listbox').style.visibility='hidden';
     this.studid = e.target.selectedItem.textContent.trim();
+    this.idz=e.target.selectedItem.value;
+    //alert(this.id);
     this.itemArray=[];
     document.querySelector('#zonechangeinput').selected=-1;
     this.value=this.studid;
@@ -799,7 +804,7 @@ click:function(e)
 
     }
     else{
-      this.$.zservice.setzonechange(this.id,this.zone_id,this.fee,fromdate,todate,mode,name,today,status,this.value);
+      this.$.zservice.setzonechange(this.id,this.zone_id,this.fee,fromdate,todate,mode,name,today,status,this.value,this.idz);
       //this.hidepayoption=false;
       //document.querySelector("#install").checked=true;
       //this.hidetransport=false;

@@ -17,7 +17,7 @@
   <template>
     <style>
       .card {
-        margin:5% 0 0 27%;
+        margin:5% 0 0 21%;
       }
       .field{
         width: 70%;
@@ -40,13 +40,36 @@
       .horizontalframes{
         @apply(--layout-horizontal);
         width: 100% !important;
+        margin-left: 15%;
       }
       .horizontal .field paper-input{
-        width: 100%;
+        width: 70%;
       }
       .button{
         margin:2% 0 0 27%;
       }
+      /*.card
+      {
+        border-collapse: collapse;
+        border: 1px solid #6699ff;
+        padding: 5px;
+        width: 63%;
+      }*/
+      .btn11
+      {
+        margin-top: 3%;
+        margin-left: 28%;
+      }
+
+      .card
+      {
+        width:60%;
+        height:450px;
+        border: solid 1px #555; 
+        background-color: white; 
+        box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); 
+      }
+    
     </style>
     <div class="card">
       <div class="horizontalframes">
@@ -59,47 +82,48 @@
       </div>
       <div class="horizontalframes">
         <div class="fields">
-          <paper-input label="Mobile No" value="{{mobile_no}}" id="mobile" allowed-pattern="[0-9]" required error-message="needs a name!"></paper-input>
+          <paper-input label="Mobile No" value="{{mobile_no}}" id="mobile" allowed-pattern="[0-9]" required error-message="needs a Mobile number!" max-length="10"></paper-input>
         </div>
         <div class="fields">
-          <paper-input label="Licence No" value="{{licence_no}}" id="licence" allowed-pattern="[a-zA-Z0-9]" required error-message="needs a name!"></paper-input>
+          <paper-input label="Licence No" value="{{licence_no}}" id="licence" allowed-pattern="[a-zA-Z0-9]" required error-message="needs a Licence number!"></paper-input>
         </div>
       </div>
-      <div class="horizontal">
-        <div class="date" style="margin-left: -2%;">
+      <div class="horizontalframes">
+        <div class="date" style="width: 54%;margin-left: -2%;">
           <licence_expiry_datepicker-card></licence_expiry_datepicker-card>
         </div>
-      </div>
-      <div class="horizontal">
-        <div class="date" style="margin-left: -2%;">
+        <div class="date" style="margin-left: -10em; width: 54%;">
           <since-when-employed-card></since-when-employed-card>
         </div>
       </div>
-      <div class="horizontal">
+        
+      <div class="horizontal" style="margin-left: 15%;width: 70%;">
         <div class="address">
           <paper-textarea value="{{address_1}}" id="address_1"  error-message="needs Address" label="Address Line 1" required ></paper-textarea>
         </div>
         <div class="address">
           <paper-textarea value="{{address_2}}" id="address_2"  error-message="needs Address" label="Address Line 2" required ></paper-textarea>
         </div>
-      </div>
-      <div class="horizontal">
         <div class="address">
           <paper-textarea value="{{address_3}}" id="address_3"  error-message="needs Address" label="Address Line 3" required ></paper-textarea>
         </div>
-        <div class="field">
+      </div>
+      
+      <div class="horizontalframes">
+        <div class="fields">
           <paper-input label="City" value="{{city}}" id="city" allowed-pattern="[a-zA-Z]" required error-message="needs a city!"></paper-input>
         </div>
-      </div>
-      <div class="horizontalframes">
-        <div class="field">
+        <div class="fields">
           <paper-input label="Pincode" value="{{pincode}}" id="pincode" allowed-pattern="[0-9]" required error-message="needs a pincode!"></paper-input>
         </div>
       </div>
+
+      <div class="btn1">
+        <paper-button id="button" class="button" on-click="click">Submit</paper-button>
+      </div>
+
     </div>
-    <div class="button">
-      <paper-button id="button" class="button" on-click="click">Submit</paper-button>
-    </div>
+    
     <transport-service id="service"></transport-service>
   </template>
   <script>
@@ -127,10 +151,10 @@
         if(this.first_name==""||this.last_name==""||this.mobile_no==""||this.licence_no==""||this.address_1==""||this.address_2==""||this
                         .address_3==""||this.city==""||this.pincode=="")
         {
-          this.$.first_name.validate();
-          this.$.last_name.validate();
-          this.$.mobile_no.validate();
-          this.$.licence_no.validate();
+          this.$.fname.validate();
+          this.$.lname.validate();
+          this.$.mobile.validate();
+          this.$.licence.validate();
           this.$.address_1.validate();
           this.$.address_2.validate();
           this.$.address_3.validate();

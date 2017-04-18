@@ -49,9 +49,19 @@
       #button{
         @apply(--layout-horizontal);
       }
+
+      .graderoutereport
+      {
+        width:76%;
+        height:150px;
+        margin-left: 13%;
+        border: solid 1px #555; 
+        background-color: white; 
+        box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); 
+      }
     </style>
     <div class="graderoutereport">
-      <div style="padding-right: 2%;">
+      <div style="padding-right: 2%; padding-left: 2%;">
         <paper-input label="Enter Route" value="{{value}}" id="inputroute" on-keydown="FnInputChanged"></paper-input>
         <paper-listbox id="selectitemlist" class="dropdown-content" on-iron-select="FnItemSelected">
           <template is="dom-repeat" items="{{itemArray}}" as="item">
@@ -88,7 +98,7 @@
             </paper-menu>
           </paper-dropdown-menu>
         </div>
-       <div class="buttons"  style="padding-top: 1%;">
+       <div class="buttons"  style="padding-top: 3%;margin-left: 3%;">
          <paper-button class="button" id="rep" on-click="show">Show</paper-button>
       </div>
       </div>
@@ -248,10 +258,10 @@
       {
       this.selectroute=routename;
          this.$.print.hidden=false;
-        this.querySelector("#tableheading").style.visibility='visible';
-        this.querySelector("#gradewisetestTable").style.visibility='visible';
-        this.querySelector("#btn2").style.visibility='visible';
-         this.$.grndtot.hidden=false;
+         this.querySelector("#tableheading").style.visibility='visible';
+         this.querySelector("#gradewisetestTable").style.visibility='visible';
+         this.querySelector("#btn2").style.visibility='visible';
+        this.$.grndtot.hidden=false;
           this.$.service.gradewiseroutereport(routeid,triptype,pickordrop, grade);
       },
       Fntrip:function(e)

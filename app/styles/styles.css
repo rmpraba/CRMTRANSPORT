@@ -6,7 +6,7 @@ body{
     padding: 0 !important;
 }
 paper-button{
-    height: 6% !important;
+    height: 24% !important;
 }
 section{
     padding: 0 !important;
@@ -451,9 +451,9 @@ ul li #new-button{
   .reports{
     margin:0% 0% 2% 0%;
   }
-paper-button{
+/*paper-button{
     height: 16%;
-  }
+  }*/
 .butto{
     margin:3% 0 0 3%;
 }
@@ -685,7 +685,7 @@ text-align: center;
 .layframe .button{
     height: 5%;
 }
-.feereports-card, .pending-card{
+.feereports-card,{
     margin-left: 3%;
 }
 .nodata{
@@ -695,8 +695,8 @@ text-align: center;
     display: flex;
     flex-direction: row;
     @apply(--layout-horizontal);
-    margin-left: 20%;
-    margin-top: 15%;
+    margin-left: 37%;
+    margin-top: 12%;
 }
 .pass .front{
    width: 5.5cm;
@@ -824,12 +824,12 @@ margin-top: 6%;
 .add-student .button{
     margin: 3% 0% 0 13%;
 }
-.routecreate{
+/*.routecreate{
     @apply(--layout-horizontal);
     margin-left: 30%;
     margin-top: 10%;
     display: flex;
-}
+}*/
 .passtemp{
     @apply(--layout-horizontal-wrap);
     @apply(--layout-vertical-wrap);

@@ -39,7 +39,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <ul>
                 <paper-input hidden value="{{routeid}}"></paper-input>
                 <li class="row">
-                  <div class="detail">
+                   <div class="detail">
                     <div class="field">
                       <paper-dropdown-menu label="Route">
                         <paper-menu   id="sets0" class="dropdown-content" on-iron-select="routezxc" >
@@ -168,16 +168,18 @@ var attender;
         bus = (e.target.selectedItem.value);
 
         this.noofseatsurl=sessionStorage.getItem("addrinfo")+"/noofseats";
-        var obj={"schol":"", "bus":""}
+        var obj={"schol":"", "bus":"","academic_year":""}
         obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.bus = bus;
         this.noofseatsparam=obj;
         //alert(JSON.stringify(obj));
         this.$.noofseatsajax.generateRequest();
 
         this.noofstudentsinrouteurl=sessionStorage.getItem("addrinfo")+"/noofstudentsinroute";
-        var obj={"routeid":"","schol":""}
+        var obj={"routeid":"","schol":"","academic_year":""}
         obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.routeid=this.routeid;
         this.noofstudentsinrouteparam=obj;
         //alert(JSON.stringify(obj));

@@ -1,4 +1,4 @@
-<!--
+{<!--
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
@@ -18,25 +18,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .laybut{
         @apply(--layout-horizontal);
-   @apply(--layout-center);
-   display: flex;
-   margin-left: 36%;
+       @apply(--layout-center);
+       display: flex;
+       margin-left: 36%;
       }
-      .card2{
-        margin-left: 11%;
+      
+      .card2
+      {
+        width:50%;
+        height:600px;
+        margin-left: 21%;
+        margin-top: 4%;
+        border: solid 1px #555; 
+        background-color: white; 
+        box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); 
       }
+      
     </style>
     <div class="card2">
-        <ul>
-          <li class="ro2">
-            <fieldset>
-              <ul>
+      <ul>
+        <li class="ro2">
+          <fieldset>
+            <ul>
               <paper-input  hidden value="{{staffid}}"></paper-input>
                 <li class="row">
                   <div class="detail">
+                    <div class="field1">
+                      <paper-input id="text" class="field" label="Type a Staff Name" is="" value="{{value}}" on-keydown="FnInputChanged" style="width: 72%; text-align: center;"></paper-input>
+                        <paper-listbox class="dropdown-content" id="fetchname" on-iron-select="FnItemSelected">
+                        <template is="dom-repeat" items="{{itemArray}}" as="item">
+                          <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
+                        </template>
+                        </paper-listbox>
+                    </div>
                   <div class="field1">
                      <paper-input id="text" class="field" label="Type a Staff Name" is="" value="{{value}}" on-keydown="FnInputChanged" style="width: 72%; text-align: center;"></paper-input>
-      <paper-listbox class="dropdown-content" id="fetchname" on-iron-select="FnItemSelected">
+     <paper-listbox class="dropdown-content" id="fetchname" on-iron-select="FnItemSelected">
         <template is="dom-repeat" items="{{itemArray}}" as="item">
           <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
         </template>
@@ -58,61 +75,61 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </paper-menu>
                       </paper-dropdown-menu>
                     </div>
-                    </div>
-                    </li>
-                    <li class="row">
-                  <div class="detail">
-                    <div class="field">
-                  <paper-dropdown-menu id="set" label="Pick-up Route">
-                    <paper-menu class="dropdown-content" on-iron-select="pickroute" attr-for-selected="value" >
-                      <template  is="dom-repeat" items="{{routearr}}" as="view">
-                        <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
-                      </template>
-                    </paper-menu>
-                  </paper-dropdown-menu>
-                </div>
-                <div class="field">
-                  <paper-dropdown-menu id="set1" label="Pick-up Point">
-                    <paper-menu class="dropdown-content" on-iron-select="pickpoints" attr-for-selected="value" >
-                      <template  is="dom-repeat" items="{{pointarr}}" as="view">
-                        <paper-item value="{{view.id}}">{{view.point_name}}</paper-item>
-                      </template>
-                    </paper-menu>
-                  </paper-dropdown-menu>
-                </div>
-              </div>
-            </li>
-            <li class="row">
-              <div class="detail">
-                <div class="field">
-                  <paper-dropdown-menu id="set2" label="Drop Route">
-                    <paper-menu class="dropdown-content" on-iron-select="droproute" selected="{{selectid}}" attr-for-selected="value" >
-                      <template  is="dom-repeat" items="{{routearr}}" as="view">
-                        <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
-                      </template>
-                    </paper-menu>
-                  </paper-dropdown-menu>
-                </div>
-                <div class="field">
-                  <paper-dropdown-menu id="set3" label="Drop Point">
-                    <paper-menu class="dropdown-content" on-iron-select="droppoints" selected="{{selectpoint}}" attr-for-selected="value" >
-                      <template  is="dom-repeat" items="{{droparr}}" as="view">
-                        <paper-item value="{{view.id}}">{{view.point_name}}</paper-item>
-                      </template>
-                    </paper-menu>
-                  </paper-dropdown-menu>
-                </div>
-                   
-                  </div>
-                 
-                    
                   </div>
                 </li>
-              </ul>
-            </fieldset>
-          </li>
-        </ul>
-        <paper-button style="margin-left: 46%;margin-top: 2%" class="button" on-click="qwerty">Submit</paper-button>
+                <li class="row">
+                  <div class="detail">
+                    <div class="field">
+                      <paper-dropdown-menu id="set" label="Pick-up Route">
+                        <paper-menu class="dropdown-content" on-iron-select="pickroute" attr-for-selected="value" >
+                          <template  is="dom-repeat" items="{{routearr}}" as="view">
+                            <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
+                          </template>
+                        </paper-menu>
+                      </paper-dropdown-menu>
+                    </div>
+                    <div class="field">
+                      <paper-dropdown-menu id="set1" label="Pick-up Point">
+                        <paper-menu class="dropdown-content" on-iron-select="pickpoints" attr-for-selected="value" >
+                          <template  is="dom-repeat" items="{{pointarr}}" as="view">
+                            <paper-item value="{{view.id}}">{{view.point_name}}</paper-item>
+                          </template>
+                        </paper-menu>
+                      </paper-dropdown-menu>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="row">
+                <div class="detail">
+                  <div class="field">
+                    <paper-dropdown-menu id="set2" label="Drop Route">
+                      <paper-menu class="dropdown-content" on-iron-select="droproute" selected="{{selectid}}" attr-for-selected="value" >
+                        <template  is="dom-repeat" items="{{routearr}}" as="view">
+                          <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
+                        </template>
+                      </paper-menu>
+                    </paper-dropdown-menu>
+                  </div>
+                  <div class="field">
+                    <paper-dropdown-menu id="set3" label="Drop Point">
+                      <paper-menu class="dropdown-content" on-iron-select="droppoints" selected="{{selectpoint}}" attr-for-selected="value" >
+                        <template  is="dom-repeat" items="{{droparr}}" as="view">
+                          <paper-item value="{{view.id}}">{{view.point_name}}</paper-item>
+                        </template>
+                      </paper-menu>
+                    </paper-dropdown-menu>
+                  </div> 
+                </div>    
+              </li>
+            </ul>
+          </fieldset>
+        </li>
+      </ul>
+        <div>
+          <paper-button style="margin-left: 46%;margin-top: 2%" class="button" on-click="qwerty">Submit</paper-button>
+        </div>
+        
     </div>
   
 

@@ -87,8 +87,9 @@ var school=sessionStorage.getItem("sch");
      {
 
       this.refundurl=sessionStorage.getItem("addrinfo")+"/refund-card";
-      var obj={"schol":""}
-        obj.schol=sessionStorage.getItem("sch");
+      var obj={"schol":"","academic_year":""}
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+         obj.schol=sessionStorage.getItem("sch");
         this.refundparam=obj;
         this.$.refundajax.generateRequest();
       },
@@ -104,10 +105,10 @@ var school=sessionStorage.getItem("sch");
       },
       Approvereq:function(stdid,status,flag)
       {
-        //alert('aa');
-        this.approvalurl=sessionStorage.getItem("addrinfo")+"/approval-card";
-         var obj={"studid":"","status":"","flag":"","schol":""}
-         obj.schol=sessionStorage.getItem("sch");;
+    this.approvalurl=sessionStorage.getItem("addrinfo")+"/approval-card";
+        var obj={"studid":"","status":"","flag":"","schol":"","academic_year":""}
+        obj.schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.studid=stdid;
         obj.status=status;
         obj.flag=flag;
@@ -130,8 +131,9 @@ var school=sessionStorage.getItem("sch");
      {
 
       this.getverifyurl=sessionStorage.getItem("addrinfo")+"/getverify";
-      var obj={"schol":""}
-        obj.schol=sessionStorage.getItem("sch");
+      var obj={"schol":"","academic_year":""}
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+         obj.schol=sessionStorage.getItem("sch");
         this.getverifyparam=obj;
         this.$.getverifyajax.generateRequest();
       },

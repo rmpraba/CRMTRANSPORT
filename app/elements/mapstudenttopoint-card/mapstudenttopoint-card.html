@@ -21,16 +21,31 @@
   .template{
     margin-left: -5%;
   }
-  .hrlayout
+  /*.hrlayout
   {
-    margin-left: 20%;
-     @apply(--layout-horizontal);
-  }
+    @apply(--layout-horizontal);
+     border-radius: 10px;
+     border: 1px solid #6699ff;
+     padding: 15px; 
+     margin-left: 27%;
+     width: 40%;
+     min-height: 150px;
+  }*/
   .hrspace
   {
-    padding-left: 3%;
-    padding-top: 5%;
+    padding-left: 11%;
+    padding-top: 11%;
   }
+  .hrlayout
+      {
+        @apply(--layout-horizontal);
+        width:45%;
+        margin-left: 24%;
+        height:170px;
+        border: solid 1px #555; 
+        background-color: white; 
+        box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); 
+      }
 
 
   </style>
@@ -38,7 +53,7 @@
       <div class = "mapstudenttopoint-card">
       <div class="card">
         <div class="hrlayout">
-          <div id="selectclass" >
+          <div id="selectclass" style="margin-top: 5%; margin-left: 6%;">
             <paper-dropdown-menu   label="Select Grade">
               <paper-menu class="dropdown-content" id="gradeselect" on-iron-select="classes1" attr-for-selected="value" >
                 <template  is="dom-repeat" items="{{classarr}}" as="view">
@@ -54,7 +69,7 @@
 
         </div>
          <div id="search">
-            <paper-input label="Enter Student ID Or Class ID or Student Name" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
+            <paper-input label="Enter Student ID/Class ID/Student Name" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
             <paper-listbox id="itemlist" class="dropdown-content" on-iron-select="FnItemSelected">
               <template is="dom-repeat" items="{{itemArray}}" as="item">
                 <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
@@ -65,9 +80,9 @@
       <div class="template">
         <app-service studentarr="{{studentarr}}"></app-service>
           <template  is="dom-repeat" items="{{studentarr}}">
-            <studenttopoint-item-card schooltype="{{item.school_type}}" studentid="{{item.id}}" studentname="{{item.student_name}}">
+            <studenttopoint-item-card schooltype="{{item.school_type}}" studentid="{{item.id}}" studentname="{{item.student_name}}"></studenttopoint-item-card>
           </template>
-          <div class="button" style="margin-left: 50%;margin-top: 3%; height: 40% !important;">
+          <div class="button" style="margin-left: 47%;margin-top: 3%; height: 40% !important;">
             <paper-button raised id="submitbutton" class="custom indigo" on-click="click">Submit</paper-button>
           </div>
         </div>  

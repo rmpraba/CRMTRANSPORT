@@ -7,22 +7,36 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../changepoint-service/changepoint-service.html">
-<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../border-collapse: collapse;
+    border: 1px solid #6699ff;
+   padding: 5px;
+   width: 65%;
+   margin-left: 18em;bower_components/iron-ajax/iron-ajax.html">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <dom-module id="changepoint-list">
 <style type="text/css">
-  .flexchild-vertical {
+  .flexchild-vertical 
+  {
     @apply(--layout-horizontal);
   }
+   .card
+      {
+        width:60%;
+        height:450px;
+        border: solid 1px #555; 
+        background-color: white; 
+        box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); 
+      }
 </style>
 <template>
   <legend align="center"></legend>
   <paper-input hidden class="field" value="{{schooltype}}"></paper-input>
   <div class="card">
-    <ul>
-      <li class="ro">
+    <!-- <ul> -->
+      <li class="ro11">
         <fieldset>
-          <ul>
+        <ul>
           <div class="check-box">
             <paper-checkbox id="selectbox" on-change="changeHandler"></paper-checkbox>
           </div>
@@ -36,6 +50,7 @@
                 </div>
               </div>
             </li>
+
             <li class="row">
               <div class="detail">
                 <div class="field">
@@ -58,6 +73,7 @@
                 </div>
               </div>
             </li>
+
             <li class="row">
               <div class="detail">
                 <div class="field">
@@ -81,13 +97,13 @@
               </div>
               </li>
 
-            </li>
-          </ul>
+        </ul>
         </fieldset>
       </li>
-    </ul>
-    <changepoint-services id="mapstud"></changepoint-services>
+    <!-- </ul> -->
   </div>
+
+    <changepoint-services id="mapstud"></changepoint-services>
   <iron-ajax
     method="post"
     id="selectpointajax"
