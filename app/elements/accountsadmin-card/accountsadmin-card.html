@@ -41,7 +41,7 @@
          <paper-dropdown-menu id="academicyear" label="Select Academic Year" disabled="{{read}}" required>
             <paper-menu id="academicyr" class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
               <template is="dom-repeat" items="{{academicarr}}">
-                <paper-item value="{{item.year}}">{{item.year}}</paper-item>                               
+                <paper-item value="{{item.year}}">{{item.year}}</paper-item>                          
               </template>
             </paper-menu>
           </paper-dropdown-menu>
@@ -60,48 +60,45 @@
   Polymer({
     is: "accountsadmin-card",
     
-       FnSelectacademicyear:function(e){ 
+      FnSelectacademicyear:function(e){ 
         academicyear=e.target.selectedItem.value.trim();
         localStorage.setItem("curr_sess_academicyear",academicyear);
-       if(localStorage.getItem('curr_sess_acadmic')=="zone")
-         {
-     document.querySelector('transport-app').setPage("zonetostudent","Zone to Student");
+        if(localStorage.getItem('curr_sess_acadmic')=="zone")
+        {
+        document.querySelector('transport-app').setPage("zonetostudent","Zone to Student");
         document.querySelector('zonetostudent-card').hidetransport=true;
         document.querySelector('zonetostudent-card').hidetransport1=true;
         document.querySelector('zonetostudent-card').changeoption();
            this.$.service.getname();
           this.$.service.getzone();
-       }
-         else if(localStorage.getItem('curr_sess_acadmic')=="transportfee11") 
-         {
+        }
+        else if(localStorage.getItem('curr_sess_acadmic')=="transportfee11") 
+        {
              document.querySelector('transport-app').setPage("transportfee","Transport Fee");
              this.$.trservice.getnameofstu();
-         }
+        }
 
-       this.$.cdialog.close();
-    },
+        this.$.cdialog.close();
+      },
       FnRefresh:function()
       { //alert('1');
          document.querySelector('#academicyr').selected=-1;
       },
- 
       zone:function()   
       {
 
         localStorage.setItem('curr_sess_acadmic','zone'); 
-         this.$.service.callAcademicService(); 
-      
+        this.$.service.callAcademicService(); 
         this.$.cdialog.toggle();
  
-      },
-     
+      },   
       transportfee:function(e)
       { 
           localStorage.setItem('curr_sess_acadmic','transportfee11'); 
            this.$.service.callAcademicService();
            this.$.cdialog.toggle();
-       },
-    feereports:function()
+      },
+      feereports:function()
       {
         document.querySelector('transport-app').setPage("feereports","Fee Reports");
         var dt=new Date();
@@ -113,7 +110,7 @@
         document.querySelector('transport-app').setPage("pending","Pending Fee Reports");
          this.$.trservice.pending();
       },
-        add:function()
+      add:function()
       {
         document.querySelector('transport-app').setPage("addstudent","Add Student");
         this.$.service.classesx();
@@ -132,10 +129,6 @@
         document.querySelector('zonechange-card').hidetransport1=true;
         document.querySelector('transport-app').setPage("zonechange","Zone Change"); 
       }
-      
-    
-      
-
   });
   })();
 </script>
