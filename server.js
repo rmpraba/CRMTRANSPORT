@@ -5,8 +5,7 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
-  database : 'demo11'
-
+  database : 'transport'
 });
 var bodyParser = require('body-parser');
  var app = express();
@@ -425,16 +424,12 @@ app.post('/getzonechangetermdate' ,  urlencodedParser,function (req, res)
       console.log('No data Fetched'+err);
     }
 });
-  });
+});
 app.post('/setzone' ,  urlencodedParser,function (req, res)
 {
-  var queryy="insert into student_fee values('"+req.query.schol+"','"+req.query.studid+"','"+req.query.zone+"','','',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"','"+req.query.name+"',STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),'"+req.query.status+"','','',0,0,'"+req.query.academic_year+"')";
+  var queryy="insert into student_fee values('"+req.query.schol+"','"+req.query.studid+"','"+req.query.zone+"','','',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"','"+req.query.name+"',STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),'"+req.query.status+"','','',0,0,'"+req.query.academic_year+"','','','','','')";
      // console.log(queryy);
-      connection.query(queryy,
-        function(err, rows)
-        {   
-
-
+      connection.query(queryy,function(err, rows){   
       if(!err)
       {
       res.status(200).json({'returnval': 'success'});

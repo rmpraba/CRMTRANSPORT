@@ -41,7 +41,7 @@
          <paper-dropdown-menu id="academicyear" label="Select Academic Year" disabled="{{read}}" required>
             <paper-menu id="academicyr" class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
               <template is="dom-repeat" items="{{academicarr}}">
-                <paper-item value="{{item.year}}">{{item.year}}</paper-item>                               
+                <paper-item value="{{item.year}}">{{item.year}}</paper-item>                          
               </template>
             </paper-menu>
           </paper-dropdown-menu>
@@ -60,18 +60,18 @@
   Polymer({
     is: "accountsadmin-card",
     
-       FnSelectacademicyear:function(e){ 
+      FnSelectacademicyear:function(e){ 
         academicyear=e.target.selectedItem.value.trim();
         localStorage.setItem("curr_sess_academicyear",academicyear);
-       if(localStorage.getItem('curr_sess_acadmic')=="zone")
-         {
-        alert(localStorage.getItem("curr_sess_academicyear"));
-     document.querySelector('transport-app').setPage("zonetostudent","Zone to Student");
+        if(localStorage.getItem('curr_sess_acadmic')=="zone")
+        {
+        document.querySelector('transport-app').setPage("zonetostudent","Zone to Student");
         document.querySelector('zonetostudent-card').hidetransport=true;
         document.querySelector('zonetostudent-card').hidetransport1=true;
         document.querySelector('zonetostudent-card').changeoption();
            this.$.service.getname();
           this.$.service.getzone();
+
        }
      else if(localStorage.getItem('curr_sess_acadmic')=="transportfee11") 
          {
@@ -114,69 +114,58 @@
         document.querySelector('transport-app').setPage("zonechange","Zone Change"); 
       
      }
-
-       this.$.cdialog.close();
-    },
+        this.$.cdialog.close();
+      },
       FnRefresh:function()
       { //alert('1');
          document.querySelector('#academicyr').selected=-1;
       },
- 
       zone:function()   
       {
 
         localStorage.setItem('curr_sess_acadmic','zone'); 
-         this.$.service.callAcademicService(); 
-      
+        this.$.service.callAcademicService(); 
         this.$.cdialog.toggle();
  
-      },
-     
+      },   
       transportfee:function(e)
       { 
-          localStorage.setItem('curr_sess_acadmic','transportfee11'); 
+           localStorage.setItem('curr_sess_acadmic','transportfee11'); 
            this.$.service.callAcademicService();
            this.$.cdialog.toggle();
-       },
-    feereports:function()
+      },
+      feereports:function()
       {
-          localStorage.setItem('curr_sess_acadmic','feereportsz'); 
+           localStorage.setItem('curr_sess_acadmic','feereportsz'); 
            this.$.service.callAcademicService();
            this.$.cdialog.toggle();
     
       },
       pend:function()
       {
-        localStorage.setItem('curr_sess_acadmic','pend'); 
+           localStorage.setItem('curr_sess_acadmic','pend'); 
            this.$.service.callAcademicService();
            this.$.cdialog.toggle();
-    
       },
-        add:function()
+      add:function()
       {
-            localStorage.setItem('curr_sess_acadmic','add'); 
+           localStorage.setItem('curr_sess_acadmic','add'); 
            this.$.service.callAcademicService();
            this.$.cdialog.toggle();
     
       },
       receipt:function()
       {
-            localStorage.setItem('curr_sess_acadmic','receipt'); 
+           localStorage.setItem('curr_sess_acadmic','receipt'); 
            this.$.service.callAcademicService();
            this.$.cdialog.toggle();
-    
-
       },
       zonechange:function()
       {
-      localStorage.setItem('curr_sess_acadmic','zonechange'); 
+           localStorage.setItem('curr_sess_acadmic','zonechange'); 
            this.$.service.callAcademicService();
            this.$.cdialog.toggle();
-       }
-      
-    
-      
-
+      }
   });
   })();
 </script>

@@ -49,8 +49,17 @@
       #button{
         @apply(--layout-horizontal);
       }
+       .card
+      {
+        width:65%;
+        height:450px;
+        border: solid 1px #555; 
+        background-color: white; 
+        box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); 
+      }
+    
     </style>
-    <div class="routereport">
+    <div class="card">
       <div style="padding-right: 2%;">
         <paper-input label="Enter Route" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
         <paper-listbox id="itemlist" class="dropdown-content" on-iron-select="FnItemSelected">

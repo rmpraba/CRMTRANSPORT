@@ -21,7 +21,7 @@
   .template{
     margin-left: -5%;
   }
-  .hrlayout
+  /*.hrlayout
   {
     @apply(--layout-horizontal);
      border-radius: 10px;
@@ -30,12 +30,22 @@
      margin-left: 27%;
      width: 40%;
      min-height: 150px;
-  }
+  }*/
   .hrspace
   {
-    padding-left: 10%;
-    padding-top: 4%;
+    padding-left: 11%;
+    padding-top: 11%;
   }
+  .hrlayout
+      {
+        @apply(--layout-horizontal);
+        width:45%;
+        margin-left: 24%;
+        height:170px;
+        border: solid 1px #555; 
+        background-color: white; 
+        box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); 
+      }
 
 
   </style>
@@ -43,7 +53,7 @@
       <div class = "mapstudenttopoint-card">
       <div class="card">
         <div class="hrlayout">
-          <div id="selectclass" >
+          <div id="selectclass" style="margin-top: 5%; margin-left: 6%;">
             <paper-dropdown-menu   label="Select Grade">
               <paper-menu class="dropdown-content" id="gradeselect" on-iron-select="classes1" attr-for-selected="value" >
                 <template  is="dom-repeat" items="{{classarr}}" as="view">
