@@ -62,7 +62,7 @@
     
        FnSelectacademicyear:function(e){ 
         academicyear=e.target.selectedItem.value.trim();
-        localStorage.setItem("curr_sess_academicyear","AY-"+academicyear);
+        localStorage.setItem("curr_sess_academicyear",academicyear);
        if(localStorage.getItem('curr_sess_acadmic')=="zone")
          {
         alert(localStorage.getItem("curr_sess_academicyear"));
