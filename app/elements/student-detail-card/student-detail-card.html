@@ -17,7 +17,7 @@
   {
 
         @apply(--layout-horizontal);
-        
+        margin-left: 2%;
   }
   .hrspace
   {
@@ -26,14 +26,16 @@
 
   .card
       {
-        width:68%;
-        height:420px;
+         width:120%;
+        /*height:420px;*/
         margin-top: 1%;
-        border: solid 1px #555; 
+        border: solid 1px #ccc; 
         background-color: white; 
-        box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); 
+        box-shadow: 0 0 2px 2px rgba(0,0,0,0.2); -moz-box-shadow: 0 0 2px 2px rgba(0,0,0,0.2); -webkit-box-shadow: 0 0 2px 2px rgba(0,0,0,0.2); -o-box-shadow: 0 0 2px 2px rgba(0,0,0,0.2); 
       }
-
+paper-dropdown-menu{
+      width:85%;
+    }
     </style>
    <div class="layframe">
     <div class="card">
@@ -51,7 +53,7 @@
       
         <div class="horizontalframe">
             <div class="drop-down">
-              <paper-dropdown-menu label="Select Class">
+              <paper-dropdown-menu label="Select Class" style="margin-left: 2%;">
                 <paper-menu id="selectclasses" required error-message="needs a class!" class="dropdown-content" on-iron-select="classes" valueattr="value" >
                   <paper-item value=0>< - - Select Class - - ></paper-item>
                                   <template  is="dom-repeat" items="{{select_class}}" as="view">
@@ -61,7 +63,7 @@
               </paper-dropdown-menu>
             </div>
     <div class="hrspace">
-            <paper-dropdown-menu label="class-Type">
+            <paper-dropdown-menu label="class-Type" style="margin-left: -3%;">
               <paper-menu id="schooltypes" required error-message="needs a Class Type!" class="dropdown-content" on-iron-select="schooltype" valueattr="value" >
                 <paper-listbox class="dropdown-content">
                 <paper-item value=0>< - - Select Grade - - ></paper-item>
@@ -73,7 +75,7 @@
               </paper-menu>
             </paper-dropdown-menu>
           </div>
-         <div class="hrspace">
+         <div class="hrspace" style="margin-left: -5%;margin-top: -1%;">
             <studentdatepicker-card></studentdatepicker-card>
           </div>
         </div>
@@ -109,7 +111,7 @@
           </div>
          
         </div>
-      <div class="btn11" style="margin-left: 26%;">
+      <div class="btn11" style="padding: 1%;">
         <paper-button id="button" class="button" on-click="click">Submit</paper-button>
       </div>
      </div> 

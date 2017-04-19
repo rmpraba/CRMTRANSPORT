@@ -1317,7 +1317,7 @@ app.post('/getnameofstu-card',  urlencodedParser,function (req, res)
 app.post('/payfee-card',  urlencodedParser,function (req, res)
 {
    
-        var instalment1date=req.query.instdate;
+    var instalment1date=req.query.instdate;
     var mode;
     var install1;
     var install1date;
