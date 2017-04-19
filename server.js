@@ -351,7 +351,7 @@ app.post('/getfee' ,  urlencodedParser,function (req, res)
 app.post('/getzonechangefee' ,  urlencodedParser,function (req, res)
 {
     var schoolx={"school_id":req.query.schol};
-  var zone={"zone_name":req.query.zone};
+     var zone={"zone_name":req.query.zone};
       connection.query('select fees from md_distance where id=(select distance_id from md_zone where ? and ? and  academic_year="'+req.query.academic_year+'")',[zone,schoolx],
         function(err, rows)
         {
