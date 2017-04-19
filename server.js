@@ -546,6 +546,7 @@ app.post('/getname' ,  urlencodedParser,function (req, res)
     var schoolx={"school_id":req.query.schol};
     var trans_req={"transport_required":"yes"};
     var qur="select student_name from student_details where id NOT IN(Select student_id from student_fee where status='mapped' and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and transport_required='yes'";
+      
       console.log(qur);
       connection.query(qur,
         function(err, rows)
@@ -648,10 +649,16 @@ app.post('/getstudetail' ,  urlencodedParser,function (req, res)
 {
     var schoolx={"school_id":req.query.schol};
     var id={"student_name":req.query.studid};
-      connection.query('select * from student_details where ? and ?',[id,schoolx],
+    var acyear={"academic_year":req.query.academicyear};
+    var qur="select * from student_details where school_id='"+req.query.schol+"' and student_name='"+req.query.studid+"' and academic_year='"+req.query.academicyear+"'";
+      console.log('--------------------------------------');
+      console.log(qur);
+      console.log('--------------------------------------');
+      connection.query('select * from student_details where ? and ? and ?',[id,schoolx,acyear],
         function(err, rows)
         {
         if(!err)
+    
     {
       if(rows.length>0)
       {

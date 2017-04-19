@@ -1468,7 +1468,7 @@
         var obj={"studid":"","schol":"","academic_year":""};
         obj.studid=studid;
         obj.schol=sessionStorage.getItem("sch");
-        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
 
         this.getstudetailparam=obj;
         this.$.getstudetailajax.generateRequest();
