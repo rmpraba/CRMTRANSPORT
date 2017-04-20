@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
-  database : 'transport'
+  database : 'transportcloud'
 
 });
 var bodyParser = require('body-parser');
@@ -35,8 +35,8 @@ var parentemail=req.query.parentemail;
   var bank=req.query.bank;
 //console.log(parentemail);
 var server  = email.server.connect({
-   user:    "softabbas@gmail.com",
-   password:"@Abbas4321",
+   user:    "samsidhgroup@yahoo.com",
+   password:"mlzsinstitutions",
    host:    "smtp.gmail.com",
    ssl:     true
 
@@ -44,7 +44,7 @@ var server  = email.server.connect({
 // send the message and get a callback with an error or details of the message that was sent
 server.send({
    text:    "FEE RECEIPT/ACKNOWLEDGEMENT",
-   from:    "softabbas@gmail.com",
+   from:    "samsidhgroup@yahoo.com",
    to:      parentemail,
    subject: "FEE RECEIPT/ACKNOWLEDGEMENT",
     attachment:
@@ -4688,9 +4688,9 @@ app.post('/registrationfee',  urlencodedParser,function (req, res)
   {  
     var response={"school_id":req.query.schlidz,
     "id":req.query.distanceid1,"mindistance":req.query.mindistance,"maxdistance":req.query.maxdistance,"fees":req.query.fee,"academic_year":req.query.academic_year}; 
-   //console.log(response);
+   console.log(response);
 
-    var qqq="SELECT * FROM md_distance WHERE school_id='"+req.query.schlidz+"' and  id='"+req.query.distanceid1+"' or mindistance='"+req.query.mindistance+"' and maxdistance='"+req.query.maxdistance+"' and  academic_year='"+req.query.academic_year+"'";
+    var qqq="SELECT * FROM md_distance WHERE school_id='"+req.query.schlidz+"' and  id='"+req.query.distanceid1+"' and mindistance='"+req.query.mindistance+"' and maxdistance='"+req.query.maxdistance+"' and  academic_year='"+req.query.academic_year+"'";
      console.log(qqq);
      
     connection.query(qqq,
@@ -4709,7 +4709,10 @@ app.post('/registrationfee',  urlencodedParser,function (req, res)
                 function (err,result)
                 {
                   if(result.affectedRows>0)
+                  {
+                    console.log(rows);
                     res.status(200).json({'returnval': 'Inserted!'});
+                  }
               });
             }
               else
@@ -4756,7 +4759,6 @@ app.post('/registrationfee',  urlencodedParser,function (req, res)
     "id":req.query.zonename1,"distance_id":req.query.distanceid1,"zone_name":req.query.zoneid1,
     "academic_year":req.query.academic_year}; 
     console.log(response);
-
 
     var qq1="SELECT school_id,id,zone_name,distance_id,(select id from md_distance where id=distance_id) from md_zone where school_id='"+req.query.scholid+"' and academic_year='"+req.query.academic_year+"' and distance_id='"+req.query.distanceid1+"' and id='"+req.query.zonename1+"' ";
 
