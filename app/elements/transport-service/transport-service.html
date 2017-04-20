@@ -3539,7 +3539,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
       newdistanceResponse:function(e)
       {
         var res=e.detail.response.returnval;
-        //alert(JSON.stringify(res));
+       // alert(JSON.stringify(res));
 
         if(res=='Already Exit')
         {
@@ -3559,7 +3559,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.fnnewzoneparam=obj;
         //alert(distanceid1+""+zoneid1);
-        //alert(JSON.stringify(obj));
+       // alert(JSON.stringify(obj));
         this.$.fnnewzoneajax.generateRequest();
 
         }    
@@ -3568,7 +3568,11 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
       fnnewzoneResponse:function(e)
       {
         var res=e.detail.response.returnval;
-       // alert(JSON.stringify(res));
+        if(res=='Inserted!')
+        {
+            alert("Inserted");
+        }
+        //alert(JSON.stringify(res));
       },
      
 

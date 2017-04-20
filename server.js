@@ -4688,9 +4688,9 @@ app.post('/registrationfee',  urlencodedParser,function (req, res)
   {  
     var response={"school_id":req.query.schlidz,
     "id":req.query.distanceid1,"mindistance":req.query.mindistance,"maxdistance":req.query.maxdistance,"fees":req.query.fee,"academic_year":req.query.academic_year}; 
-   console.log(response);
+   //console.log(response);
 
-    var qqq="SELECT * FROM md_distance WHERE school_id='"+req.query.schlidz+"' and academic_year='"+req.query.academic_year+"' and id='"+req.query.distanceid1+"' or mindistance='"+req.query.mindistance+"' and maxdistance='"+req.query.maxdistance+"'";
+    var qqq="SELECT * FROM md_distance WHERE school_id='"+req.query.schlidz+"' and  id='"+req.query.distanceid1+"' or mindistance='"+req.query.mindistance+"' and maxdistance='"+req.query.maxdistance+"' and  academic_year='"+req.query.academic_year+"'";
      console.log(qqq);
      
     connection.query(qqq,

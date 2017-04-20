@@ -25,11 +25,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
-      .laybut{
+      .laybut
+      {
         @apply(--layout-horizontal);
-   @apply(--layout-center);
-   display: flex;
-   margin-left: 36%;
+       @apply(--layout-center);
+      display: flex;
+      margin-left: 36%;
+      }
+      .card2
+      {
+         width:57%;
+        height:270px;
+        margin-top: 5%;
+        margin-left: 21%;
+        border: solid 1px #555; 
+        background-color: white; 
+        box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); 
+      }
+      .detail
+      {
+        @apply(--layout-horizontal);
       }
     </style>
     <div class="card2">
@@ -39,7 +54,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <ul>
                 <paper-input hidden value="{{routeid}}"></paper-input>
                 <li class="row">
-                   <div class="detail">
+                  <div class="detail">
                     <div class="field">
                       <paper-dropdown-menu label="Route">
                         <paper-menu   id="sets0" class="dropdown-content" on-iron-select="routezxc" >
@@ -48,7 +63,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                           </template>
                         </paper-menu>
                       </paper-dropdown-menu>
-                    </div><div class="field">
+                    </div>
+                    <div class="field" style="margin-left: 2em;">
                       <paper-dropdown-menu  label="Trip">
                         <paper-menu id="sets01" class="dropdown-content" on-iron-select="tripzxc" >
                           <paper-item value=1>Primary</paper-item>
@@ -56,6 +72,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </paper-menu>
                       </paper-dropdown-menu>
                     </div>
+                  </div>
+                  <div class="detail">  
                     <div class="field">
                       <paper-dropdown-menu  label="Bus">
                         <paper-menu id="sets1" class="dropdown-content" on-iron-select="bus" attr-for-selected="value">
@@ -65,9 +83,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </paper-menu>
                       </paper-dropdown-menu>
                     </div>
-                  </div>
-                  <div class="detail">
-                    <div class="field">
+      
+                    <div class="field" style="margin-left: 2em;">
                       <paper-dropdown-menu  label="Driver">
                         <paper-menu id="sets2" class="dropdown-content" on-iron-select="driver" attr-for-selected="value" >
                           <template  is="dom-repeat" items="{{bustodriver}}" as="view">
@@ -76,7 +93,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </paper-menu>
                       </paper-dropdown-menu>
                     </div>
-                    <div class="field">
+                  </div>
+                   
+
+                    <div class="detail" style="width: 48%;">
                       <paper-dropdown-menu  label="Attender">
                         <paper-menu id="sets3" class="dropdown-content" on-iron-select="attender" attr-for-selected="value" >
                           <template  is="dom-repeat" items="{{bustoattender}}" as="view">
@@ -85,14 +105,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </paper-menu>
                       </paper-dropdown-menu>
                     </div>
-                  </div>
-                </li>
-              </ul>
+                     <div>
+                       <paper-button style="margin-left: 46%;margin-top: 2%" class="button" on-click="payfee">Submit</paper-button>
+                    </div> 
+                  </li>
+                </ul>
             </fieldset>
           </li>
         </ul>
-        <paper-button style="margin-left: 46%;margin-top: 2%" class="button" on-click="payfee">Submit</paper-button>
-    </div>
+      </div>
+          
+        <!-- <paper-button style="margin-left: 46%;margin-top: 2%" class="button" on-click="payfee">Submit</paper-button> -->
     <div class="confirm-fee">
   <paper-dialog id="confirmbox1ret" modal>
   <h4>Do You Want Proceed ?</h4>

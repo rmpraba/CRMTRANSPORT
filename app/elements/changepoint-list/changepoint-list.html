@@ -43,7 +43,7 @@
       <li class="ro11">
         <fieldset>
         <ul>
-          <div class="check-box">
+          <div class="check-box" style="margin-right: -8em;">
             <paper-checkbox id="selectbox" on-change="changeHandler"></paper-checkbox>
           </div>
             <li class="row">
@@ -51,7 +51,7 @@
                 <div class="field" style="padding: 0 1% 0 1%;">
                     <paper-input readonly class="field" value="{{studentid}}"></paper-input>
                 </div>
-                <div class="field"  style="padding: 0 1% 0 1%;">
+                <div class="field"  style="margin-left: 3em;">
                     <paper-input readonly class="field" value="{{studentname}}"></paper-input>
                 </div>
               </div>
@@ -68,7 +68,7 @@
                     </paper-menu>
                   </paper-dropdown-menu>
                 </div>
-                <div class="field">
+                <div class="field" style="margin-left: 3em;">
                   <paper-dropdown-menu id="set1" label="Pick-up Point">
                     <paper-menu class="dropdown-content" on-iron-select="pickpoints" selected="{{selectpick}}" attr-for-selected="value" >
                       <template  is="dom-repeat" items="{{pointarr}}" as="view">
@@ -91,7 +91,7 @@
                     </paper-menu>
                   </paper-dropdown-menu>
                 </div>
-                <div class="field">
+                <div class="field" style="margin-left: 3em;">
                   <paper-dropdown-menu id="set3" label="Drop Point">
                     <paper-menu class="dropdown-content" on-iron-select="droppoints" selected="{{selectpoint}}" attr-for-selected="value" >
                       <template  is="dom-repeat" items="{{droparr}}" as="view">
