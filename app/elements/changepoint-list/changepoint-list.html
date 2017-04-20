@@ -22,16 +22,22 @@
   }
    .card
       {
-        width:60%;
-        height:450px;
+        width:57%;
+        height:220px;
+        margin-left: 26%;
         border: solid 1px #555; 
         background-color: white; 
         box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); 
+      }
+      .detail
+      {
+        @apply(--layout-horizontal);
       }
 </style>
 <template>
   <legend align="center"></legend>
   <paper-input hidden class="field" value="{{schooltype}}"></paper-input>
+    
   <div class="card">
     <!-- <ul> -->
       <li class="ro11">

@@ -2208,6 +2208,7 @@ document.querySelector('feereports2-card').totalcollection=parseInt(cashtotal1)+
 			},
 			pendingResponse:function(e){
 				var pending=e.detail.response.returnval;
+				alert(JSON.stringify(pending));
 				if(e.detail.response.returnval=='invalid')
 				{
 					 document.querySelector('transport-app').setPage("nodata","Pending Fee Report");

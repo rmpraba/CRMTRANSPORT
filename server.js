@@ -6,6 +6,7 @@ var connection = mysql.createConnection({
   user     : 'root',
   password : 'admin',
   database : 'transport'
+
 });
 var bodyParser = require('body-parser');
  var app = express();

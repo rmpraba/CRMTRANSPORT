@@ -160,10 +160,96 @@
 
         <paper-input id="status" class="field" value="{{status}}"></paper-input>
     </div>
+  </div>
+
+        <div hidden$="{{hidepayoption}}">
+        <div  class="collapse" on-click="toggle2"><b>Transport Fee</b></div>
+          <div  class="horizontalframe" style="margin-top: 2%;">
+            <div style="width: 25%; ">
+              <paper-checkbox style="margin-left: 25%" id="lumsum" class="checkbox" on-change="lumsumHandler">LUMPSUM</paper-checkbox>
+            </div>
+            <div style="width: 100%;">
+              <paper-checkbox style="margin-left: 3%" id="install" class="checkbox" on-change="installHandler">INSTALLMENT</paper-checkbox>
+            </div>
+          </div>
+        </div>
+
+      <div hidden$="{{hidetransport}}">
+
+        <div class="collapse1">
+          <paper-tabs>
+            <paper-tab>Installment Type</paper-tab>
+            <paper-tab>Amount</paper-tab>
+            <paper-tab>Mode of Payment</paper-tab>
+          </paper-tabs>
+        </div>
+        <div class="collapse1">
+          <template  is="dom-repeat" items="{{installmentarr}}" as="view">
+            <zoneinstalltype-card installtype="{{view.installtype}}"  installamt="{{view.amount}}" paydate="{{view.paydate}}" installdate="{{view.installdate}}" paidstatus="{{view.paidstatus}}" paymode="{{view.paymentmode}}" studid="{{view.feestudid}}" studname="{{view.feestudname}}" fineamount="{{view.fineamt}}">
+            </zoneinstalltype-card>
+          </template>
+          <div>
+            <paper-button  id="{{id}}" on-click="payfee">PAY</paper-button>
+          </div>
+        </div>
+      </div>
+
+      <div hidden$="{{hidetransport1}}">
+
+        <div class="collapse1">
+          <paper-tabs>
+            <paper-tab>Installment Type</paper-tab>
+            <paper-tab>Amount</paper-tab>
+            <paper-tab>Mode of Payment</paper-tab>
+          </paper-tabs>
+        </div>
+        <div class="collapse1">
+          <template  is="dom-repeat" items="{{installmentarr1}}" as="view">
+            <zoneinstalltype-card installtype="{{view.installtype}}" installamt="{{view.amount}}"  paydate="{{view.paydate}}" installdate="{{view.installdate}}" paidstatus="{{view.paidstatus}}" paymode="{{view.paymentmode}}" studid="{{view.feestudid}}" studname="{{view.feestudname}}" fineamount="{{view.fineamt}}">
+            </zoneinstalltype-card>
+          </template>
+          <div>
+            <paper-button  id="{{id}}" on-click="payfee">PAY</paper-button>
+          </div>
+        </div>
+      </div>
+  </div>
+  </body>
+          <div class="confirm-fee">
+            <paper-dialog id="confirmbox" modal>
+              <h4>Do You Want Continue to Pay</h4>
+              <paper-tabs>
+                <paper-tab>Installment Type</paper-tab>
+                <paper-tab>Amount</paper-tab>
+                <paper-tab>Mode of Payment</paper-tab>
+                <paper-tab>Cheque No</paper-tab>
+                <paper-tab>Bank Name</paper-tab>
+                <paper-tab>Cheque Date</paper-tab>
+              </paper-tabs>
+            <template  is="dom-repeat" items="{{continuearr}}" as="view">
+              <div  class="horizontalframe">
+                <paper-item>{{view.installtype}}</paper-item>
+                <paper-item>{{view.installamt}}</paper-item>
+                <paper-item>{{view.paytype}}</paper-item>
+                <paper-item>{{view.chequenum}}</paper-item>
+                <paper-item>{{view.bankname}}</paper-item>
+                <paper-item>{{view.chequedate}}</paper-item>
+              </div>
+            </template>
+            <div  class="horizontalframe">
+              <div class="buttons hrspace" >
+                <paper-button style="height:33px !important;"  on-click="Confirm">CONFIRM</paper-button>
+              </div>
+              <div class="buttons hrspace">
+                <paper-button style="height:33px !important;" on-click="cancel">CANCEL</paper-button>
+              </div>  
+            </div>
+          </paper-dialog>
+        </div>
   </div> 
 
-<div hidden$="{{hidepayoption}}">
-<div  class="collapse" on-click="toggle2">Transport Fee</div>
+<!-- <div hidden$="{{hidepayoption}}">
+<div  class="collapse" on-click="toggle2"><b>Transport Fee</b></div>
 <div  class="horizontalframe" style="margin-top: 2%;">
   <div style="width: 25%; ">
   <paper-checkbox style="margin-left: 25%" id="lumsum" class="checkbox" on-change="lumsumHandler">LUMPSUM</paper-checkbox></div>
@@ -243,7 +329,7 @@
     </div>  
   </div>
    </paper-dialog>
-</div>
+</div> -->
     <transport-service id="root"></transport-service>
     <transportfee-service id="service"></transportfee-service>
 </template>
@@ -304,7 +390,7 @@ if(sessionStorage.getItem("sch")=='SCH003'||sessionStorage.getItem("sch")=='SCH0
   this.$.twowayoption.hidden=true;
 
 }
-else
+else   
 {
   this.$.moption.hidden=true;
 }
@@ -630,9 +716,8 @@ this.hidetransport=true;
     this.itemArray=[];
     document.querySelector('#input1').selected=-1;
     this.value=this.studid;
-   // alert(this.studid);
+   //alert(this.studid);
      this.$.root.getstudetail(this.studid);
-
      this.$.dad1.disabled=false;
      this.$.dad2.disabled=false;
      this.$.dad4.disabled=false;
