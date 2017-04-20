@@ -95,7 +95,7 @@
     { 
  
         transacademicyr=e.target.selectedItem.value.trim();
-        localStorage.setItem("curr_sess_academicyear","AY-"+transacademicyr);
+        localStorage.setItem("curr_sess_academicyear",transacademicyr);
        if(localStorage.getItem('curr_sess_acadmic')=="pointallocation")
          {
           document.querySelector('transport-app').setPage("mapstudenttopoint","Map Student to point");

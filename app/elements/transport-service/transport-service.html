@@ -1362,6 +1362,7 @@
          obj.grade=grade;
          this.gettermdateparam=obj;
         //alert(JSON.stringify(obj));
+
         this.$.gettermdateajax.generateRequest();
       },  
          gettermdateResponse:function(e1)
@@ -1403,7 +1404,8 @@
          if(result=="success")
          {
           alert('Zone allocated successfully');
-          document.querySelector('transportfee-service').zonefee(zstuname);
+          document.querySelector('zonetostudent-card').FnDeselect();
+          // document.querySelector('transportfee-service').zonefee(zstuname);
          }
          else
          {
@@ -1467,7 +1469,7 @@
         var obj={"studid":"","schol":"","academic_year":""};
         obj.studid=studid;
         obj.schol=sessionStorage.getItem("sch");
-        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
 
         this.getstudetailparam=obj;
         this.$.getstudetailajax.generateRequest();
@@ -1612,6 +1614,7 @@
         var routereportresult=e.detail.response.returnval;
         var no_of_student = routereportresult.length;
        // alert(JSON.stringify(routereportresult));
+
        document.querySelector('gradewiseroute-report').reportarr=routereportresult;
         document.querySelector('gradewiseroute-report').no_of_student=no_of_student;
       },
@@ -1764,7 +1767,7 @@
         var reportresult=e.detail.response.returnval;
         if(reportresult=='success'){
             
-          alert('Cancellation Request is Sent Successfully');
+        alert('Cancellation Request is Sent Successfully');
               var obj={"student_id":"","schol":""}
               obj.schol=sessionStorage.getItem("sch");
         obj.student_id=this.student_id;
@@ -2105,7 +2108,7 @@
           feedet=e.detail.response.returnval;
           //alert(JSON.stringify(feedet));
           //alert(feedet[0].student_id);
- this.getfeeparenturl=sessionStorage.getItem("addrinfo")+"/getfeeparent";
+              this.getfeeparenturl=sessionStorage.getItem("addrinfo")+"/getfeeparent";
               var obj={"stid":"","schol":""}
               obj.schol=sessionStorage.getItem("sch");
               obj.stid=feedet[0].student_id;
@@ -2992,6 +2995,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
               this.increasedriveridparam=obj1;
               this.$.increasedriveridajax.generateRequest();
              // alert('1');
+
                  this.driver_count();
      
                 document.querySelector('driver-card').FnClear();
@@ -3340,6 +3344,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             alert('Error! Attendance marked for this trip or No students Mapped');
         } else {
            // alert(JSON.stringify(result));
+
             document.querySelector('addattendence-card').attendancearr=result;
         }
       },
@@ -3442,6 +3447,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
     },
     getstaffroute:function(rout,trip){
        // alert('pick service');
+
         this.getstaffrouteurl=sessionStorage.getItem("addrinfo")+"/getstaffroute";
         var obj={"schol":"","route":"","trip":""}
         obj.route=rout;
@@ -3457,6 +3463,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
     },
     getstaffdrop:function(rout,trip){
        // alert('drop service');
+
         this.getstaffdropurl=sessionStorage.getItem("addrinfo")+"/getstaffdrop";
         var obj={"schol":"","route":"","trip":""}
         obj.route=rout;
@@ -3561,7 +3568,6 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
       {
         var res=e.detail.response.returnval;
        // alert(JSON.stringify(res));
-        
       },
      
 

@@ -1,25 +1,25 @@
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
- <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-   <link rel="import" href="../bower_components/paper-input/paper-input.html">
+       <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+       <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+       <link rel="import" href="../bower_components/paper-input/paper-input.html">
        <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
        <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
        <link rel="import" href="../bower_components/paper-item/paper-item.html">
        <link rel="import" href="../bower_components/paper-button/paper-button.html">
-       <link rel="import" href="../bower_components/paper-styles/paper-styles.html">
-       <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
-       <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-       <link rel="import" href="../bower_components/paper-input-autocomplete/paper-input-autocomplete.html">
-       <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
-       <link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
-       <link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
-        <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+    <link rel="import" href="../bower_components/paper-styles/paper-styles.html">
+    <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../bower_components/paper-input-autocomplete/paper-input-autocomplete.html">
+    <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+    <link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
+    <link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
+    <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
     <link rel="import" href="../transport-service/transport-service.html">
     <link rel="import" href="../fromdatepicker-card/fromdatepicker-card.html">
     <link rel="import" href="../todatepicker-card/todatepicker-card.html">
     <link rel="stylesheet" type="text/css" href="../styles/styles.css">
     <link rel="import" href="../zoneinstalltype-card/zoneinstalltype-card.html">
     <link rel="import" href="../zoneinstalltype1-card/zoneinstalltype1-card.html">
-        <link rel="import" href="../transportfee-service/transportfee-service.html">
+    <link rel="import" href="../transportfee-service/transportfee-service.html">
 <dom-module id="zonetostudent-card">
 
 <template>
@@ -37,7 +37,6 @@
   }
   .hrrspace
   {
-
     padding-left: 4%;
   }
   .vrspace
@@ -46,7 +45,7 @@
     margin-top: 2%;
   }
   .fee{
-    margin-left: 1%;
+    margin-left: -3%;
   }
   .mode{
     margin-left: 4%;
@@ -54,13 +53,16 @@
   }
   .card
       {
-        width:68%;
-        height:420px;
+        width:110%;
+        /*height:420px;*/
         margin-top: 1%;
-        border: solid 1px #555; 
+        border: solid 1px #ccc; 
         background-color: white; 
-        box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); 
+        box-shadow: 0 0 2px 2px rgba(0,0,0,0.2); -moz-box-shadow: 0 0 2px 2px rgba(0,0,0,0.2); -webkit-box-shadow: 0 0 2px 2px rgba(0,0,0,0.2); -o-box-shadow: 0 0 2px 2px rgba(0,0,0,0.2); 
       }
+    paper-dropdown-menu{
+      width:85%;
+    }
 </style>
   <body>
 
@@ -121,9 +123,9 @@
 
       <div  class="horizontalframe hrrspace">
         <div class="verticalframe">
-          <p style="font-weight: 500; font-size: large; margin-left: -1.5%;">Travel Requirements:</p>
+          <p style="font-weight: 500; font-size: large; margin-left: -10%;">Travel Requirements:</p>
         <div  style="width: 170%;" class="horizontalframe" >
-          <div style="width: 150%;">
+          <div style="width: 150%;margin-left: -4%;">
             Complete Year
               <paper-checkbox style="margin-left: 3%" id="yearly" readonly class="checkbox" on-change="fullHandler"></paper-checkbox></div>
               <div style="width: 100%;" id="twowayoption">
@@ -135,13 +137,13 @@
     </div>
 
     <div class="mode" id="moption">
-      <p style="font-weight: 500; font-size: large; margin-left: 0%;">Mode Of Travel:</p>
+      <p style="font-weight: 500; font-size: large; margin-left: 2%;">Mode Of Travel:</p>
         <div style="width: 70%;" class="horizontalframe" >
-          <div style="width: 25%;">
+          <div style="width: 50%;">
             One-Way
-            <paper-checkbox style="margin-left: 25%" id="oneway" class="checkbox" on-change="onewayHandler"></paper-checkbox>
+            <paper-checkbox style="margin-left: 5%" id="oneway" class="checkbox" on-change="onewayHandler"></paper-checkbox>
           </div>
-          <div style="width: 100%;">
+          <div style="width: 50%;">
             Two-Way
             <paper-checkbox style="margin-left: 3%" id="twoway1" class="checkbox" on-change="twowayHandler1"></paper-checkbox>
           </div>
@@ -388,7 +390,7 @@ if(sessionStorage.getItem("sch")=='SCH003'||sessionStorage.getItem("sch")=='SCH0
   this.$.twowayoption.hidden=true;
 
 }
-else
+else   
 {
   this.$.moption.hidden=true;
 }
@@ -485,7 +487,6 @@ this.hidetransport=true;
        gotozone:function()
        {
 
-
        },
     zoned:function(e){
       this.zone_id=e.target.selectedItem.value;
@@ -495,15 +496,13 @@ this.hidetransport=true;
       this.$.root.studzone(this.id);
       this.$.dad.disabled=false;
       this.$.yearly.disabled=true;
-         this.$.twoway.disabled=true;
-         this.$.twoway1.disabled=false;
-         this.$.oneway.disabled=false;
-          this.$.but.disabled=false;
+      this.$.twoway.disabled=true;
+      this.$.twoway1.disabled=false;
+      this.$.oneway.disabled=false;
+      this.$.but.disabled=false;
       document.querySelector("#yearly").checked=true;
       document.querySelector("#twoway").checked=true;
-       document.querySelector("#twoway1").checked=true;
-
-
+      document.querySelector("#twoway1").checked=true;
     },
     setzonedate:function(zonefromdate,zonetodate)
     {
@@ -719,7 +718,6 @@ this.hidetransport=true;
     this.value=this.studid;
    //alert(this.studid);
      this.$.root.getstudetail(this.studid);
-
      this.$.dad1.disabled=false;
      this.$.dad2.disabled=false;
      this.$.dad4.disabled=false;
@@ -936,11 +934,11 @@ click:function(e)
     }
     else{
       this.$.root.setzone(this.id,this.zone_id,this.fee,fromdate,todate,mode,name,today,status,this.value);
-      this.hidepayoption=false;
+      // this.hidepayoption=false;
       document.querySelector("#install").checked=true;
-      this.hidetransport=false;
-          this.hidetransport1=true;
-          this.installmentarr=payarrr;
+      // this.hidetransport=false;
+          // this.hidetransport1=true;
+          // this.installmentarr=payarrr;
 
     }
 
@@ -949,11 +947,26 @@ click:function(e)
 clickdate:function()
 {
     this.$.date1.hidden=false;
-        this.$.date2.hidden=false;
-        this.$.datebox.hidden=false;
+    this.$.date2.hidden=false;
+    this.$.datebox.hidden=false;
+},
+FnDeselect:function(){
+  document.querySelector('#zone').selected=-1;
+  this.fee="";
+  this.value="";
+  this.parent="";
+  this.grade="";
+  this.stnd="";
+  this.id="";
+  this.date="";
+  document.querySelector('#yearly').checked=false;
+  document.querySelector('#twoway').checked=false;
+  document.querySelector('#oneway').checked=false;
+  document.querySelector('#twoway1').checked=false;
 }
   });
    })();
+
 
 </script>
 </dom-module>
