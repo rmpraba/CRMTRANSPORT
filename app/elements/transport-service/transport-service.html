@@ -1482,7 +1482,7 @@
       },
       parentnameResponse:function(e){
        // alert("2");
-        var parentname= e.detail.response.returnval[0].parent_name;
+        var parentname= e.detail.response.returnval[0].father_name;
        // alert((parentname));
         document.querySelector('zonetostudent-card').parent=parentname;
       },
@@ -1492,18 +1492,19 @@
             var gradename=e1.detail.response.returnval[0].school_type;
             var dob=e1.detail.response.returnval[0].dob;
             var stdid=e1.detail.response.returnval[0].id;
-            var classz=e1.detail.response.returnval[0].class_id;
+            var classz=e1.detail.response.returnval[0].class;
             document.querySelector('zonetostudent-card').name=profilename;
             document.querySelector('zonetostudent-card').grade=gradename;
             document.querySelector('zonetostudent-card').date=dob;
             document.querySelector('zonetostudent-card').id=stdid;
+            document.querySelector('zonetostudent-card').stnd=classz;
 
-            this.classurl=sessionStorage.getItem("addrinfo")+"/getclass";
-            var obj1={"class":"","schol":""}
-            obj1.class=classz;
-            obj1.schol=sessionStorage.getItem("sch");
-            this.classparam=obj1;
-            this.$.classajax.generateRequest();
+            // this.classurl=sessionStorage.getItem("addrinfo")+"/getclass";
+            // var obj1={"class":"","schol":""}
+            // obj1.class=classz;
+            // obj1.schol=sessionStorage.getItem("sch");
+            // this.classparam=obj1;
+            // this.$.classajax.generateRequest();
 
       },
       classResponse:function(e){

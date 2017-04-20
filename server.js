@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
-  database : 'demo11'
+  database : 'transport'
 });
 var bodyParser = require('body-parser');
  var app = express();
@@ -378,8 +378,8 @@ app.post('/gettermdate' ,  urlencodedParser,function (req, res)
   var schoolx={"school_id":req.query.schol};
   var idz={"school_type":req.query.grade};
   var academicyear={"academic_year":req.query.academic_year};
-  
-      connection.query('select start_date,end_date from transport_details where ? and ? and ?',[idz,schoolx,academicyear],
+  // var qur="select start_date,end_date from transport_details where school_id='"+req.query.schol+"' and ? and ?";
+      connection.query('select start_date,end_date from transport_details where ? and ? ',[schoolx,academicyear],
         function(err, rows)
         {
         if(!err)
@@ -427,8 +427,8 @@ app.post('/getzonechangetermdate' ,  urlencodedParser,function (req, res)
 });
 app.post('/setzone' ,  urlencodedParser,function (req, res)
 {
-  var queryy="insert into student_fee values('"+req.query.schol+"','"+req.query.studid+"','"+req.query.zone+"','','',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"','"+req.query.name+"',STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),'"+req.query.status+"','','',0,0,'"+req.query.academic_year+"')";
-     // console.log(queryy);
+  var queryy="insert into student_fee values('"+req.query.schol+"','"+req.query.studid+"','"+req.query.zone+"','','',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"','"+req.query.name+"',STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),'"+req.query.status+"','','',0,0,'"+req.query.academic_year+"','','','','','')";
+     console.log(queryy);
       connection.query(queryy,function(err, rows){   
       if(!err)
       {
@@ -545,8 +545,9 @@ app.post('/getname' ,  urlencodedParser,function (req, res)
 {
     var schoolx={"school_id":req.query.schol};
     var trans_req={"transport_required":"yes"};
-    var qur="select student_name from student_details where id NOT IN(Select student_id from student_fee where status='mapped' and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and transport_required='yes'";
-      
+    // var qur="select student_name from student_details where id NOT IN(Select student_id from student_fee where status='mapped' and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and transport_required='yes'";
+    var qur="select student_name from student_details where  school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and transport_required='yes'";
+    // var qur="select s.student_name from student_details s"
       console.log(qur);
       connection.query(qur,
         function(err, rows)
@@ -650,10 +651,10 @@ app.post('/getstudetail' ,  urlencodedParser,function (req, res)
     var schoolx={"school_id":req.query.schol};
     var id={"student_name":req.query.studid};
     var acyear={"academic_year":req.query.academicyear};
-    var qur="select * from student_details where school_id='"+req.query.schol+"' and student_name='"+req.query.studid+"' and academic_year='"+req.query.academicyear+"'";
-      console.log('--------------------------------------');
-      console.log(qur);
-      console.log('--------------------------------------');
+    // var qur="select * from student_details where school_id='"+req.query.schol+"' and student_name='"+req.query.studid+"' and academic_year='"+req.query.acyear+"'";
+      // console.log('--------------------------------------');
+      // console.log(qur);
+      // console.log('--------------------------------------');
       connection.query('select * from student_details where ? and ? and ?',[id,schoolx,acyear],
         function(err, rows)
         {
@@ -1933,7 +1934,7 @@ app.post('/getclass',  urlencodedParser,function (req, res)
 {
     var schoolx={"school_id":req.query.schol};
       var id={"class":req.query.class};
-      connection.query('SELECT * from class_details where ? and ?',[id,schoolx],
+      connection.query('SELECT * from student_details where ? and ?',[id,schoolx],
         function(err, rows)
         {
     if(!err)
@@ -3139,7 +3140,10 @@ app.post('/getparentname',  urlencodedParser,function (req, res){
   var stuid = req.query.studid;
   var schoolx=req.query.schol;
   var academicyear=req.query.academic_year;
-  connection.query('select * from parent where student_id=(select id from student_details where student_name=? and school_id=? and academic_year=?) and school_id=? and academic_year=?',[stuid,schoolx,academicyear,schoolx,academicyear],
+  var qur="select * from mlzscrm.md_admission where admission_no=(select id from transport.student_details where student_name='"+req.query.studid+"' and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"'";
+  console.log('-------------------------------------');
+  console.log(qur);
+  connection.query('select * from mlzscrm.md_admission where admission_no=(select id from transport.student_details where student_name=? and school_id=? and academic_year=?) and school_id=? and academic_year=?',[stuid,schoolx,academicyear,schoolx,academicyear],
     function(err, rows){
       if(!err){
         if(rows.length>0)
@@ -3783,7 +3787,6 @@ app.post('/consolidatedreportread',  urlencodedParser,function (req, res){
     }
   });
 });
-
 
 app.post('/consolidatedallocatedreportread',  urlencodedParser,function (req, res){
   
