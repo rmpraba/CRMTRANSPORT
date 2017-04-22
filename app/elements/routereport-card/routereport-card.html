@@ -116,7 +116,7 @@
         <paper-button id="btn2" style="margin: 4% 0 0 4%; height: 35px;" onclick="tableToExcel('testTable2', 'W3C Example Table')" value="Export to Excel">Excel</paper-button>
       </div>
       <transport-service id="service"></transport-service>
-    </template>
+    </template>   
   </div>
   <script type="text/javascript">
     var tableToExcel = (function() {
@@ -252,7 +252,7 @@
       },
       show:function()
       {
-      this.selectroute=routename;
+      this.selectroute=routename;   
          this.$.print.hidden=false;
         this.querySelector("#tableheading").style.visibility='visible';
         this.querySelector("#testTable2").style.visibility='visible';
