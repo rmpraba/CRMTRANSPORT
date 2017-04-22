@@ -3567,7 +3567,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.fnnewzoneparam=obj;
         //alert(distanceid1+""+zoneid1);
-       // alert(JSON.stringify(obj));
+       //alert(JSON.stringify(obj));
         this.$.fnnewzoneajax.generateRequest();
 
         }    
@@ -3596,7 +3596,9 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         var res=e.detail.response.returnval;
         //alert("disttt");
 
-        document.querySelector('zonedistance-card').distanceid=res[0].distance_prefix+res[0].distance_seq;
+        var disid=res[0].distance_prefix+res[0].distance_seq;
+        //alert(disid);
+        document.querySelector('zonedistance-card').fndistanceidseqq(disid);
         //alert(JSON.stringify(distanceid));  
 
       },
@@ -3611,8 +3613,10 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
       {
         var res=e.detail.response.returnval;
         //alert("zoneee");
-        //alert(JSON.stringify(res));      
-        document.querySelector('zonedistance-card').zoneid=res[0].zone_prefix+res[0].zone_seq;
+        //alert(JSON.stringify(res));   
+        var zid=res[0].zone_prefix+res[0].zone_seq; 
+        //alert(zid);
+        document.querySelector('zonedistance-card').fnzoneidseqq(zid);
       },
 
      
