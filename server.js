@@ -5,10 +5,10 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
-  database : 'cloudtrans'
+  database : 'transportdemo11'
 
 });
-var bodyParser = require('body-parser');
+var bodyParser = require('body-parser'); 
  var app = express();
 
 app.use(express.static('app'));
@@ -35,8 +35,8 @@ var parentemail=req.query.parentemail;
   var bank=req.query.bank;
 //console.log(parentemail);
 var server  = email.server.connect({
-   user:    "softabbas@gmail.com",
-   password:"@Abbas4321",
+   user:    "samsidhgroup@yahoo.com",
+   password:"mlzsinstitutions",
    host:    "smtp.gmail.com",
    ssl:     true
 
@@ -44,7 +44,7 @@ var server  = email.server.connect({
 // send the message and get a callback with an error or details of the message that was sent
 server.send({
    text:    "FEE RECEIPT/ACKNOWLEDGEMENT",
-   from:    "softabbas@gmail.com",
+   from:    "samsidhgroup@yahoo.com",
    to:      parentemail,
    subject: "FEE RECEIPT/ACKNOWLEDGEMENT",
     attachment:
