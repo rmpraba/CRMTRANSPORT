@@ -360,17 +360,6 @@
       document.querySelector('cqreceipt-card').ready();
       document.querySelector('zoneinstalltype-card').FnClear();
       document.querySelector('zoneinstalltype-card').ready();*/
-    if(currpage=="zonetostudent"){
-      document.querySelector('app-card').setPage("transportapp");
-      document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
-      document.querySelector('zonetostudent-card').FnClear();
-      document.querySelector('zonetostudent-card').ready();
-      document.querySelector('accountsadmin-card').FnRefresh();
-      document.querySelector('zoneinstalltype-card').FnClear();
-      document.querySelector('zoneinstalltype-card').ready();
-
-      
-    }
     if(currpage=="feereports"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
@@ -446,6 +435,18 @@
       document.querySelector('mapstudenttopoint-card').ready();
    
     }
+     if(currpage=="zonetostudent"){
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+      document.querySelector('zonetostudent-card').FnClear();
+      document.querySelector('zonetostudent-card').ready();
+      document.querySelector('accountsadmin-card').FnRefresh();
+      document.querySelector('zoneinstalltype-card').FnClear();
+      document.querySelector('zoneinstalltype-card').ready();
+
+      
+    }
+   
      if(currpage=="changepoint"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");

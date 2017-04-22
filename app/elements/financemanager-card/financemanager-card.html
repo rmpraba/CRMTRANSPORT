@@ -79,7 +79,7 @@
     { 
  
         finacademicyr=e.target.selectedItem.value.trim();
-           localStorage.setItem("curr_sess_academicyear","AY-"+finacademicyr);
+           localStorage.setItem("curr_sess_academicyear",finacademicyr);
             if(localStorage.getItem('curr_sess_acadmic')=="register")
             {
                  document.querySelector('transport-app').setPage("registration","Registration Page");

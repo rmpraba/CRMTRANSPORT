@@ -103,9 +103,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </paper-menu>
         </paper-dropdown-menu>
       </div>
-
-    
-      
+  
    
     <div class="drop-down" style="margin-left: 30%;">   
        <paper-dropdown-menu id="minidistance" label="Select Minimum Distance">
@@ -165,7 +163,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       fnselectnewzone:function(e)
       { 
         zonename="Zone"+" "+e.target.selectedItem.textContent.trim();
-        alert(zonename);
+        //alert(zonename);
         this.$.service.fetchzone(zonename);
 
       },
@@ -198,10 +196,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         else
         {
-          //alert(zonename+" "+this.zoneid+" "+this.distanceid);
+          //alert(zonename+" "+this.zoneid+" "+this.distanceidd);
           //alert(this.fee);
      //   this.$.service.fnnewzone(zonename,this.zoneid,this.distanceid);
-        this.$.service.fnnewdistance(this.distanceid,mindistance,maxdistance,this.fee,zonename,this.zoneid);
+        this.$.service.fnnewdistance(this.distanceidd,mindistance,maxdistance,this.fee,zonename,this.zoneidd);
         this.fnclear();
         }
         
@@ -226,6 +224,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         document.querySelector('#newmindistz').selected=-1;
         document.querySelector('#newmaxdistz').selected=-1;
 
+      },
+      fndistanceidseqq:function(e)
+      {
+        this.distanceidd=e;
+      },
+      fnzoneidseqq:function(e)
+      {
+        this.zoneidd=e;
       }
 
 

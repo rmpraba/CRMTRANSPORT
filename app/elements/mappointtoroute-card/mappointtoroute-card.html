@@ -37,7 +37,7 @@
           <paper-dropdown-menu label="Route" id="route" required  errorMessage ="please select the route" >
             <paper-menu id="routemenu" class="dropdown-content" on-iron-select="rootname" valueattr="value" >
               <template  is="dom-repeat" items="{{routearr}}" as="view">
-                <paper-item value="{{view.route_id}}">{{view.route_name}}</paper-item>
+                <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
@@ -49,7 +49,7 @@
             </paper-menu>
           </paper-dropdown-menu>
         </div>
-        <div>
+        <div hidden$="{{hide11}}">
           <template  is="dom-repeat" items="{{itemarr}}">
             <fetch-card points="{{item.point_name}}" trip="{{item.trip}}" picktime="{{item.pickup_time}}" droptime="{{item.drop_time}}">
           </template>
@@ -66,17 +66,18 @@
   <transport-service id="select"></transport-service>
   </template>
   <script>
-    (function() {
+    (function() { 
       var routename="";
       var pointarray=[];
       var detailarr=[];
       var tripno="";
+        var routevalue1;
         Polymer({
           is: "mappointtoroute-card",
           ready:function(){ 
             this.hide=true;
             this.$.button.hidden=true;
-            this.$.create.hidden=true;
+            this.$.create.hidden=true;   
             //this.$.select.getroute();
           },
           FnClear:function()
@@ -84,23 +85,31 @@
             this.$.routemenu.selected=-1;
             this.$.tripmenu.selected=-1;
             this.itemarr=[];
-
+   
           },
           rootname:function(e){
             routename = (e.target.selectedItem.textContent).trim();
-            this.$.select.gettrip(routename);
+            routevalue1=e.target.selectedItem.value;
+        alert(routevalue1);
+            this.$.select.gettrip(routename,routevalue1);
             sessionStorage.setItem("route",routename);
+            sessionStorage.setItem("routevalue",routevalue1);
+
+        
           },
           tripnum:function(e){
-            tripno = (e.target.selectedItem.textContent).trim();
-            this.$.select.getroutedetail(tripno);
+            tripno=(e.target.selectedItem.textContent).trim();
+            this.$.select.getroutedetail(tripno,routevalue1);
             sessionStorage.setItem("trip",tripno);
             //this.$.button.hidden=false;
             this.$.create.hidden=false;
+           // alert(sessionStorage.getItem("routevalue"));
+               this.hide11=false;
+     
           },
           refreshdeletedata:function()
           {
-             this.$.select.getroutedetail(tripno);
+             this.$.select.getroutedetail(tripno,routevalue1);
              this.hide=true;
 
            },
@@ -126,6 +135,11 @@
               this.$.tripnoo.validate();
             } else {
               this.hide=false;
+              this.hide11=false;
+                   this.$.select.getroutedetail(tripno,routevalue1);
+  
+     
+
             }
           },
           FnGetpoints:function(points,checktype){
@@ -139,6 +153,11 @@
             }
             
           },
+          fn1:function(e){
+        //    alert('1')
+           this.hide11=true;
+          }
+
         });
     })();
     </script>

@@ -14,7 +14,7 @@
 <dom-module id="changepoint-card">
   <template>
   <style>
-  .card{
+  .card{  
    @apply(--layout-center);
   }
   .template{
@@ -58,7 +58,7 @@
           </div>
         </div>
       </div>
-    </body>
+    </body>   
     <changepoint-service id="maps"></changepoint-service>
   </template>
   <script>
@@ -185,6 +185,7 @@
         },
         click:function(){
           this.$.maps.submit(itemarray);
+          alert(JSON.stringify(itemarray));
           itemarray=[];
           document.querySelector('#gradeselect').selected=-1;
           this.value="";

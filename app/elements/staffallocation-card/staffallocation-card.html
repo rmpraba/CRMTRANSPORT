@@ -26,12 +26,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .card2
       {
         width:50%;
-        height:600px;
-        margin-left: 21%;
+        height:400px;
+        margin-left: 24%;
         margin-top: 4%;
         border: solid 1px #555; 
         background-color: white; 
         box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); 
+      }
+      .detail
+      {
+        @apply(--layout-horizontal);
       }
       
     </style>
@@ -42,8 +46,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <ul>
               <paper-input  hidden value="{{staffid}}"></paper-input>
                 <li class="row">
-                  <div class="detail">
-                    <div class="field1">
+                    <div class="field1" style="margin-left: 6%;">
                       <paper-input id="text" class="field" label="Type a Staff Name" is="" value="{{value}}" on-keydown="FnInputChanged" style="width: 72%; text-align: center;"></paper-input>
                         <paper-listbox class="dropdown-content" id="fetchname" on-iron-select="FnItemSelected">
                         <template is="dom-repeat" items="{{itemArray}}" as="item">
@@ -51,14 +54,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </template>
                         </paper-listbox>
                     </div>
-                  <div class="field1">
-                     <paper-input id="text" class="field" label="Type a Staff Name" is="" value="{{value}}" on-keydown="FnInputChanged" style="width: 72%; text-align: center;"></paper-input>
-     <paper-listbox class="dropdown-content" id="fetchname" on-iron-select="FnItemSelected">
-        <template is="dom-repeat" items="{{itemArray}}" as="item">
-          <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
-        </template>
-      </paper-listbox>
-                  </div>
+
+                  <div class="detail">
                     <div class="field">
                       <paper-dropdown-menu  label="PickUp Trip">
                         <paper-menu id="sets01" class="dropdown-content" on-iron-select="tripzxc" >
@@ -67,7 +64,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </paper-menu>
                       </paper-dropdown-menu>
                     </div>
-                    <div class="field">
+                    <div class="field" style="margin-left:2em;">
                       <paper-dropdown-menu  label="Drop Trip">
                         <paper-menu id="sets02" class="dropdown-content" on-iron-select="tripz" >
                           <paper-item value=1>Primary</paper-item>
@@ -88,7 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </paper-menu>
                       </paper-dropdown-menu>
                     </div>
-                    <div class="field">
+                    <div class="field" style="margin-left:2em;">
                       <paper-dropdown-menu id="set1" label="Pick-up Point">
                         <paper-menu class="dropdown-content" on-iron-select="pickpoints" attr-for-selected="value" >
                           <template  is="dom-repeat" items="{{pointarr}}" as="view">
@@ -111,7 +108,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       </paper-menu>
                     </paper-dropdown-menu>
                   </div>
-                  <div class="field">
+                  <div class="field" style="margin-left:2em;">
                     <paper-dropdown-menu id="set3" label="Drop Point">
                       <paper-menu class="dropdown-content" on-iron-select="droppoints" selected="{{selectpoint}}" attr-for-selected="value" >
                         <template  is="dom-repeat" items="{{droparr}}" as="view">
