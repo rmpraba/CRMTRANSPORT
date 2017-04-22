@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
-  database : 'transportcloud'
+  database : 'cloudtrans'
 
 });
 var bodyParser = require('body-parser');
@@ -35,8 +35,8 @@ var parentemail=req.query.parentemail;
   var bank=req.query.bank;
 //console.log(parentemail);
 var server  = email.server.connect({
-   user:    "samsidhgroup@yahoo.com",
-   password:"mlzsinstitutions",
+   user:    "softabbas@gmail.com",
+   password:"@Abbas4321",
    host:    "smtp.gmail.com",
    ssl:     true
 
@@ -44,7 +44,7 @@ var server  = email.server.connect({
 // send the message and get a callback with an error or details of the message that was sent
 server.send({
    text:    "FEE RECEIPT/ACKNOWLEDGEMENT",
-   from:    "samsidhgroup@yahoo.com",
+   from:    "softabbas@gmail.com",
    to:      parentemail,
    subject: "FEE RECEIPT/ACKNOWLEDGEMENT",
     attachment:
@@ -173,12 +173,11 @@ app.post('/getzonenamedetail' ,  urlencodedParser,function (req, res)
   });
 app.post('/getroutedetail' ,  urlencodedParser,function (req, res)
 {
+  var routename={"route_name":req.query.routename};
   var trip={"trip":req.query.tripnos};
   var schoolx={"school_id":req.query.schol};
   //console.log('hello trip...'+trip);
-   var qur='select * from point where route_id="'+req.query.routename+'"and academic_year="'+req.query.academic_year+'"and school_id="'+req.query.schol+'"  and trip="'+req.query.tripnos+'"'
-   console.log(qur);
-  connection.query(qur,
+  connection.query('select * from point where route_id=(select id from route where ? and ? and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and ? and academic_year="'+req.query.academic_year+'"',[routename,schoolx,trip],
     function(err, rows){
     if(!err){
       if(rows.length>0){
@@ -353,7 +352,7 @@ app.post('/getfee' ,  urlencodedParser,function (req, res)
 app.post('/getzonechangefee' ,  urlencodedParser,function (req, res)
 {
     var schoolx={"school_id":req.query.schol};
-     var zone={"zone_name":req.query.zone};
+  var zone={"zone_name":req.query.zone};
       connection.query('select fees from md_distance where id=(select distance_id from md_zone where ? and ? and  academic_year="'+req.query.academic_year+'")',[zone,schoolx],
         function(err, rows)
         {
@@ -380,8 +379,8 @@ app.post('/gettermdate' ,  urlencodedParser,function (req, res)
   var schoolx={"school_id":req.query.schol};
   var idz={"school_type":req.query.grade};
   var academicyear={"academic_year":req.query.academic_year};
-  // var qur="select start_date,end_date from transport_details where school_id='"+req.query.schol+"' and ? and ?";
-      connection.query('select start_date,end_date from transport_details where ? and ? ',[schoolx,academicyear],
+  
+      connection.query('select start_date,end_date from transport_details where ? and ? and ?',[idz,schoolx,academicyear],
         function(err, rows)
         {
         if(!err)
@@ -421,17 +420,21 @@ app.post('/getzonechangetermdate' ,  urlencodedParser,function (req, res)
       res.status(200).json({'returnval': 'invalid'});
       }
     }
-    else   
+    else
     {
       console.log('No data Fetched'+err);
     }
-});   
 });
+  });
 app.post('/setzone' ,  urlencodedParser,function (req, res)
 {
-  var queryy="insert into student_fee values('"+req.query.schol+"','"+req.query.studid+"','"+req.query.zone+"','','',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"','"+req.query.name+"',STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),'"+req.query.status+"','','',0,0,'"+req.query.academic_year+"','','','','','')";
-     console.log(queryy);
-      connection.query(queryy,function(err, rows){   
+  var queryy="insert into student_fee values('"+req.query.schol+"','"+req.query.studid+"','"+req.query.zone+"','','',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"','"+req.query.name+"',STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),'"+req.query.status+"','','',0,0,'"+req.query.academic_year+"')";
+     // console.log(queryy);
+      connection.query(queryy,
+        function(err, rows)
+        {   
+
+
       if(!err)
       {
       res.status(200).json({'returnval': 'success'});
@@ -547,9 +550,7 @@ app.post('/getname' ,  urlencodedParser,function (req, res)
 {
     var schoolx={"school_id":req.query.schol};
     var trans_req={"transport_required":"yes"};
-    // var qur="select student_name from student_details where id NOT IN(Select student_id from student_fee where status='mapped' and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and transport_required='yes'";
-    var qur="select student_name from student_details where  school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and transport_required='yes'";
-    // var qur="select s.student_name from student_details s"
+    var qur="select student_name from student_details where id NOT IN(Select student_id from student_fee where status='mapped' and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and transport_required='yes'";
       console.log(qur);
       connection.query(qur,
         function(err, rows)
@@ -652,16 +653,10 @@ app.post('/getstudetail' ,  urlencodedParser,function (req, res)
 {
     var schoolx={"school_id":req.query.schol};
     var id={"student_name":req.query.studid};
-    var acyear={"academic_year":req.query.academicyear};
-    // var qur="select * from student_details where school_id='"+req.query.schol+"' and student_name='"+req.query.studid+"' and academic_year='"+req.query.acyear+"'";
-      // console.log('--------------------------------------');
-      // console.log(qur);
-      // console.log('--------------------------------------');
-      connection.query('select * from student_details where ? and ? and ?',[id,schoolx,acyear],
+      connection.query('select * from student_details where ? and ?',[id,schoolx],
         function(err, rows)
         {
         if(!err)
-    
     {
       if(rows.length>0)
       {
@@ -733,6 +728,29 @@ app.post('/fetchstuzonedetail' ,  urlencodedParser,function (req, res)
     }
 });
   });
+app.post('/getroute' ,  urlencodedParser,function (req, res)
+{
+      connection.query('select route_name from md_route',
+        function(err, rows)
+        {
+        if(!err)
+    {
+      if(rows.length>0)
+      {
+      res.status(200).json({'returnval': rows});
+      }
+      else
+      {
+      res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+      console.log('No data Fetched'+err);
+    }
+});
+  });
+
 app.post('/report-card',  urlencodedParser,function (req, res)
 {
 
@@ -740,7 +758,7 @@ app.post('/report-card',  urlencodedParser,function (req, res)
   var class_id={"class_id":req.query.studid};
   var stu_name={"student_name":req.query.studid};
   var schoolx={"school_id":req.query.schol};
-       connection.query('SELECT s.id,s.student_name,s.school_type,(select class from class_details where class=s.class) as class_id,s.photo,s.dob,s.transport_required,z.zone_id,z.fees,z.discount_fee,z.fees-z.discount_fee as actualfee ,z.installment_1+z.installment_2 as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where (? or ? or ?) and ? )',[stu_id,class_id,stu_name,schoolx],
+       connection.query('SELECT s.id,s.student_name,s.school_type,(select class from class_details where id=s.class_id) as class_id,(select section from class_details where id=s.class_id) as section,s.photo,s.dob,s.transport_required,z.zone_id,z.fees,z.discount_fee,z.fees-z.discount_fee as actualfee ,z.installment_1+z.installment_2 as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where (? or ? or ?) and ? )',[stu_id,class_id,stu_name,schoolx],
         function(err, rows)
         {
     if(!err)
@@ -812,7 +830,7 @@ app.post('/selectnameforchpoint',  urlencodedParser,function (req, res)
 {
    var qur1='SELECT id, student_name from student_details where id in(select student_id from student_fee where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and id  in (Select student_id from student_point) and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"';
 
-    console.log(qur1);
+   console.log(qur1);
 
        connection.query(qur1, function(err, rows)
         {
@@ -1069,11 +1087,11 @@ app.post('/submitupdateurl',  urlencodedParser,function (req, res)
 app.post('/gettrip' ,  urlencodedParser,function (req, res)
 {
 
-     var routen={"route_id":req.query.triproute};
+     var routen={"route_name":req.query.triproute};
      var schoolx={"school_id":req.query.schol};
      //console.log('in server...');
      //console.log(routen);
-      connection.query('select distinct trip from point where route_id="'+req.query.triproute+'"and ? and academic_year="'+req.query.academic_year+'"',[routen,schoolx],
+      connection.query('select distinct trip from point where route_id=(select id from route where ? and ?)',[routen,schoolx],
         function(err, rows)
         {
     if(!err)
@@ -1100,7 +1118,7 @@ app.post('/gettrip' ,  urlencodedParser,function (req, res)
 app.post('/getrouteid' ,  urlencodedParser,function (req, res)
 {
 
-     var routen={"id":req.query.routename};
+     var routen={"route_name":req.query.routename};
      var schoolx={"school_id":req.query.schol};
      var academicyear={"academic_year":req.query.academic_year};
      //console.log('in server...');
@@ -1219,16 +1237,16 @@ app.post('/reportfee-card',  urlencodedParser,function (req, res)
 
   var schoolx={"school_id":req.query.schol};
   var stu_id={"id":req.query.studid};
-  var class_id={"class":req.query.studid};
+  var class_id={"class_id":req.query.studid};
   var stu_name={"student_name":req.query.studid};
   var academicyear={"academic_year":req.query.academic_year};
   var zschool=req.query.schol;
 
-    var ww='SELECT s.id,s.student_name,(select class from class_details where class=s.class) as class_id,s.photo,s.dob,s.transport_required,z.install1_status,z.install2_status,z.install1_fine,z.install2_fine,z.zone_id,z.fees,z.discount_fee,(z.fees-z.discount_fee)as actualfee,z.installment_1,z.installment_2,(z.installment_1+z.installment_2) as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(z.fees-z.discount_fee)/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id =(select id from student_details where student_name="'+req.query.stuid+'" and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and z.academic_year="'+req.query.academic_year+'"and s.academic_year="'+req.query.academic_year+'"and z.school_id="'+req.query.schol+'" and s.school_id="'+req.query.schol+'"';
+    var ww='SELECT s.id,s.student_name,(select class from class_details where id=s.class_id) as class_id,s.photo,s.dob,s.transport_required,z.install1_status,z.install2_status,z.install1_fine,z.install2_fine,z.zone_id,z.fees,z.discount_fee,(z.fees-z.discount_fee)as actualfee,z.installment_1,z.installment_2,(z.installment_1+z.installment_2) as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(z.fees-z.discount_fee)/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id =(select id from student_details where student_name="'+req.query.stuid+'" and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and z.academic_year="'+req.query.academic_year+'"and s.academic_year="'+req.query.academic_year+'"and z.school_id="'+req.query.schol+'" and s.school_id="'+req.query.schol+'"';
 
   console.log("loos");
   console.log(ww);
-       connection.query('SELECT s.id,s.student_name,(select class from class_details where class=s.class) as class_id,s.photo,s.dob,s.transport_required,z.install1_status,z.install2_status,z.install1_fine,z.install2_fine,z.zone_id,z.fees,z.discount_fee,(z.fees-z.discount_fee)as actualfee,z.installment_1,z.installment_2,(z.installment_1+z.installment_2) as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(z.fees-z.discount_fee)/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id =(select id from student_details where student_name="'+req.query.studid+'" and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and z.academic_year="'+req.query.academic_year+'"and s.academic_year="'+req.query.academic_year+'"and z.school_id="'+req.query.schol+'" and s.school_id="'+req.query.schol+'"',
+       connection.query('SELECT s.id,s.student_name,(select class from class_details where id=s.class_id) as class_id,s.photo,s.dob,s.transport_required,z.install1_status,z.install2_status,z.install1_fine,z.install2_fine,z.zone_id,z.fees,z.discount_fee,(z.fees-z.discount_fee)as actualfee,z.installment_1,z.installment_2,(z.installment_1+z.installment_2) as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(z.fees-z.discount_fee)/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id =(select id from student_details where student_name="'+req.query.studid+'" and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and z.academic_year="'+req.query.academic_year+'"and s.academic_year="'+req.query.academic_year+'"and z.school_id="'+req.query.schol+'" and s.school_id="'+req.query.schol+'"',
         function(err, rows)
         {
     if(!err)
@@ -1252,14 +1270,14 @@ app.post('/zonefee-card',  urlencodedParser,function (req, res)
 
 
   var stu_id={"id":req.query.studid};
-   var class_id={"class":req.query.studid};
+   var class_id={"class_id":req.query.studid};
   var stu_name={"student_name":req.query.studid};
   var schoolx={"school_id":req.query.schol};
   console.log(stu_id);
   console.log(class_id);
   console.log(stu_name);
   console.log(schoolx);
-       connection.query("SELECT s.id,s.student_name,(select class from class_details where class=s.class and school_id='"+req.query.schol+"') as class_id,s.photo,s.dob,s.transport_required,z.install1_status,z.install2_status,z.install1_fine,z.install2_fine,z.zone_id,z.fees,z.discount_fee,(z.fees-z.discount_fee)as actualfee,z.installment_1,z.installment_2,(z.installment_1+z.installment_2) as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(z.fees-z.discount_fee)/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id and school_id='"+req.query.schol+"')) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id and school_id='"+req.query.schol+"')) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where student_name='"+req.query.studid+"'and school_id='"+req.query.schol+"') and s.school_id='"+req.query.schol+"' and z.school_id='"+req.query.schol+"'",
+       connection.query("SELECT s.id,s.student_name,(select class from class_details where id=s.class_id and school_id='"+req.query.schol+"') as class_id,s.photo,s.dob,s.transport_required,z.install1_status,z.install2_status,z.install1_fine,z.install2_fine,z.zone_id,z.fees,z.discount_fee,(z.fees-z.discount_fee)as actualfee,z.installment_1,z.installment_2,(z.installment_1+z.installment_2) as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(z.fees-z.discount_fee)/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id and school_id='"+req.query.schol+"')) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id and school_id='"+req.query.schol+"')) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where student_name='"+req.query.studid+"'and school_id='"+req.query.schol+"') and s.school_id='"+req.query.schol+"' and z.school_id='"+req.query.schol+"'",
         function(err, rows)
         {
     if(!err)
@@ -1304,7 +1322,7 @@ app.post('/getnameofstu-card',  urlencodedParser,function (req, res)
 app.post('/payfee-card',  urlencodedParser,function (req, res)
 {
    
-    var instalment1date=req.query.instdate;
+        var instalment1date=req.query.instdate;
     var mode;
     var install1;
     var install1date;
@@ -1627,7 +1645,7 @@ app.post('/discountbyname',  urlencodedParser,function (req, res)
 app.post('/generateroutereport',  urlencodedParser,function (req, res)
 {
   var schoolx={"school_id":req.query.schol};
-  connection.query('SELECT * from route where ? and academic_year="'+req.query.academic_year+'"',[schoolx],
+  connection.query('SELECT * from route where ?',[schoolx],
         function(err, rows)
         {
     if(!err)
@@ -1670,8 +1688,7 @@ app.post('/studentpickroute-report-card',  urlencodedParser,function (req, res){
   var tripid={"school_type":req.query.tripid};
   var schoolx={"school_id":req.query.schol};
        var route_id={"pickup_route_id":req.query.routeid};
-        var query="SELECT p.student_id,(select student_name from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as name,(select class from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as std,(select m.mobile from mlzscrm.parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"') as mobile,(select parent_name from mlzscrm.parent where student_id=p.student_id and school_id='"+req.query.schol+"' ) as pname, (select point_name from point where id=p.pickup_point and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"') as pick from student_point p where p.pickup_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"' and p.academic_year='"+req.query.academic_year+"'";
-        console.log(query);
+        var query="SELECT p.student_id,(select student_name from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as name ,(select class from class_details where id=(select class_id from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')) as std,(select m.mobile from parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' and m.academic_year='"+req.query.academic_year+"') as mobile,(select parent_name from parent where student_id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pname, (select point_name from point where id=p.pickup_point and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"') as pick from student_point p where p.pickup_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"' and p.academic_year='"+req.query.academic_year+"'";
    
     connection.query(query,
     function(err, rows){
@@ -1695,7 +1712,7 @@ app.post('/studentdroproute-report-card',  urlencodedParser,function (req, res){
   var route_id={"drop_route_id":req.query.routeid};
 
 
-   var qur="SELECT p.student_id,(select student_name from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as name ,(select class from class_details where class=(select class from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')) as std,(select m.mobile from parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' and m.academic_year='"+req.query.academic_year+"') as mobile,(select parent_name from parent where student_id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pname, (select point_name from point where id=p.drop_point and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"') as pick from student_point p where p.drop_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"' and p.academic_year='"+req.query.academic_year+"'";
+   var qur="SELECT p.student_id,(select student_name from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as name ,(select class from class_details where id=(select class_id from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')) as std,(select m.mobile from parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' and m.academic_year='"+req.query.academic_year+"') as mobile,(select parent_name from parent where student_id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pname, (select point_name from point where id=p.drop_point and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"') as pick from student_point p where p.drop_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"' and p.academic_year='"+req.query.academic_year+"'";
 
 
     connection.query(qur,
@@ -1913,8 +1930,8 @@ app.post('/getverify',  urlencodedParser,function (req, res)
 app.post('/getclass',  urlencodedParser,function (req, res)
 {
     var schoolx={"school_id":req.query.schol};
-      var id={"class":req.query.class};
-      connection.query('SELECT * from student_details where ? and ?',[id,schoolx],
+      var id={"id":req.query.class};
+      connection.query('SELECT * from class_details where ? and ?',[id,schoolx],
         function(err, rows)
         {
     if(!err)
@@ -1940,7 +1957,7 @@ app.post('/getclass',  urlencodedParser,function (req, res)
 app.post('/getzonechangeclass',  urlencodedParser,function (req, res)
 {
     var schoolx={"school_id":req.query.schol};
-      var id={"class":req.query.class};
+      var id={"id":req.query.class};
       connection.query('SELECT * from class_details where ? and ?',[id,schoolx],
         function(err, rows)
         {
@@ -2369,7 +2386,7 @@ app.post('/feereport',  urlencodedParser,function (req, res)
   var dat1={"installment_1Date":req.query.dates};
   var dat2={"installment_2Date":req.query.dates};
   //console.log('come');
-var qur="Select student_id,receipt_no1,receipt_no2,fees,installment_1,installment_2,installment_1Date,installment_2Date,modeofpayment1,modeofpayment2,(select student_name from student_details where id=student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as name ,(select (select class from class_details c where c.class=class and c.school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as standard ,(select (select section from class_details l where l.class=class and l.school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as section from student_fee  where(installment_1Date='"+req.query.dates+"' or installment_2Date='"+req.query.dates+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"'";
+var qur="Select student_id,receipt_no1,receipt_no2,fees,installment_1,installment_2,installment_1Date,installment_2Date,modeofpayment1,modeofpayment2,(select student_name from student_details where id=student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as name ,(select (select class from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as standard ,(select (select section from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as section from student_fee  where(installment_1Date='"+req.query.dates+"' or installment_2Date='"+req.query.dates+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"'";
    console.log(qur);
 
   connection.query(qur,
@@ -2430,7 +2447,7 @@ app.post('/feereport2',  urlencodedParser,function (req, res)
   //var dat2=req.query.dates2;
 
   //console.log('come server fee');
-  connection.query("Select student_id,receipt_no1,receipt_no2,fees,installment_1,installment_2,installment_1Date,installment_2Date,modeofpayment1,modeofpayment2,install1_fine,install2_fine, (select student_name from student_details where id = student_id and school_id='"+req.query.schol+"') as name,(select (select class from class_details m where m.class=class and m.school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as standard from student_fee  where ((installment_1Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d')) or (installment_2Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d'))) and school_id='"+req.query.schol+"'",
+  connection.query("Select student_id,receipt_no1,receipt_no2,fees,installment_1,installment_2,installment_1Date,installment_2Date,modeofpayment1,modeofpayment2,install1_fine,install2_fine, (select student_name from student_details where id = student_id and school_id='"+req.query.schol+"') as name,(select (select class from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as standard,(select (select section from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as section from student_fee  where ((installment_1Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d')) or (installment_2Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d'))) and school_id='"+req.query.schol+"'",
     function(err, rows)
     {
       if(!err)
@@ -2755,7 +2772,7 @@ app.post('/getfeeparent',  urlencodedParser,function (req, res)
  var id=req.query.stid;
  //console.log(id);
   var name={"id":req.query.stid};
-      connection.query('Select class,section,(select parent_name from parent where student_id =? and?) as parentname,(select email from parent where student_id =? and ?) as parentmail from class_details r where r.class=(select class from student_details where id=? and ?)',[id,schoolx,id,schoolx,id,schoolx],
+      connection.query('Select class,section,(select parent_name from parent where student_id =? and?) as parentname,(select email from parent where student_id =? and ?) as parentmail from class_details where id=(select class_id from student_details where id=? and ?)',[id,schoolx,id,schoolx,id,schoolx],
         function(err, rows){
     if(!err){
       if(rows.length>0)
@@ -2817,7 +2834,7 @@ app.post('/getzonedetail',  urlencodedParser,function (req, res)
 app.post('/getpassclass',  urlencodedParser,function (req, res)
 {
 
-  var date5={"class":req.query.class};
+  var date5={"id":req.query.class};
   var schoolx={"school_id":req.query.schol};
       connection.query('Select * from class_details where ? and ?',[date5,schoolx],
         function(err, rows){
@@ -2997,7 +3014,7 @@ app.post('/getstureceipt',  urlencodedParser,function (req, res)
 {
   var stuid=req.query.stid;
   var schoolx={"school_id":req.query.schol};
-      connection.query('select student_name ,(select class from class_details r where r.class=class) as classname from student_details where id= ? and ?',[stuid,schoolx],
+      connection.query('select student_name ,(select class from class_details where id=class_id) as classname, (select section from class_details where id=class_id) as section from student_details where id= ? and ?',[stuid,schoolx],
         function(err, rows){
     if(!err){
       if(rows.length>0)
@@ -3085,7 +3102,7 @@ app.post('/selectclasses',  urlencodedParser,function (req, res){
 });
 
 app.post('/addstudent',  urlencodedParser,function (req, res){
-  var collection={"id":req.query.student_id, "student_name":req.query.student_name,"class":req.query.stu_class,"school_type":req.query.stu_schooltype, "transport_required":req.query.stu_transport,"school_id":req.query.schol,"dob":req.query.dob};
+  var collection={"id":req.query.student_id, "student_name":req.query.student_name,"class_id":req.query.stu_class,"school_type":req.query.stu_schooltype, "transport_required":req.query.stu_transport,"school_id":req.query.schol,"dob":req.query.dob};
     connection.query('insert into student_details set ?',[collection],
         function(err, rows){
     if(!err){
@@ -3120,10 +3137,7 @@ app.post('/getparentname',  urlencodedParser,function (req, res){
   var stuid = req.query.studid;
   var schoolx=req.query.schol;
   var academicyear=req.query.academic_year;
-  var qur="select * from mlzscrm.md_admission where admission_no=(select id from transport.student_details where student_name='"+req.query.studid+"' and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"'";
-  console.log('-------------------------------------');
-  console.log(qur);
-  connection.query('select * from mlzscrm.md_admission where admission_no=(select id from transport.student_details where student_name=? and school_id=? and academic_year=?) and school_id=? and academic_year=?',[stuid,schoolx,academicyear,schoolx,academicyear],
+  connection.query('select * from parent where student_id=(select id from student_details where student_name=? and school_id=? and academic_year=?) and school_id=? and academic_year=?',[stuid,schoolx,academicyear,schoolx,academicyear],
     function(err, rows){
       if(!err){
         if(rows.length>0)
@@ -3394,7 +3408,7 @@ app.post('/getpasssec',  urlencodedParser,function (req, res)
 {
   //console.log('In server..');
   var role={"id":req.query.stid};
-  connection.query("select sd.student_name,(select class from class_details where class=sd.class and school_id='"+req.query.schol+"') as standard,(select section from class_details where class=sd.class and school_id='"+req.query.schol+"') as section,(select zone_name from md_zone where id=sf.zone_id and school_id='"+req.query.schol+"') as zone_name,(select route_name from route where id=sp.pickup_route_id and school_id='"+req.query.schol+"') as pickup_route_id,(select route_name from route where id=sp.drop_route_id and school_id='"+req.query.schol+"') as drop_route_id,(select point_name from point where id=sp.pickup_point and school_id='"+req.query.schol+"') as pickup_point,(select point_name from point where id=sp.drop_point and school_id='"+req.query.schol+"') as drop_point,p.parent_name,p.mobile,p.address1,p.address2,p.address3,p.city,p.pincode from student_details sd join student_fee sf on (sd.id=sf.student_id) join student_point sp on(sf.student_id=sp.student_id) join parent p on(p.student_id=sp.student_id) where sp.student_id='"+req.query.stid+"' and sp.school_id='"+req.query.schol+"'",
+  connection.query("select sd.student_name,(select class from class_details where id=sd.class_id and school_id='"+req.query.schol+"') as standard,(select section from class_details where id=sd.class_id and school_id='"+req.query.schol+"') as section,(select zone_name from md_zone where id=sf.zone_id and school_id='"+req.query.schol+"') as zone_name,(select route_name from route where id=sp.pickup_route_id and school_id='"+req.query.schol+"') as pickup_route_id,(select route_name from route where id=sp.drop_route_id and school_id='"+req.query.schol+"') as drop_route_id,(select point_name from point where id=sp.pickup_point and school_id='"+req.query.schol+"') as pickup_point,(select point_name from point where id=sp.drop_point and school_id='"+req.query.schol+"') as drop_point,p.parent_name,p.mobile,p.address1,p.address2,p.address3,p.city,p.pincode from student_details sd join student_fee sf on (sd.id=sf.student_id) join student_point sp on(sf.student_id=sp.student_id) join parent p on(p.student_id=sp.student_id) where sp.student_id='"+req.query.stid+"' and sp.school_id='"+req.query.schol+"'",
     function(err, rows){
     if(!err){
       if(rows.length>0)
@@ -3768,6 +3782,7 @@ app.post('/consolidatedreportread',  urlencodedParser,function (req, res){
   });
 });
 
+
 app.post('/consolidatedallocatedreportread',  urlencodedParser,function (req, res){
   
     connection.query('select (select name from md_school where id=school_id) as schoolname,count(student_id) as allocatedcount from student_point group by school_id',
@@ -3788,7 +3803,7 @@ app.post('/valuesinsta1cheque',  urlencodedParser,function (req, res)
 
   var type={"installtype":'installment1'};
   var schoolx=req.query.schol;
-  var qur="select distinct f.student_id, p.parent_name, d.student_name, f.receipt_no1, f.fees,f.install1_fine,f.installment_1,f.installment_1Date, c.cheque_no, c.bank_name, c.cheque_date,cd.class,cd.section from student_fee f join student_details d on f.student_id = d.id join cheque_details c on (f.student_id = c.student_id) join class_details cd on (cd.class=d.class) join parent p on p.student_id=d.id where  installment_1Date between '"+req.query.fromdate+"' and '"+req.query.dates+"' and modeofpayment1='Cheque' and installtype='installment1' and c.cheque_status not in('bounce') and d.school_id='"+schoolx+"' and d.academic_year='"+academic_year+"' and p.school_id='"+schoolx+"' and p.academic_year='"+academic_year+"' and f.school_id='"+schoolx+"' and f.academic_year='"+academic_year+"'and c.school_id='"+schoolx+"' and c.academic_year='"+academic_year+"' and cd.academic_year='"+academic_year+"' and cd.school_id='"+schoolx+"'";
+  var qur="select distinct f.student_id, p.parent_name, d.student_name, f.receipt_no1, f.fees,f.install1_fine,f.installment_1,f.installment_1Date, c.cheque_no, c.bank_name, c.cheque_date,cd.class,cd.section from student_fee f join student_details d on f.student_id = d.id join cheque_details c on (f.student_id = c.student_id) join class_details cd on (cd.id=d.class_id) join parent p on p.student_id=d.id where  installment_1Date between '"+req.query.fromdate+"' and '"+req.query.dates+"' and modeofpayment1='Cheque' and installtype='installment1' and c.cheque_status not in('bounce') and d.school_id='"+schoolx+"' and d.academic_year='"+academic_year+"' and p.school_id='"+schoolx+"' and p.academic_year='"+academic_year+"' and f.school_id='"+schoolx+"' and f.academic_year='"+academic_year+"'and c.school_id='"+schoolx+"' and c.academic_year='"+academic_year+"' and cd.academic_year='"+academic_year+"' and cd.school_id='"+schoolx+"'";
        console.log(qur);
       //connection.query('select f.student_id, p.parent_name, d.student_name, f.receipt_no1, f.fees,f.installment_1, c.cheque_no, c.bank_name, c.cheque_date,cd.class,cd.section from student_fee f inner join student_details d on f.student_id = d.id inner join cheque_details c on (f.student_id = c.student_id) join class_details cd on (cd.id=d.class_id) join parent p on p.student_id=d.id where ? between and ? and ? and ? and d.school_id=?',[fromdate,date, mode,type,schoolx],
 
@@ -3847,7 +3862,7 @@ app.post('/valuesinsta2cheque',  urlencodedParser,function (req, res)
 
   // var installtype = {"installtype":"installment2"}
       // connection.query("Select f.student_id,f.receipt_no2,f.fees,f.installment_2Date,f.installment_2,(select d.student_name from student_details d where d.id=f.student_id and f.school_id='"+req.query.schol+"') as name,(select (select z.class from class_details z where z.id=d.class_id and d.school_id='"+req.query.schol+"') from student_details d where d.id=f.student_id and f.school_id='"+req.query.schol+"')as standard,(select (select z.section from class_details z where z.id=d.class_id and d.school_id='"+req.query.schol+"') from student_details d where d.id=f.student_id and f.school_id='"+req.query.schol+"')as section, c.cheque_date, c.bank_name, c.cheque_no from student_fee f join cheque_details c on f.student_id = c.student_id where (? and ? and ?)",[date, mode,installtype],
-  var qur="select distinct f.student_id, p.parent_name, d.student_name, f.receipt_no2, f.fees,f.install2_fine,f.installment_2,f.installment_2Date, c.cheque_no, c.bank_name, c.cheque_date,cd.class,cd.section from student_fee f join student_details d on f.student_id = d.id join cheque_details c on (f.student_id = c.student_id) join class_details cd on (cd.class=d.class) join parent p on p.student_id=d.id where  installment_2Date between '"+req.query.fromdate+"' and '"+req.query.dates+"' and modeofpayment2='Cheque' and installtype='installment2' and c.cheque_status not in('bounce') and d.school_id='"+schoolx+"' and p.school_id='"+schoolx+"' and f.school_id='"+schoolx+"' and cd.school_id='"+schoolx+"' and c.school_id='"+schoolx+"'";
+  var qur="select distinct f.student_id, p.parent_name, d.student_name, f.receipt_no2, f.fees,f.install2_fine,f.installment_2,f.installment_2Date, c.cheque_no, c.bank_name, c.cheque_date,cd.class,cd.section from student_fee f join student_details d on f.student_id = d.id join cheque_details c on (f.student_id = c.student_id) join class_details cd on (cd.id=d.class_id) join parent p on p.student_id=d.id where  installment_2Date between '"+req.query.fromdate+"' and '"+req.query.dates+"' and modeofpayment2='Cheque' and installtype='installment2' and c.cheque_status not in('bounce') and d.school_id='"+schoolx+"' and p.school_id='"+schoolx+"' and f.school_id='"+schoolx+"' and cd.school_id='"+schoolx+"' and c.school_id='"+schoolx+"'";
         //console.log(qur);
         connection.query(qur,
         function(err, rows){
@@ -3900,7 +3915,7 @@ app.post('/valuesinsta2cash',  urlencodedParser,function (req, res)
   var mode= {"modeofpayment2":"Cash"};
   var type={"installtype":'installment2'};
   var schoolx=req.query.schol;
-  var qur="Select distinct f.student_id, p.parent_name,d.student_name, f.receipt_no2, f.fees,f.installment_2,f.install2_fine,f.installment_2Date,cd.class,cd.section from student_fee f join student_details d on (f.student_id=d.id) join class_details cd on (cd.class=d.class) join parent p on p.student_id=d.id where installment_2Date between '"+req.query.fromdate+"' and '"+req.query.dates+"'  and modeofpayment2='Cash' and d.school_id='"+schoolx+"' and d.academic_year='"+academic_year+"' and p.school_id='"+schoolx+"' and p.academic_year='"+academic_year+"' and f.school_id='"+schoolx+"' and f.academic_year='"+academic_year+"'and c.school_id='"+schoolx+"' and c.academic_year='"+academic_year+"' and cd.academic_year='"+academic_year+"' and cd.school_id='"+schoolx+"'";
+  var qur="Select distinct f.student_id, p.parent_name,d.student_name, f.receipt_no2, f.fees,f.installment_2,f.install2_fine,f.installment_2Date,cd.class,cd.section from student_fee f join student_details d on (f.student_id=d.id) join class_details cd on (cd.id=d.class_id) join parent p on p.student_id=d.id where installment_2Date between '"+req.query.fromdate+"' and '"+req.query.dates+"'  and modeofpayment2='Cash' and d.school_id='"+schoolx+"' and d.academic_year='"+academic_year+"' and p.school_id='"+schoolx+"' and p.academic_year='"+academic_year+"' and f.school_id='"+schoolx+"' and f.academic_year='"+academic_year+"'and c.school_id='"+schoolx+"' and c.academic_year='"+academic_year+"' and cd.academic_year='"+academic_year+"' and cd.school_id='"+schoolx+"'";
      // connection.query('Select f.student_id, p.parent_name,d.student_name, f.receipt_no2, f.fees,f.installment_2,cd.class,cd.section from student_fee f left join student_details d on (f.student_id=d.id) join class_details cd on (cd.id=d.class_id) join parent p on p.student_id=d.id where ? between and ? and ? and d.school_id=?',[fromdate,date, mode,schoolx],
 console.log(qur);
   // var date={"installment_2Date":req.query.dates};
@@ -3954,7 +3969,7 @@ app.post('/zonechangeinsta2cash',  urlencodedParser,function (req, res)
   var mode= {"modeofpayment2":"Cash"};
   var type={"installtype":'installment2'};
   var schoolx=req.query.schol;
-  var qur="Select distinct f.student_id, p.parent_name,d.student_name, f.receipt_no2, f.fees,f.install2_fine,f.installment_2,f.installment_2Date,cd.class,cd.section from student_zonechange f join student_details d on (f.student_id=d.id) join class_details cd on (cd.class=d.class) join parent p on p.student_id=d.id where installment_2Date between '"+req.query.fromdate+"' and '"+req.query.dates+"' and modeofpayment2='Cash' and d.school_id='"+schoolx+"' and d.academic_year='"+academic_year+"' and p.school_id='"+schoolx+"' and p.academic_year='"+academic_year+"' and f.school_id='"+schoolx+"' and f.academic_year='"+academic_year+"'and c.school_id='"+schoolx+"' and c.academic_year='"+academic_year+"' and cd.academic_year='"+academic_year+"' and cd.school_id='"+schoolx+"'";
+  var qur="Select distinct f.student_id, p.parent_name,d.student_name, f.receipt_no2, f.fees,f.install2_fine,f.installment_2,f.installment_2Date,cd.class,cd.section from student_zonechange f join student_details d on (f.student_id=d.id) join class_details cd on (cd.id=d.class_id) join parent p on p.student_id=d.id where installment_2Date between '"+req.query.fromdate+"' and '"+req.query.dates+"' and modeofpayment2='Cash' and d.school_id='"+schoolx+"' and d.academic_year='"+academic_year+"' and p.school_id='"+schoolx+"' and p.academic_year='"+academic_year+"' and f.school_id='"+schoolx+"' and f.academic_year='"+academic_year+"'and c.school_id='"+schoolx+"' and c.academic_year='"+academic_year+"' and cd.academic_year='"+academic_year+"' and cd.school_id='"+schoolx+"'";
      // connection.query('Select f.student_id, p.parent_name,d.student_name, f.receipt_no2, f.fees,f.installment_2,cd.class,cd.section from student_fee f left join student_details d on (f.student_id=d.id) join class_details cd on (cd.id=d.class_id) join parent p on p.student_id=d.id where ? between and ? and ? and d.school_id=?',[fromdate,date, mode,schoolx],
 
   // var date={"installment_2Date":req.query.dates};
@@ -4012,7 +4027,7 @@ app.post('/valuesinsta1cash',  urlencodedParser,function (req, res)
   // var type={"installtype":'installment2'};
   var schoolx=req.query.schol;
   //    connection.query('Select f.student_id,p.parent_name, d.student_name, f.receipt_no1, f.fees,f.installment_1,cd.class,cd.section from student_fee f left join student_details d on (f.student_id=d.id) join class_details cd on (cd.id=d.class_id) join parent p on p.student_id=d.id where ? between and ? and ? and d.school_id=?',[fromdate,date, mode,schoolx],
-  var qur="Select distinct f.student_id, p.parent_name,d.student_name, f.receipt_no1, f.fees,f.install1_fine,f.installment_1,f.installment_1Date,cd.class,cd.section from student_fee f join student_details d on (f.student_id=d.id) join class_details cd on (cd.class=d.class) join parent p on p.student_id=d.id where installment_1Date between '"+req.query.fromdate+"' and '"+req.query.dates+"' and modeofpayment1='Cash' and d.school_id='"+schoolx+"' and d.academic_year='"+req.query.academic_year+"'and p.school_id='"+schoolx+"' and p.academic_year='"+req.query.academic_year+"'and f.school_id='"+schoolx+"' and f.academic_year='"+req.query.academic_year+"'and cd.school_id='"+schoolx+"' and cd.academic_year='"+req.query.academic_year+"'";
+  var qur="Select distinct f.student_id, p.parent_name,d.student_name, f.receipt_no1, f.fees,f.install1_fine,f.installment_1,f.installment_1Date,cd.class,cd.section from student_fee f join student_details d on (f.student_id=d.id) join class_details cd on (cd.id=d.class_id) join parent p on p.student_id=d.id where installment_1Date between '"+req.query.fromdate+"' and '"+req.query.dates+"' and modeofpayment1='Cash' and d.school_id='"+schoolx+"' and d.academic_year='"+req.query.academic_year+"'and p.school_id='"+schoolx+"' and p.academic_year='"+req.query.academic_year+"'and f.school_id='"+schoolx+"' and f.academic_year='"+req.query.academic_year+"'and cd.school_id='"+schoolx+"' and cd.academic_year='"+req.query.academic_year+"'";
    console.log(qur);
    var schol=req.query.schol;
       // connection.query("Select student_id,receipt_no1,fees,installment_1,(select student_name from student_details where id=student_id and school_id='"+req.query.schol+"') as name,(select (select class from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as standard,(select (select section from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as section from student_fee  where (? and ?) and school_id='"+req.query.schol+"'",[date, mode],
@@ -4064,7 +4079,7 @@ app.post('/zonechangeinsta1cash',  urlencodedParser,function (req, res)
   // var type={"installtype":'installment2'};
   var schoolx=req.query.schol;
   //    connection.query('Select f.student_id,p.parent_name, d.student_name, f.receipt_no1, f.fees,f.installment_1,cd.class,cd.section from student_fee f left join student_details d on (f.student_id=d.id) join class_details cd on (cd.id=d.class_id) join parent p on p.student_id=d.id where ? between and ? and ? and d.school_id=?',[fromdate,date, mode,schoolx],
-  var qur="Select distinct f.student_id, p.parent_name,d.student_name, f.receipt_no1, f.fees,f.install1_fine,f.installment_1,f.installment_1Date,cd.class,cd.section from student_zonechange f join student_details d on (f.student_id=d.id) join class_details cd on (cd.class=d.class) join parent p on p.student_id=d.id where installment_1Date between '"+req.query.fromdate+"' and '"+req.query.dates+"' and modeofpayment1='Cash' and d.school_id='"+schoolx+"' and d.academic_year='"+req.query.academic_year+"'and p.school_id='"+schoolx+"' and p.academic_year='"+req.query.academic_year+"'and f.school_id='"+schoolx+"' and f.academic_year='"+req.query.academic_year+"'and cd.school_id='"+schoolx+"' and cd.academic_year='"+req.query.academic_year+"'";;
+  var qur="Select distinct f.student_id, p.parent_name,d.student_name, f.receipt_no1, f.fees,f.install1_fine,f.installment_1,f.installment_1Date,cd.class,cd.section from student_zonechange f join student_details d on (f.student_id=d.id) join class_details cd on (cd.id=d.class_id) join parent p on p.student_id=d.id where installment_1Date between '"+req.query.fromdate+"' and '"+req.query.dates+"' and modeofpayment1='Cash' and d.school_id='"+schoolx+"' and d.academic_year='"+req.query.academic_year+"'and p.school_id='"+schoolx+"' and p.academic_year='"+req.query.academic_year+"'and f.school_id='"+schoolx+"' and f.academic_year='"+req.query.academic_year+"'and cd.school_id='"+schoolx+"' and cd.academic_year='"+req.query.academic_year+"'";;
    console.log(qur);
    var schol=req.query.schol;
       // connection.query("Select student_id,receipt_no1,fees,installment_1,(select student_name from student_details where id=student_id and school_id='"+req.query.schol+"') as name,(select (select class from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as standard,(select (select section from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as section from student_fee  where (? and ?) and school_id='"+req.query.schol+"'",[date, mode],
@@ -4136,10 +4151,10 @@ app.post('/getgrade',  urlencodedParser,function (req, res){
 app.post('/gradewisepickroute-report-card',  urlencodedParser,function (req, res){
   var tripid={"school_type":req.query.tripid};
   var schoolx={"school_id":req.query.schol};
-  var grade = {"class":req.query.grade};
+  var grade = {"class_id":req.query.grade};
   //console.log(req.query.grade);
     var route_id={"pickup_route_id":req.query.routeid};
-      var qur="SELECT p.student_id ,(select d.student_name from student_details d where id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"')as name,(select zone_name from md_zone where id =(select f.zone_id from student_fee f where student_id=p.student_id and f.school_id='"+req.query.schol+"' and f.academic_year='"+req.query.academic_year+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as zone,(select m.mobile from parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' and m.academic_year='"+req.query.academic_year+"') as mobile ,(select c.class from class_details c  where c.class=(select d.class from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"'and d.class ='"+req.query.grade+"')) as std ,(select parent_name from parent where student_id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pname,(select point_name from point where id=p.pickup_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pick from student_point p where p.pickup_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"'  and  p.academic_year='"+req.query.academic_year+"'";
+      var qur="SELECT p.student_id ,(select d.student_name from student_details d where id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"')as name,(select zone_name from md_zone where id =(select f.zone_id from student_fee f where student_id=p.student_id and f.school_id='"+req.query.schol+"' and f.academic_year='"+req.query.academic_year+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as zone,(select m.mobile from parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' and m.academic_year='"+req.query.academic_year+"') as mobile ,(select c.class from class_details c  where c.id=(select d.class_id from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"'and d.class_id ='"+req.query.grade+"')) as std ,(select parent_name from parent where student_id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pname,(select point_name from point where id=p.pickup_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pick from student_point p where p.pickup_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"'  and  p.academic_year='"+req.query.academic_year+"'";
       console.log(qur);
 
     //console.log(query);
@@ -4162,12 +4177,12 @@ app.post('/gradewisepickroute-report-card',  urlencodedParser,function (req, res
 app.post('/gradewisedroproute-report-card',  urlencodedParser,function (req, res){
   var tripid={"school_type":req.query.tripid};
   var schoolx={"school_id":req.query.schol};
-  var grade = {"class":req.query.grade};
+  var grade = {"class_id":req.query.grade};
 
     var route_id={"drop_route_id":req.query.routeid};
     /*var query="SELECT p.student_id,(select d.student_name from student_details d where id=p.student_id and school_id='"+req.query.schol+"')as name,(select c.class from class_details c where c.id=(select d.class_id from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.class_id = '"+req.query.grade+"')) as std,(select parent_name from parent where student_id=p.student_id and school_id='"+req.query.schol+"') as pname,(select point_name from point where id=pickup_point) as pick from student_point p where pickup_route_id='"+req.query.routeid+"' and school_type='"+req.query.tripid+"' and school_id='"+req.query.schol+"' and (select c.class from class_details c where c.id=(select d.class_id from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.class_id = '"+req.query.grade+"')) is not null";
 */
-   var qur="SELECT p.student_id ,(select d.student_name from student_details d where id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"')as name,(select zone_name from md_zone where id =(select f.zone_id from student_fee f where student_id=p.student_id and f.school_id='"+req.query.schol+"' and f.academic_year='"+req.query.academic_year+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as zone,(select m.mobile from parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' and m.academic_year='"+req.query.academic_year+"') as mobile ,(select c.class from class_details c  where c.class=(select d.clas from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"'and d.class ='"+req.query.grade+"')) as std ,(select parent_name from parent where student_id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pname,(select point_name from point where id=p.drop_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pick from student_point p where p.drop_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"'  and  p.academic_year='"+req.query.academic_year+"'";
+   var qur="SELECT p.student_id ,(select d.student_name from student_details d where id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"')as name,(select zone_name from md_zone where id =(select f.zone_id from student_fee f where student_id=p.student_id and f.school_id='"+req.query.schol+"' and f.academic_year='"+req.query.academic_year+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as zone,(select m.mobile from parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' and m.academic_year='"+req.query.academic_year+"') as mobile ,(select c.class from class_details c  where c.id=(select d.class_id from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"'and d.class_id ='"+req.query.grade+"')) as std ,(select parent_name from parent where student_id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pname,(select point_name from point where id=p.drop_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pick from student_point p where p.drop_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"'  and  p.academic_year='"+req.query.academic_year+"'";
 
     connection.query(qur,
     function(err, rows){
@@ -4669,7 +4684,7 @@ app.post('/registrationfee',  urlencodedParser,function (req, res)
     "id":req.query.distanceid1,"mindistance":req.query.mindistance,"maxdistance":req.query.maxdistance,"fees":req.query.fee,"academic_year":req.query.academic_year}; 
    console.log(response);
 
-    var qqq="SELECT * FROM md_distance WHERE school_id='"+req.query.schlidz+"' and  id='"+req.query.distanceid1+"' and mindistance='"+req.query.mindistance+"' and maxdistance='"+req.query.maxdistance+"' and  academic_year='"+req.query.academic_year+"'";
+    var qqq="SELECT * FROM md_distance WHERE school_id='"+req.query.schlidz+"' and academic_year='"+req.query.academic_year+"' and id='"+req.query.distanceid1+"' or mindistance='"+req.query.mindistance+"' and maxdistance='"+req.query.maxdistance+"'";
      console.log(qqq);
      
     connection.query(qqq,
@@ -4688,10 +4703,7 @@ app.post('/registrationfee',  urlencodedParser,function (req, res)
                 function (err,result)
                 {
                   if(result.affectedRows>0)
-                  {
-                    console.log(rows);
                     res.status(200).json({'returnval': 'Inserted!'});
-                  }
               });
             }
               else
@@ -4738,6 +4750,7 @@ app.post('/registrationfee',  urlencodedParser,function (req, res)
     "id":req.query.zonename1,"distance_id":req.query.distanceid1,"zone_name":req.query.zoneid1,
     "academic_year":req.query.academic_year}; 
     console.log(response);
+
 
     var qq1="SELECT school_id,id,zone_name,distance_id,(select id from md_distance where id=distance_id) from md_zone where school_id='"+req.query.scholid+"' and academic_year='"+req.query.academic_year+"' and distance_id='"+req.query.distanceid1+"' and id='"+req.query.zonename1+"' ";
 
