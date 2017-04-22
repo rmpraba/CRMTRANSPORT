@@ -55,9 +55,9 @@
         width:65%;
         margin-left: 22%;
         height:190px;
-        border: solid 1px #555; 
+        
         background-color: white; 
-        box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); 
+        box-shadow: 0 0 3px 3px rgb(184, 209, 249); -moz-box-shadow: 0 0 3px 3px rgb(184, 209, 249); -webkit-box-shadow: 0 0 3px 3px gb(184, 209, 249); -o-box-shadow: 0 0 3px 3px rgb(184, 209, 249);  
       }
     
     </style>     
@@ -116,7 +116,7 @@
         <paper-button id="btn2" style="margin: 4% 0 0 4%; height: 35px;" onclick="tableToExcel('testTable2', 'W3C Example Table')" value="Export to Excel">Excel</paper-button>
       </div>
       <transport-service id="service"></transport-service>
-    </template>
+    </template>   
   </div>
   <script type="text/javascript">
     var tableToExcel = (function() {
@@ -252,7 +252,7 @@
       },
       show:function()
       {
-      this.selectroute=routename;
+      this.selectroute=routename;   
          this.$.print.hidden=false;
         this.querySelector("#tableheading").style.visibility='visible';
         this.querySelector("#testTable2").style.visibility='visible';

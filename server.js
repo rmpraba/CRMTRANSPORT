@@ -5,7 +5,8 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
-  database : 'transportdemo11'
+  database : 'transportcloud'
+
 
 });
 var bodyParser = require('body-parser'); 
@@ -1711,8 +1712,9 @@ app.post('/studentdroproute-report-card',  urlencodedParser,function (req, res){
   var schoolx={"school_id":req.query.schol};
   var route_id={"drop_route_id":req.query.routeid};
 
+ var qur="SELECT p.student_id,(select student_name from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as name ,(select class from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as std,(select m.mobile from mlzscrm.parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' ) as mobile,(select parent_name from  mlzscrm.parent where student_id=p.student_id and school_id='"+req.query.schol+"') as pname, (select point_name from point where id=p.drop_point and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"') as pick from student_point p where p.drop_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"' and p.academic_year='"+req.query.academic_year+"'";
 
-   var qur="SELECT p.student_id,(select student_name from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as name ,(select class from class_details where id=(select class_id from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')) as std,(select m.mobile from parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' and m.academic_year='"+req.query.academic_year+"') as mobile,(select parent_name from parent where student_id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pname, (select point_name from point where id=p.drop_point and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"') as pick from student_point p where p.drop_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"' and p.academic_year='"+req.query.academic_year+"'";
+  
 
 
     connection.query(qur,
@@ -4138,7 +4140,7 @@ app.post('/mapbustoroute',  urlencodedParser,function (req, res){
 
 app.post('/getgrade',  urlencodedParser,function (req, res){
   var schoolx={"school_id":req.query.schol};
-    connection.query('select * from class_details where ?',[schoolx],
+    connection.query('select distinct class from class_details where ?',[schoolx],
     function(err, rows){
     if(!err){
       res.status(200).json({'returnval': rows});
@@ -4154,7 +4156,8 @@ app.post('/gradewisepickroute-report-card',  urlencodedParser,function (req, res
   var grade = {"class_id":req.query.grade};
   //console.log(req.query.grade);
     var route_id={"pickup_route_id":req.query.routeid};
-      var qur="SELECT p.student_id ,(select d.student_name from student_details d where id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"')as name,(select zone_name from md_zone where id =(select f.zone_id from student_fee f where student_id=p.student_id and f.school_id='"+req.query.schol+"' and f.academic_year='"+req.query.academic_year+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as zone,(select m.mobile from parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' and m.academic_year='"+req.query.academic_year+"') as mobile ,(select c.class from class_details c  where c.id=(select d.class_id from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"'and d.class_id ='"+req.query.grade+"')) as std ,(select parent_name from parent where student_id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pname,(select point_name from point where id=p.pickup_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pick from student_point p where p.pickup_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"'  and  p.academic_year='"+req.query.academic_year+"'";
+
+      var qur="SELECT p.student_id ,(select d.student_name from student_details d where id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"')as name,(select zone_name from md_zone where id =(select f.zone_id from student_fee f where student_id=p.student_id and f.school_id='"+req.query.schol+"' and f.academic_year='"+req.query.academic_year+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as zone,(select m.mobile from mlzscrm.parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' ) as mobile ,(select d.class from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"') as std ,(select parent_name from mlzscrm.parent where student_id=p.student_id and school_id='"+req.query.schol+"') as pname,(select point_name from point where id=p.pickup_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pick from student_point p where p.pickup_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"'  and  p.academic_year='"+req.query.academic_year+"'";
       console.log(qur);
 
     //console.log(query);
@@ -4166,7 +4169,7 @@ app.post('/gradewisepickroute-report-card',  urlencodedParser,function (req, res
         res.status(200).json({'returnval': rows});
       } else {
         console.log(err);
-        res.status(200).json({'returnval': ''});
+        res.status(200).json({'returnval': 'empty'});
       }
     } else {
       console.log(err);
@@ -4180,9 +4183,9 @@ app.post('/gradewisedroproute-report-card',  urlencodedParser,function (req, res
   var grade = {"class_id":req.query.grade};
 
     var route_id={"drop_route_id":req.query.routeid};
-    /*var query="SELECT p.student_id,(select d.student_name from student_details d where id=p.student_id and school_id='"+req.query.schol+"')as name,(select c.class from class_details c where c.id=(select d.class_id from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.class_id = '"+req.query.grade+"')) as std,(select parent_name from parent where student_id=p.student_id and school_id='"+req.query.schol+"') as pname,(select point_name from point where id=pickup_point) as pick from student_point p where pickup_route_id='"+req.query.routeid+"' and school_type='"+req.query.tripid+"' and school_id='"+req.query.schol+"' and (select c.class from class_details c where c.id=(select d.class_id from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.class_id = '"+req.query.grade+"')) is not null";
-*/
-   var qur="SELECT p.student_id ,(select d.student_name from student_details d where id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"')as name,(select zone_name from md_zone where id =(select f.zone_id from student_fee f where student_id=p.student_id and f.school_id='"+req.query.schol+"' and f.academic_year='"+req.query.academic_year+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as zone,(select m.mobile from parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' and m.academic_year='"+req.query.academic_year+"') as mobile ,(select c.class from class_details c  where c.id=(select d.class_id from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"'and d.class_id ='"+req.query.grade+"')) as std ,(select parent_name from parent where student_id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pname,(select point_name from point where id=p.drop_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pick from student_point p where p.drop_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"'  and  p.academic_year='"+req.query.academic_year+"'";
+  
+   var qur="SELECT p.student_id ,(select d.student_name from student_details d where id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"')as name,(select zone_name from md_zone where id =(select f.zone_id from student_fee f where student_id=p.student_id and f.school_id='"+req.query.schol+"' and f.academic_year='"+req.query.academic_year+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as zone,(select m.mobile from mlzscrm.parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"') as mobile ,(select d.class from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"') as std ,(select parent_name from mlzscrm.parent where student_id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pname,(select point_name from point where id=p.drop_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pick from student_point p where p.drop_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"'  and  p.academic_year='"+req.query.academic_year+"'";
+
 
     connection.query(qur,
     function(err, rows){
@@ -4190,7 +4193,7 @@ app.post('/gradewisedroproute-report-card',  urlencodedParser,function (req, res
       if(rows.length>0){
         res.status(200).json({'returnval': rows});
       } else {
-        res.status(200).json({'returnval': ''});
+        res.status(200).json({'returnval': 'empty'});
       }
     } else {
       console.log(err);
