@@ -81,7 +81,7 @@
         <app-service studentarr="{{studentarr}}"></app-service>
           <template  is="dom-repeat" items="{{studentarr}}">
             <studenttopoint-item-card schooltype="{{item.school_type}}" studentid="{{item.id}}" studentname="{{item.student_name}}"></studenttopoint-item-card>
-          </template>
+          </template>  
           <div class="button" style="margin-left: 47%;margin-top: 3%; height: 40% !important;">
             <paper-button raised id="submitbutton" class="custom indigo" on-click="click">Submit</paper-button>
           </div>

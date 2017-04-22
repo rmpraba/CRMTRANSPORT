@@ -1234,31 +1234,35 @@
       {
 
         var a2=e1.detail.response.returnval;
-       //  alert(JSON.stringify(a2));
+        alert(JSON.stringify(a2));
         document.querySelector('mappointtoroute-card').routearr=a2;
         document.querySelector('vehicleroute-card').routes=a2;
         document.querySelector('staffallocation-card').routearr=a2;
         document.querySelector('staffreport-card').routearr=a2;
         document.querySelector('addattendence-card').routes=a2;
       },
-       getroutedetail:function(tripno)
+       getroutedetail:function(tripno,routevalue1)
       {
    
         this.getroutedetailurl=sessionStorage.getItem("addrinfo")+"/getroutedetail";
         var obj={"routename":"","tripnos":"","schol":"","academic_year":""};
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.schol=sessionStorage.getItem("sch");
-        obj.routename=routetrip;
+        obj.routename=routevalue1;
         obj.tripnos=tripno;
         this.getroutedetailparam=obj;
-        //alert(JSON.stringify(obj));
         this.$.getroutedetailajax.generateRequest();
       },
       getroutedetailResponse:function(e1)
           {
           var routedetails=e1.detail.response.returnval;
-          //alert(JSON.stringify(routedetails));
-          document.querySelector('mappointtoroute-card').itemarr=routedetails;
+          alert(JSON.stringify(routedetails));
+          if(routedetails=='invalid'){
+             document.querySelector('mappointtoroute-card').fn1();
+           }
+           else{
+             document.querySelector('mappointtoroute-card').itemarr=routedetails;
+           }
       },
 
       insertpoint:function(route,pt,pickuptime,droptime,tripp,dist)
@@ -1285,7 +1289,7 @@
             alert('The point is mapped to route');
             document.querySelector('mappointtoroute-card').refreshdeletedata();
         }
-        else
+       else
         {
             alert('The point is not mapped to route');
         }
@@ -1308,18 +1312,19 @@
         obj.schol=sessionStorage.getItem("sch");
         obj.id="p"+seq;
         obj.academic_year=localStorage.getItem("curr_sess_academicyear")
-        obj.routes=sessionStorage.getItem("routid");
+        obj.routes=sessionStorage.getItem("routevalue");
         obj.points=point;
         obj.trip=trip;
         obj.pick=pick;
         obj.drop=drop;
         obj.distance=distance;
         this.insertpointparam=obj;
+        alert(JSON.stringify(obj));
         this.insertpointurl=sessionStorage.getItem("addrinfo")+"/insertpoint";
         this.$.insertpointajax.generateRequest();
 
       },
-         getzone:function()
+         getzone:function()  
 
       {
         this.getzoneurl=sessionStorage.getItem("addrinfo")+"/getzone";
@@ -1332,6 +1337,7 @@
       getzoneResponse:function(e1)
           {
             var zoneitem=e1.detail.response.returnval;
+            alert(JSON.stringify(zoneitem));
             document.querySelector('zonetostudent-card').itemarr=zoneitem;
       },
       getfee:function(zone)
@@ -1646,22 +1652,24 @@
         //alert(JSON.stringify(e.detail.response.returnval));
       },
 
-     gettrip:function(routename)
+     gettrip:function(routename,routevalue1)
       {
         routetrip=routename;
         //alert('name of route'+routetrip);
         //alert('Hi');
         this.gettripurl=sessionStorage.getItem("addrinfo")+"/gettrip";
-        var obj={"triproute":"","schol":""};
+        var obj={"triproute":"","schol":"","academic_year":""};
         obj.schol=sessionStorage.getItem("sch");
-        obj.triproute=routename;
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+        obj.triproute=routevalue1;
         this.gettripparam=obj;
 
         this.$.gettripajax.generateRequest();
         this.getrouteidurl=sessionStorage.getItem("addrinfo")+"/getrouteid";
-        var obj1={"routename":"","schol":""}
+        var obj1={"routename":"","schol":"","academic_year":""}
         obj1.schol=sessionStorage.getItem("sch");
-        obj1.routename=routename;
+       obj1.academic_year=localStorage.getItem("curr_sess_academicyear");
+        obj1.routename=routevalue1;
         this.getrouteidparam=obj1;
       //alert(JSON.stringify(obj1));
         this.$.getrouteidajax.generateRequest();

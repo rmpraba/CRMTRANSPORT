@@ -73,7 +73,7 @@
           </paper-dropdown-menu>
       </paper-dialog>
     </div>  
-  </body>
+  </body>  
   <mapstudenttopoint-service id="maps"></mapstudenttopoint-service>
    <refund-service id="service"></refund-service>
    <transport-service id="transportservice"></transport-service>
@@ -88,7 +88,7 @@
     
     ready:function()
     {
-      this.Attendence=true;
+      this.Attendence=true;  
       this.bus=true;
       this.Driver=true;
     },
@@ -97,7 +97,7 @@
    
         transacademicyr=e.target.selectedItem.value.trim();
         localStorage.setItem("curr_sess_academicyear",transacademicyr);
-        
+
         if(localStorage.getItem('curr_sess_acadmic')=="zone")
         {
         document.querySelector('transport-app').setPage("zonetostudent","Zone to Student");
@@ -107,7 +107,7 @@
            this.$.transportservice.getname();
           this.$.transportservice.getzone();
 
-       }
+       }  
        if(localStorage.getItem('curr_sess_acadmic')=="pointallocation")
          {
           document.querySelector('transport-app').setPage("mapstudenttopoint","Map Student to point");

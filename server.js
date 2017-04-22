@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
-  database : 'transcloud'
+  database : 'transport'
 
 });
 var bodyParser = require('body-parser');
@@ -173,11 +173,12 @@ app.post('/getzonenamedetail' ,  urlencodedParser,function (req, res)
   });
 app.post('/getroutedetail' ,  urlencodedParser,function (req, res)
 {
-  var routename={"route_name":req.query.routename};
   var trip={"trip":req.query.tripnos};
   var schoolx={"school_id":req.query.schol};
   //console.log('hello trip...'+trip);
-  connection.query('select * from point where route_id=(select id from route where ? and ? and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and ? and academic_year="'+req.query.academic_year+'"',[routename,schoolx,trip],
+   var qur='select * from point where route_id="'+req.query.routename+'"and academic_year="'+req.query.academic_year+'"and school_id="'+req.query.schol+'"  and trip="'+req.query.tripnos+'"'
+   console.log(qur);
+  connection.query(qur,
     function(err, rows){
     if(!err){
       if(rows.length>0){
@@ -732,29 +733,6 @@ app.post('/fetchstuzonedetail' ,  urlencodedParser,function (req, res)
     }
 });
   });
-app.post('/getroute' ,  urlencodedParser,function (req, res)
-{
-      connection.query('select route_name from md_route',
-        function(err, rows)
-        {
-        if(!err)
-    {
-      if(rows.length>0)
-      {
-      res.status(200).json({'returnval': rows});
-      }
-      else
-      {
-      res.status(200).json({'returnval': 'invalid'});
-      }
-    }
-    else
-    {
-      console.log('No data Fetched'+err);
-    }
-});
-  });
-
 app.post('/report-card',  urlencodedParser,function (req, res)
 {
 
@@ -834,7 +812,7 @@ app.post('/selectnameforchpoint',  urlencodedParser,function (req, res)
 {
    var qur1='SELECT id, student_name from student_details where id in(select student_id from student_fee where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and id  in (Select student_id from student_point) and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"';
 
-   console.log(qur1);
+    console.log(qur1);
 
        connection.query(qur1, function(err, rows)
         {
@@ -1091,11 +1069,11 @@ app.post('/submitupdateurl',  urlencodedParser,function (req, res)
 app.post('/gettrip' ,  urlencodedParser,function (req, res)
 {
 
-     var routen={"route_name":req.query.triproute};
+     var routen={"route_id":req.query.triproute};
      var schoolx={"school_id":req.query.schol};
      //console.log('in server...');
      //console.log(routen);
-      connection.query('select distinct trip from point where route_id=(select id from route where ? and ?)',[routen,schoolx],
+      connection.query('select distinct trip from point where route_id="'+req.query.triproute+'"and ? and academic_year="'+req.query.academic_year+'"',[routen,schoolx],
         function(err, rows)
         {
     if(!err)
@@ -1122,7 +1100,7 @@ app.post('/gettrip' ,  urlencodedParser,function (req, res)
 app.post('/getrouteid' ,  urlencodedParser,function (req, res)
 {
 
-     var routen={"route_name":req.query.routename};
+     var routen={"id":req.query.routename};
      var schoolx={"school_id":req.query.schol};
      var academicyear={"academic_year":req.query.academic_year};
      //console.log('in server...');
@@ -1649,7 +1627,7 @@ app.post('/discountbyname',  urlencodedParser,function (req, res)
 app.post('/generateroutereport',  urlencodedParser,function (req, res)
 {
   var schoolx={"school_id":req.query.schol};
-  connection.query('SELECT * from route where ?',[schoolx],
+  connection.query('SELECT * from route where ? and academic_year="'+req.query.academic_year+'"',[schoolx],
         function(err, rows)
         {
     if(!err)
@@ -1692,7 +1670,8 @@ app.post('/studentpickroute-report-card',  urlencodedParser,function (req, res){
   var tripid={"school_type":req.query.tripid};
   var schoolx={"school_id":req.query.schol};
        var route_id={"pickup_route_id":req.query.routeid};
-        var query="SELECT p.student_id,(select student_name from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as name ,(select class from class_details where class=(select class from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')) as std,(select m.mobile from parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' and m.academic_year='"+req.query.academic_year+"') as mobile,(select parent_name from parent where student_id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pname, (select point_name from point where id=p.pickup_point and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"') as pick from student_point p where p.pickup_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"' and p.academic_year='"+req.query.academic_year+"'";
+        var query="SELECT p.student_id,(select student_name from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as name,(select class from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as std,(select m.mobile from mlzscrm.parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"') as mobile,(select parent_name from mlzscrm.parent where student_id=p.student_id and school_id='"+req.query.schol+"' ) as pname, (select point_name from point where id=p.pickup_point and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"') as pick from student_point p where p.pickup_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"' and p.academic_year='"+req.query.academic_year+"'";
+        console.log(query);
    
     connection.query(query,
     function(err, rows){
