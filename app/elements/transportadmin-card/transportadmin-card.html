@@ -35,14 +35,15 @@
        <paper-icon-button class="iconbutton" src="../../images/busroute.png" on-click="busroute"></paper-icon-button>
       <paper-icon-button class="iconbutton"  src="../../images/pass.png" on-click="stpass"></paper-icon-button>
       
-      <div class="bus1" hidden$="{{bus}}">
+      <!-- <div class="bus1" hidden$="{{bus}}"> -->
         <paper-icon-button class="iconbutton"  src="../../images/bus.png"  on-click="bus"></paper-icon-button>
-       </div>
+       <!-- </div> -->
+       
         <paper-icon-button class="iconbutton"  src="../../images/attender.png" on-click="attender"></paper-icon-button>
 
-     <div class="driver1" hidden$="{{Driver}}">   
+     <!-- <div class="driver1" hidden$="{{Driver}}">    -->
         <paper-icon-button class="iconbutton" src="../../images/driver.png" on-click="driver"></paper-icon-button>
-      </div>
+      <!-- </div> -->
       
          <paper-icon-button class="iconbutton"  src="../../images/bus_report.png" on-click="busreport"></paper-icon-button>
      
@@ -52,9 +53,9 @@
         
       <!-- <paper-icon-button class="iconbutton" src="../../images/bus_route.png" on-click="bustoroute"></paper-icon-button> -->
       
-      <div class="attend1" hidden$="{{Attendence}}">
+      <!-- <div class="attend1" hidden$="{{Attendence}}"> -->
         <paper-icon-button class="iconbutton" src="../../images/add_attendance.png" on-click="addattendence"></paper-icon-button>
-      </div>
+      <!-- </div> -->
        
        <paper-icon-button class="iconbutton" src="../../images/gradewise-route-report.png" on-click="gradewisereport"></paper-icon-button>
        
@@ -86,12 +87,12 @@
     is: "transportadmin-card",
 
     
-    ready:function()
+    /*ready:function()
     {
       this.Attendence=true;  
       this.bus=true;
       this.Driver=true;
-    },
+    },*/
     FnSelectacademicyear:function(e)
     { 
    
