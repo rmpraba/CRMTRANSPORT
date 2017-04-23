@@ -1452,6 +1452,7 @@
       getnameResponse:function(e1)  
           {
             var iditem=e1.detail.response.returnval;
+            alert(JSON.stringify(iditem));
             //document.querySelector('zonetostudent-card').studentidarr=iditem;
             document.querySelector('zonetostudent-card').autocompletearr(iditem);
             //document.querySelector('studentpass-card').autocompletearr(iditem);

@@ -50,20 +50,29 @@
           </div>
         </div>
         <div class="detail">
-          <paper-tabs class="htab">
-            <paper-tab>Installment Type</paper-tab>
-            <paper-tab>Amount</paper-tab>
-            <paper-tab>Mode of Payment</paper-tab>
-            <paper-tab>Cheque No</paper-tab>
-            <paper-tab>Bank Name</paper-tab>
-            <paper-tab>Cheque Date</paper-tab>
-          </paper-tabs>
+          <div class="collapse1">
+            <paper-tabs class="htab">
+              <paper-tab>Installment Type</paper-tab>
+              <paper-tab>Amount</paper-tab>
+              <paper-tab>Mode of Payment</paper-tab>
+              <paper-tab>Cheque No</paper-tab>
+              <paper-tab>Bank Name</paper-tab>
+              <paper-tab>Cheque Date</paper-tab>
+            </paper-tabs>
+          </div>
+         
+         <div class="collapse1">
            <template  is="dom-repeat" items="{{editarr1}}" as="view">
             <edit-cheque-item-card installtype1="{{view.installtype1}}" installamt1="{{view.installamt1}}" paytype1="{{view.paytype1}}" prevcheque="{{view.chequenum1}}" stuid="{{id}}" chequenum1="{{view.chequenum1}}" bankname1="{{view.bankname1}}" chequedate1="{{view.chequedate1}}"></edit-cheque-item-card>
           </template>
-          <template  is="dom-repeat" items="{{editarr2}}" as="views">
+         </div> 
+         
+         <div class="collapse1">
+            <template  is="dom-repeat" items="{{editarr2}}" as="views">
             <edit-cheque2-item-card installtype2="{{views.installtype2}}" installamt2="{{views.installamt2}}" paytype2="{{views.paytype2}} " prevcheque="{{views.chequenum2}}" stuid="{{id}}" chequenum2="{{views.chequenum2}}" bankname2="{{views.bankname2}}" chequedate2="{{views.chequedate2}}"></edit-cheque2-item-card>
           </template>
+         </div>  
+         
         
         </div>
       </div>
