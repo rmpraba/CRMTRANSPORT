@@ -230,6 +230,14 @@
         }
       }
     },
+    f11:function(e){
+        this.querySelector("#tableheading").style.visibility='hidden';
+        this.querySelector("#gradewisetestTable").style.visibility='hidden';
+        this.querySelector("#btn2").style.visibility='hidden';
+        this.$.print.hidden=true;
+        this.$.grndtot.hidden=true;
+   
+    },
       FnItemSelected:function(e){
        
         routeid= e.target.selectedItem.value;

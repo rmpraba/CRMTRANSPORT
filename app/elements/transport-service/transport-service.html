@@ -1538,8 +1538,7 @@
         this.generateroutereporturl=sessionStorage.getItem("addrinfo")+"/generateroutereport";
         var obj={"schol":"","academic_year":""}
          obj.academic_year=localStorage.getItem("curr_sess_academicyear");
-       
-        obj.schol=sessionStorage.getItem("sch");
+         obj.schol=sessionStorage.getItem("sch");
         this.generateroutereportparam=obj;
         this.$.generateroutereportajax.generateRequest();
       },
@@ -1624,6 +1623,8 @@
     }
     else{
         alert(" Route is not mapped in the Grade");
+        document.querySelector('gradewiseroute-report').f11();
+      
     }
 
       },
@@ -1632,31 +1633,42 @@
         var routereportresult=e.detail.response.returnval;
         var no_of_student= routereportresult.length;
           if(routereportresult!='empty'){
-
         document.querySelector('gradewiseroute-report').reportarr=routereportresult;
         document.querySelector('gradewiseroute-report').no_of_student=no_of_student;
         //alert(JSON.stringify(e.detail.response.returnval));
     }else{
         alert("Route not mapping in the Grade");
+           document.querySelector('gradewiseroute-report').f11();
+   
        }
       },
       studentpickroutereportResponse:function(e)
       {
         var routereportresult=e.detail.response.returnval;
-        //alert(JSON.stringify(e.detail.response.returnval));
         var no_of_student = routereportresult.length;
+         if(routereportresult!="empty"){
         document.querySelector('routereport-card').reportarr=routereportresult;
         document.querySelector('addattendence-card').reportarr=routereportresult;
         document.querySelector('routereport-card').no_of_student=no_of_student;
         //alert(JSON.stringify(e.detail.response.returnval));
+    }else{
+        alert("No pickup point in the route");
+           document.querySelector('gradewiseroute-report').f11();
+       }
       },
        studentdroproutereportResponse:function(e)
       {
-        var routereportresult=e.detail.response.returnval;
+          var routereportresult=e.detail.response.returnval;
+           if(routereportresult!="empty"){
         var no_of_student= routereportresult.length;
         document.querySelector('routereport-card').reportarr=routereportresult;
         document.querySelector('routereport-card').no_of_student=no_of_student;
-        //alert(JSON.stringify(e.detail.response.returnval));
+    }else{
+      alert("No drop point in the route");
+                document.querySelector('routereport-card').studentpickroutereport1();
+  
+  
+    }
       },
 
      gettrip:function(routename,routevalue1)
