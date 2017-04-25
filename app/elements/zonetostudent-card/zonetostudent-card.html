@@ -53,13 +53,13 @@
   }
   .card
       {
-        width:110%;
-        /*height:420px;*/
-        margin-top: 1%;
-        border: solid 1px #ccc; 
+        width:67%;
+        height:450px;
+        margin-top: -2%;
+        
         background-color: white; 
-        box-shadow: 0 0 2px 2px rgba(0,0,0,0.2); -moz-box-shadow: 0 0 2px 2px rgba(0,0,0,0.2); -webkit-box-shadow: 0 0 2px 2px rgba(0,0,0,0.2); -o-box-shadow: 0 0 2px 2px rgba(0,0,0,0.2); 
-      }
+       box-shadow: 0 0 3px 3px rgb(184, 209, 249); -moz-box-shadow: 0 0 3px 3px rgb(184, 209, 249); -webkit-box-shadow: 0 0 3px 3px gb(184, 209, 249); -o-box-shadow: 0 0 3px 3px rgb(184, 209, 249); 
+     }
     paper-dropdown-menu{
       width:85%;
     }
@@ -665,7 +665,7 @@ this.hidetransport=true;
           var backsubval=(((this.value).substring(0,(len-1))).trim()).toUpperCase();
           for(var i=0;i<item.length;i++)
           {
-           // alert(item[i].student_name);
+           alert(item[i].student_name);
 
             var subval=((item[i].student_name).trim()).substring(0,backsubval.length);
             if((subval).toUpperCase()==(backsubval).toUpperCase())

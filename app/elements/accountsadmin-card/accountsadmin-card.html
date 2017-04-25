@@ -14,7 +14,7 @@
     width: 100%;
  }  
 .iconbutton
- {
+ { 
 
     top:35%;
   width: 13%;
@@ -25,8 +25,8 @@
   
 
     <div class="frontpage">
-      <paper-icon-button class="iconbutton" src="../../images/zone.png" on-click="zone"></paper-icon-button>
-      
+     <!--  <paper-icon-button class="iconbutton" src="../../images/zone.png" on-click="zone"></paper-icon-button>
+       -->
       
       <!-- <paper-icon-button class="iconbutton" src="../../images/transportation.png" on-click="transportfee"></paper-icon-button> -->
        <paper-icon-button class="iconbutton" src="../../images/add_user.png" on-click="add"></paper-icon-button>
@@ -72,7 +72,7 @@
            this.$.service.getname();
           this.$.service.getzone();
 
-       }
+       }  
          
      else if(localStorage.getItem('curr_sess_acadmic')=="transportfee11") 
          {
@@ -121,14 +121,14 @@
       { //alert('1');
          document.querySelector('#academicyr').selected=-1;
       },
-      zone:function()   
+   /*   zone:function()   
       {
 
         localStorage.setItem('curr_sess_acadmic','zone'); 
         this.$.service.callAcademicService(); 
         this.$.cdialog.toggle();
  
-      },   
+      },  */ 
       transportfee:function(e)
       { 
            localStorage.setItem('curr_sess_acadmic','transportfee11'); 

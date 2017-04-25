@@ -42,9 +42,8 @@
         width:45%;
         margin-left: 24%;
         height:170px;
-        border: solid 1px #555; 
         background-color: white; 
-        box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px 5px rgba(0,0,0,0.6); 
+        box-shadow: 0 0 3px 3px rgb(184, 209, 249); -moz-box-shadow: 0 0 3px 3px rgb(184, 209, 249); -webkit-box-shadow: 0 0 3px 3px gb(184, 209, 249); -o-box-shadow: 0 0 3px 3px rgb(184, 209, 249);
       }
 
 
@@ -81,7 +80,7 @@
         <app-service studentarr="{{studentarr}}"></app-service>
           <template  is="dom-repeat" items="{{studentarr}}">
             <studenttopoint-item-card schooltype="{{item.school_type}}" studentid="{{item.id}}" studentname="{{item.student_name}}"></studenttopoint-item-card>
-          </template>
+          </template>  
           <div class="button" style="margin-left: 47%;margin-top: 3%; height: 40% !important;">
             <paper-button raised id="submitbutton" class="custom indigo" on-click="click">Submit</paper-button>
           </div>

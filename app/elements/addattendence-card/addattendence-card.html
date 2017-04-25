@@ -49,9 +49,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .students-atten:nth-child(even) {background: #CCC};
       .students-atten:nth-child(odd) {background: #FFF};
+
+      #card
+      {
+        width:50%;
+        height:320px;
+        margin-left: 27%;
+        margin-top: 1%;
+        background-color: white; 
+       box-shadow: 0 0 3px 3px rgb(184, 209, 249); -moz-box-shadow: 0 0 3px 3px rgb(184, 209, 249); -webkit-box-shadow: 0 0 3px 3px gb(184, 209, 249); -o-box-shadow: 0 0 3px 3px rgb(184, 209, 249); 
+     }
     </style>
     <div class="container">
-      <div id="drop">
+      <div id="card">
         <div class="field">
           <paper-dropdown-menu label="Route">
             <paper-menu   id="sets0sa" class="dropdown-content" on-iron-select="routeid" >
@@ -77,7 +87,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-menu>
           </paper-dropdown-menu>
         </div>
-        <div class="button">
+        <div class="button" style="margin-top: 3%;">
           <paper-button on-click="show">Submit</paper-button>
         </div>
       </div>
@@ -91,7 +101,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <addattendance-item-card student="{{view.name}}" studentid="{{view.student_id}}" ></addattendance-item-card>
         </div>  
       </template>
-      <div class="button">
+      <div class="button" style="margin-top: 4%;">
         <paper-button raised id="submitatten" on-click="click">Submit</paper-button>
       </div>
     </div>
@@ -110,7 +120,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ready:function(){
         this.$.headatt.hidden=true;
         this.$.submitatten.hidden=true;
-        this.$.drop.hidden=false;
+        this.$.card.hidden=false;
       },
       routeid:function(e){
         routeid = (e.target.selectedItem.textContent).trim();

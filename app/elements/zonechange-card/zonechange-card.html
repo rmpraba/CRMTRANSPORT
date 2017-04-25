@@ -52,101 +52,119 @@
     margin-left: 4%;
     margin-top: 2%;
   }
+   .card
+    {
+        width:67%;
+        height:538px;
+        margin-top: -2%;
+        
+        background-color: white; 
+       box-shadow: 0 0 3px 3px rgb(184, 209, 249); -moz-box-shadow: 0 0 3px 3px rgb(184, 209, 249); -webkit-box-shadow: 0 0 3px 3px gb(184, 209, 249); -o-box-shadow: 0 0 3px 3px rgb(184, 209, 249); 
+    }
 </style>
   <body>
 
 
     <div class="layframe">
+      <div class="card">
         <div class="horizontalframe">
-    <div class="hrspace">
-      <paper-input  label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
-      <paper-listbox class="dropdown-content" id="zonechangeinput" on-iron-select="FnItemSelected">
-        <template is="dom-repeat" items="{{itemArray}}" as="item">
-          <paper-item value="{{item.id}}">{{item.itemdes}}</paper-item>
-        </template>
-      </paper-listbox>
-    </div>
           <div class="hrspace">
-            <paper-input  label="Parent Name" readonly is="" id="dad6" value="{{parent}}"></paper-input></div>
+            <paper-input  label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
+              <paper-listbox class="dropdown-content" id="zonechangeinput" on-iron-select="FnItemSelected">
+                <template is="dom-repeat" items="{{itemArray}}" as="item">
+                  <paper-item value="{{item.id}}">{{item.itemdes}}</paper-item>
+                </template>
+              </paper-listbox>
+          </div>
+          <div class="hrspace">
+            <paper-input  label="Parent Name" readonly is="" id="dad6" value="{{parent}}"></paper-input>
+          </div>
 
           <div class="hrspace">
-          <paper-input  label="School Type" readonly is="" id="dad5" value="{{grade}}"></paper-input></div>
+            <paper-input  label="School Type" readonly is="" id="dad5" value="{{grade}}"></paper-input>
+          </div>
+        </div>
+        <div class="horizontalframe">
+          <div class="hrspace">
+            <paper-input  label="Standard" is="" readonly id="dad4" value="{{stnd}}"></paper-input>
+          </div>
+          <div class="hrspace">
+             <paper-input  label="Student ID" is="" id="dad2" readonly value="{{id}}"></paper-input>
+          </div>
+          <div class="hrspace">
+            <paper-input  label="Date Of Birth" is="" id="dad1" readonly value="{{date}}"></paper-input>
+          </div>
+        </div>
+        <div class="horizontalframe">
+          <div class="hrspace">
+            <paper-input  label="Previous Zone" is="" readonly id="dad4" value="{{prevzone}}"></paper-input>
+          </div>
+          <div class="hrspace">
+            <paper-input  label="Previous Zone Fee" is="" id="dad2" readonly value="{{prevzonefee}}"></paper-input>
+          </div>
+          <div><zonechangedatepicker-card></zonechangedatepicker-card></div>
+        </div>   
+      <div class="horizontalframe">
+        <div class="hrspace">
+          <paper-input  label="Used Month" is="" readonly id="dad4" value="{{prevmonth}}"></paper-input>
+        </div>
+        <div class="hrspace">
+          <paper-input  label="Used Fee" is="" id="dad2" readonly value="{{prevusedfee}}"></paper-input>
+        </div>
+        <div class="hrspace">
+          <paper-input  label="Remaining Fee" is="" id="dad2" readonly value="{{prevremainfee}}"></paper-input>
+        </div>
+      </div>
+      <div class="horizontalframe">
+        <div class="hrspace">
+          <div class="drop-down" >
+            <paper-dropdown-menu label="Select the Zone" >
+              <paper-menu id="zone" class="dropdown-content" required on-iron-select="zoned" valueattr="value" >
+                <template  is="dom-repeat" items="{{itemarr}}" as="view">
+                  <paper-item value="{{view.id}}">{{view.zone_name}}</paper-item>
+                </template>
+              </paper-menu>
+            </paper-dropdown-menu>
+          </div>
+        </div>
+        <div class="fee">
+          <paper-input  required  readonly label="Fees" id="dad" value="{{fee}}"></paper-input>
+        </div>
 
+        <div>
+          <paper-input id="zdate1"  value="{{zfromdate}}"></paper-input> 
+        </div>
+        <div> <paper-input id="zdate"  value="{{ztodate}}"></paper-input> </div>
+      </div>
 
-</div>
- <div class="horizontalframe">
-   <div class="hrspace">
-     <paper-input  label="Standard" is="" readonly id="dad4" value="{{stnd}}"></paper-input></div>
-    <div class="hrspace">
-             <paper-input  label="Student ID" is="" id="dad2" readonly value="{{id}}"></paper-input></div>
-<div class="hrspace">
-          <paper-input  label="Date Of Birth" is="" id="dad1" readonly value="{{date}}"></paper-input></div>
-
-
-</div>
-<div class="horizontalframe">
-   <div class="hrspace">
-     <paper-input  label="Previous Zone" is="" readonly id="dad4" value="{{prevzone}}"></paper-input></div>
-    <div class="hrspace">
-  <paper-input  label="Previous Zone Fee" is="" id="dad2" readonly value="{{prevzonefee}}"></paper-input></div>
-<div><zonechangedatepicker-card></zonechangedatepicker-card></div>
-
-</div>   
-<div class="horizontalframe">
-   <div class="hrspace">
-     <paper-input  label="Used Month" is="" readonly id="dad4" value="{{prevmonth}}"></paper-input></div>
-    <div class="hrspace">
-  <paper-input  label="Used Fee" is="" id="dad2" readonly value="{{prevusedfee}}"></paper-input></div>
- <div class="hrspace">
-  <paper-input  label="Remaining Fee" is="" id="dad2" readonly value="{{prevremainfee}}"></paper-input></div>
-
-</div>
-<div class="horizontalframe">
-  <div class="hrspace">
-    <div class="drop-down" >
-      <paper-dropdown-menu label="Select the Zone" >
-        <paper-menu id="zone" class="dropdown-content" required on-iron-select="zoned" valueattr="value" >
-          <template  is="dom-repeat" items="{{itemarr}}" as="view">
-            <paper-item value="{{view.id}}">{{view.zone_name}}</paper-item>
-          </template>
-        </paper-menu>
-      </paper-dropdown-menu>
-    </div>
-  </div>
-<div class="fee">
-          <paper-input  required  readonly label="Fees" id="dad" value="{{fee}}"></paper-input></div>
-
-<div>
- <paper-input id="zdate1"  value="{{zfromdate}}"></paper-input> </div>
- <div> <paper-input id="zdate"  value="{{ztodate}}"></paper-input> </div>
-</div>
-
-<div  class="horizontalframe hrrspace">
-<div class="verticalframe">
+      <div  class="horizontalframe hrrspace">
+        <div class="verticalframe">
           <p style="font-weight: 500; font-size: large; margin-left: -1.5%;">Travel Requirements:</p>
-<div   class="horizontalframe" >
-    <div>
-            Complete Year
-            <paper-checkbox style="margin-left: 3%" id="yearly1" readonly class="checkbox" on-change="fullHandler"></paper-checkbox></div>
-           <div>
-  Two-Way
-<paper-checkbox style="margin-left: 3%" id="twoway1" readonly class="checkbox" on-change="twowayHandler"></paper-checkbox> </div>
+            <div  class="horizontalframe" style="width: 170%;" >
+              <div style="width: 50%;margin-left: -4%;">
+                Complete Year
+                <paper-checkbox style="margin-left: 3%" id="yearly1" readonly class="checkbox" on-change="fullHandler"></paper-checkbox>
+              </div>
+              <div style="width: 50%;">
+                  Two-Way
+                <paper-checkbox style="margin-left: 3%" id="twoway1" readonly class="checkbox" on-change="twowayHandler"></paper-checkbox> 
+              </div>  
+            </div>  
+          </div>
+        </div>  
 
-            
-          
-</div>
+        <div style="margin-top: 5%;" class="horizontalframe hrspace" id="but">
 
-<div style="margin-top: 5%; margin-left: 20%;" class="horizontalframe hrspace" id="but">
+        <div>
+          <paper-button style="height:35px !important;" class="button" on-click="click">Submit</paper-button>
+        </div>
+        <div style="margin-left: 5%;">
+            <paper-button  style="height:35px !important;" class="button" on-click="FnClear">Cancel</paper-button>
+        </div>
 
-<div>
-    <paper-button style="height:35px !important;" class="button" on-click="click">Submit</paper-button>
-  </div>
-  <div style="margin-left: 5%;">
-    <paper-button  style="height:35px !important;" class="button" on-click="FnClear">Cancel</paper-button>
-  </div>
-
-<paper-input id="status" class="field" value="{{status}}"></paper-input>
-</div>
+          <paper-input id="status" class="field" value="{{status}}"></paper-input>
+        </div>
+    </div>    
 
 <div hidden$="{{hidepayoption}}">
 <div  class="collapse" on-click="toggle2">Transport Fee</div>
@@ -197,7 +215,6 @@
    </div>
    </div>
     </div>
-  </div>
   </body>
 <div class="confirm-fee">
   <paper-dialog id="confirmbox" modal>

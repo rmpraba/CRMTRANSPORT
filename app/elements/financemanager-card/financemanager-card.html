@@ -172,8 +172,13 @@
           this.$.financecdialog.close();
    
       },
-   register:function(){
-    localStorage.setItem('curr_sess_acadmic','register');
+      Fnrefresh:function()
+      {
+        document.querySelector('#financeacademic').selected=-1;
+      },
+      register:function()
+      {
+        localStorage.setItem('curr_sess_acadmic','register');
               this.$.transportservice.callAcademicService();
               this.$.financecdialog.toggle();
         

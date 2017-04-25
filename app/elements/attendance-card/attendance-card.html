@@ -21,20 +21,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      <div class="date">
         <attendancedatepicker-card id="dp"></attendancedatepicker-card>
       </div>
-    
-    <div class="headtabs">
+    <div class="collapse1">
+      <div class="headtabs">
         <paper-tabs selected="0">
           <paper-tab>Route Name</paper-tab>
           <paper-tab> Number Of Students</paper-tab>
           <paper-tab>Trip</paper-tab>
           <paper-tab>Mode Of Travel</paper-tab>
-           <paper-tab>Number of Present</paper-tab>
-            <paper-tab>Number of Absent</paper-tab>
+          <paper-tab>Number of Present</paper-tab>
+          <paper-tab>Number of Absent</paper-tab>
         </paper-tabs>
       </div>
+    </div>
+    
+    <div class="collapse1">
       <template  is="dom-repeat" items="{{attendancearr}}" as="view">
         <attendance-item-card route="{{view.route}}" noofstu="{{view.cnt}}" trip="{{view.trip}}" modeoftravel="{{view.mode_of_travel}}" present="{{view.pcount}}" absent="{{view.acount}}"></attendance-item-card>
       </template>
+    </div>
+      
   </template>
   <script>
   (function() {
