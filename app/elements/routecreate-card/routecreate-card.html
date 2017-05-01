@@ -53,7 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-item>Route Name : </paper-item>
       </div>
       <div class="center" style="margin-left: -8%;margin-top: 3%;">
-        <paper-input  class="field" value="{{routename}}"></paper-input>
+        <paper-input  class="field" required error-message="needs Route name!" value="{{routename}}" allowed-pattern="[0-9]"></paper-input>
       </div>
       <div class="right" style="margin-top: 18%;margin-left: -5em;height: 60%;">
         <paper-button class="button" on-click="create">ADD</paper-button>
@@ -85,17 +85,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
-
+    var routename="";
     Polymer({
       is: 'routecreate-card',
 
       ready:function()
       {
-         
+           this.routename="ROUTE-";
       },
       create:function()
       {
+       
+          alert(this.routename);
         this.$.maps.createroute(this.routename);
+        this.ready();
+      
+        
       },
       FnClear:function()
       {
