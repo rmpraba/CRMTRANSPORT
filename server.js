@@ -435,8 +435,8 @@ app.post('/getzonechangetermdate' ,  urlencodedParser,function (req, res)
   });
 app.post('/setzone' ,  urlencodedParser,function (req, res)
 {
-  var queryy="insert into student_fee values('"+req.query.schol+"','"+req.query.studid+"','"+req.query.zone+"','','',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"','"+req.query.name+"',STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),'"+req.query.status+"','','',0,0,'0','0','0','0','0','"+req.query.academic_year+"')";
-     // console.log(queryy);
+  var queryy="insert into student_fee values('"+req.query.schol+"','"+req.query.studid+"','"+req.query.zone+"','','',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"','"+req.query.name+"',STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),'"+req.query.status+"','','',0,0,'"+req.query.academic_year+"','0','0','0','0','0')";
+      console.log(queryy);
       connection.query(queryy,
         function(err, rows)
         {   
@@ -444,6 +444,8 @@ app.post('/setzone' ,  urlencodedParser,function (req, res)
 
       if(!err)
       {
+            console.log(err);
+    
       res.status(200).json({'returnval': 'success'});
       }
       else
@@ -863,7 +865,10 @@ app.post('/classpick',  urlencodedParser,function (req, res)
    var academic_year={"academic_year":req.query.academic_year};
 
 var query='select id , student_name, class from student_details  where id in(select student_id from student_fee where (installment_1>0 or fees-discount_fee=0) and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and id not in (Select student_id from student_point) and class="'+req.query.classes+'"and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"'
-     console.log(query);
+console.log("+++++++++");
+console.log(query);
+console.log("==========");
+     
         connection.query('select id , student_name, school_type from student_details  where id in(select student_id from student_fee where (installment_1>0 or fees-discount_fee=0) and ? and ?) and id not in (Select student_id from student_point) and ? and ? and ?',[schoolx,academic_year,class_id,schoolx,academic_year],
           function(err, rows)
         {
