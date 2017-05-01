@@ -15,7 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <dom-module id="routecreate-card">
   <template>
-    <style>
+    <style> 
       :host {
         display: block;
       }
@@ -52,10 +52,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="left" style="margin-top:8%;margin-left: -11em;">
             <paper-item>Route Name : </paper-item>
       </div>
-      <div class="center" style="margin-left: -8%;margin-top: 3%;">
-        <paper-input  class="field" value="{{routename}}"></paper-input>
+      <div class="center" style="margin-left: 0%;margin-top: 4%;width: 23%;">
+        <paper-input  id="rname" value="{{routename}}" allowed-pattern="[0-9]" ></paper-input>
+        <div prefix   style="margin-top: -1.6em;margin-left: -4em;">ROUTE -</div>     
       </div>
-      <div class="right" style="margin-top: 18%;margin-left: -5em;height: 60%;">
+      <div class="right" style="margin-top: 22%;margin-left: -5em;height: 60%;">
         <paper-button class="button" on-click="create">ADD</paper-button>
       </div>
     </div>
@@ -85,28 +86,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
-    var routename="";
     Polymer({
       is: 'routecreate-card',
 
-      ready:function()
+     /* ready:function()
       {
            this.routename="ROUTE-";
-      },
+      },*/
       create:function()
       {
-       
-          alert(this.routename);
-        this.$.maps.createroute(this.routename);
-        this.ready();
+         if(this.routename=="")
+         {
+          //alert(111);
+          //this.$.rname.validate();
+          alert("Please Enter Route name");
+         }
+
+         else
+         {
+            var rnamez="ROUTE -"+(this.routename);
+           // alert(rnamez);
+          this.$.maps.createroute(rnamez);
+          this.FnClear();
+
+         }
       
         
       },
-      /*FnClear:function()
+      FnClear:function()
       {
         //this.$.maps.FetchRoute();
         this.routename="";
-      }*/
+      }
 
 
     });
