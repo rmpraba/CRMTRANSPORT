@@ -17,6 +17,7 @@
       }
     </style>
     <div>
+    <div class="collapse1" style="margin-top: 1%;">
       <paper-tabs selected="0" noink id="ptab">          
             <paper-tab>S.No</paper-tab>
             <paper-tab>School Name</paper-tab>
@@ -24,15 +25,20 @@
             <paper-tab>No of children allocated to route</paper-tab>
             <paper-tab>Pending</paper-tab>          
       </paper-tabs>
-      <template is="dom-repeat" items="{{itemArray}}" as="item">
-      <div class="itemcard">
-        <div class="field" style="width:11%;margin: 2% 0 2% 6%!important;"><paper-item>{{item.sno}}</paper-item></div>
-        <div class="field" style="width: 15%;margin: 2% 0 2% 3%!important;"><paper-item>{{item.schoolname}}</paper-item></div>
-        <div class="field" style="width: 12%;margin: 2% 0 2% 8%!important;"><paper-item>{{item.paidcount}}</paper-item></div>
-        <div class="field" style="width: 9%;margin: 2% 0 2% 12%!important;"><paper-item>{{item.allocated}}</paper-item></div>
-        <div class="field" style="width: 8%;margin: 2% 0 2% 13%!important;"><paper-item>{{item.pending}}</paper-item></div>
+    </div>
+      
+      <div class="collapse1">
+        <template is="dom-repeat" items="{{itemArray}}" as="item">
+          <div class="itemcard">
+            <div class="field" style="width:11%;margin: 2% 0 2% 6%!important;"><paper-item> {{item.sno}}</paper-item></div>
+            <div class="field" style="width: 15%;margin: 2% 0 2% 3%!important;"><paper-item>{{item.schoolname}}</paper-item></div>
+            <div class="field" style="width: 12%;margin: 2% 0 2% 8%!important;"><paper-item>{{item.paidcount}}</paper-item></div>
+            <div class="field" style="width: 9%;margin: 2% 0 2% 12%!important;"><paper-item>{{item.allocated}}</paper-item></div>
+            <div class="field" style="width: 8%;margin: 2% 0 2% 13%!important;"><paper-item>{{item.pending}}</paper-item></div>
+          </div>
+        </template>
       </div>
-      </template>
+      
       <!--Fetching ccosolidated report-->
     <iron-ajax
       id="consolidatedreportreadajax"

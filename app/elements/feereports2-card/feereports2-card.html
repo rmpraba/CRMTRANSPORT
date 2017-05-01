@@ -16,7 +16,7 @@
     <style>
       :host {
         display: block;
-      }
+      }  
       .headtabs{
         width: 90% !important;
         margin: 0 !important;
@@ -50,7 +50,8 @@
       </div>
       <div class="field" id="by1"><paper-item><h1>By Cash : Installment 1</h1></paper-item></div>
       
-      <div class="headtabs" id="tabs1">
+      <div class="collapse1">
+        <div class="headtabs" id="tabs1">
           <paper-tabs selected="0">
             <paper-tab>ID</paper-tab>
             <paper-tab>Name</paper-tab>
@@ -59,19 +60,25 @@
             <paper-tab>Fee Paid</paper-tab>
              <paper-tab>Fine</paper-tab>
           </paper-tabs>
+        </div>
       </div>
-      <template  is="dom-repeat" items="{{feereportarr1}}" as="view">
-        <feereports-item-card studentid="{{view.student_id}}" studentname="{{view.name}}" standard="{{view.standard}}" section="{{view.section}}" receiptno="{{view.receiptno}}" feepaid="{{view.installment1}}" fine="{{view.fine1}}"></feereports-item-card>
-      </template>
+      
+      <div class="collapse1">
+        <template  is="dom-repeat" items="{{feereportarr1}}" as="view">
+          <feereports-item-card studentid="{{view.student_id}}" studentname="{{view.name}}" standard="{{view.standard}}" section="{{view.section}}" receiptno="{{view.receiptno}}" feepaid="{{view.installment1}}" fine="{{view.fine1}}"></feereports-item-card>
+        </template>
         <div class="total-collection" id="totcol1">
           <paper-item>Total Collection by Cash</paper-item>
           <paper-item>{{cash1}}</paper-item>
         </div>
+      </div>
+      
 
 
         <div class="field" id="by1"><paper-item><h1>By Cash : Installment 2</h1></paper-item></div>
       
-      <div class="headtabs" id="tabs1">
+      <div class="collapse1">
+         <div class="headtabs" id="tabs1">
           <paper-tabs selected="0">
             <paper-tab>ID</paper-tab>
             <paper-tab>Name</paper-tab>
@@ -80,17 +87,23 @@
             <paper-tab>Fee Paid</paper-tab>
             <paper-tab>Fine</paper-tab>
           </paper-tabs>
+        </div>
       </div>
-      <template  is="dom-repeat" items="{{feereportarr2}}" as="view">
-        <feereports-item-card studentid="{{view.student_id}}" studentname="{{view.name}}" standard="{{view.standard}}" section="{{view.section}}" receiptno="{{view.receiptno}}" feepaid="{{view.installment2}}" fine="{{view.fine2}}"></feereports-item-card>
-      </template>
+     
+     <div class="collapse1">
+        <template  is="dom-repeat" items="{{feereportarr2}}" as="view">
+          <feereports-item-card studentid="{{view.student_id}}" studentname="{{view.name}}" standard="{{view.standard}}" section="{{view.section}}" receiptno="{{view.receiptno}}" feepaid="{{view.installment2}}" fine="{{view.fine2}}"></feereports-item-card>
+        </template>
         <div class="total-collection" id="totcol1">
           <paper-item>Total Collection by Cash</paper-item>
           <paper-item>{{cash2}}</paper-item>
         </div>
+     </div>
+     
       <div class="field" id="by2"><paper-item><h1>By Cheque : Installment 1</h1></paper-item></div>
-       
-      <div class="headtabs" id="tabs2">
+      
+      <div class="collapse1">
+        <div class="headtabs" id="tabs2">
           <paper-tabs selected="0">
             <paper-tab>ID</paper-tab>
             <paper-tab>Name</paper-tab>
@@ -103,18 +116,24 @@
             <paper-tab>Fee Paid</paper-tab>
             <paper-tab>Fine</paper-tab>
           </paper-tabs>
-      </div>
-      <template  is="dom-repeat" items="{{feereportarrcheque1}}" as="views">
-        <feereportscheque-item-card studentid="{{views.student_id}}" studentname="{{views.name}}" standard="{{views.standard}}" section="{{views.section}}" bankname="{{views.bankname}}" chequeno="{{views.chequeno}}" createddate="{{views.createddate}}"chequedate="{{views.chequedate}}" receiptno="{{views.receiptno}}" feepaid="{{views.installment1}}" fine="{{view.fine1}}"></feereportscheque-item-card>
-      </template>
+        </div>
+      </div> 
+      
+      <div class="collapse1">
+        <template  is="dom-repeat" items="{{feereportarrcheque1}}" as="views">
+          <feereportscheque-item-card studentid="{{views.student_id}}" studentname="{{views.name}}" standard="{{views.standard}}" section="{{views.section}}" bankname="{{views.bankname}}" chequeno="{{views.chequeno}}" createddate="{{views.createddate}}"chequedate="{{views.chequedate}}" receiptno="{{views.receiptno}}" feepaid="{{views.installment1}}" fine="{{view.fine1}}"></feereportscheque-item-card>
+        </template>
         <div class="total-collection" id="totcol2">
           <paper-item>Total Collection  by Cheque</paper-item><paper-item>{{cheque1}}</paper-item>
         </div>
+      </div>
+      
 
 
  <div class="field" id="by2"><paper-item><h1>By Cheque : Installment 2</h1></paper-item></div>
        
-      <div class="headtabs" id="tabs2">
+      <div class="collapse1">
+         <div class="headtabs" id="tabs2">
           <paper-tabs selected="0">
             <paper-tab>ID</paper-tab>
             <paper-tab>Name</paper-tab>
@@ -127,13 +146,18 @@
             <paper-tab>Fee Paid</paper-tab>
             <paper-tab>Fine</paper-tab>
           </paper-tabs>
-      </div>
-      <template  is="dom-repeat" items="{{feereportarrcheque2}}" as="views">
-        <feereportscheque-item-card studentid="{{views.student_id}}" studentname="{{views.name}}" standard="{{views.standard}}" section="{{views.section}}" bankname="{{views.bankname}}" chequeno="{{views.chequeno}}" createddate="{{views.createddate}}" chequedate="{{views.chequedate}}" receiptno="{{views.receiptno}}" feepaid="{{views.installment2}}" fine="{{view.fine2}}"></feereportscheque-item-card>
+        </div>
+      </div> 
+     
+     <div class="collapse1">
+       <template  is="dom-repeat" items="{{feereportarrcheque2}}" as="views">
+          <feereportscheque-item-card studentid="{{views.student_id}}" studentname="{{views.name}}" standard="{{views.standard}}" section="{{views.section}}" bankname="{{views.bankname}}" chequeno="{{views.chequeno}}" createddate="{{views.createddate}}" chequedate="{{views.chequedate}}" receiptno="{{views.receiptno}}" feepaid="{{views.installment2}}" fine="{{view.fine2}}"></feereportscheque-item-card>
       </template>
         <div class="total-collection" id="totcol2">
           <paper-item>Total Collection  by Cheque</paper-item><paper-item>{{cheque2}}</paper-item>
         </div>
+     </div>
+      
 
         <div class="grand-total" id="grndtot">
           <div class="fields">

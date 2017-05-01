@@ -1234,7 +1234,7 @@
       {
 
         var a2=e1.detail.response.returnval;
-        alert(JSON.stringify(a2));
+       // alert(JSON.stringify(a2));
         document.querySelector('mappointtoroute-card').routearr=a2;
         document.querySelector('vehicleroute-card').routes=a2;
         document.querySelector('staffallocation-card').routearr=a2;
@@ -1256,7 +1256,7 @@
       getroutedetailResponse:function(e1)
           {
           var routedetails=e1.detail.response.returnval;
-          alert(JSON.stringify(routedetails));
+         // alert(JSON.stringify(routedetails));
           if(routedetails=='invalid'){
              document.querySelector('mappointtoroute-card').fn1();
            }
@@ -1319,7 +1319,7 @@
         obj.drop=drop;
         obj.distance=distance;
         this.insertpointparam=obj;
-        alert(JSON.stringify(obj));
+       // alert(JSON.stringify(obj));
         this.insertpointurl=sessionStorage.getItem("addrinfo")+"/insertpoint";
         this.$.insertpointajax.generateRequest();
 
@@ -1337,7 +1337,7 @@
       getzoneResponse:function(e1)
           {
             var zoneitem=e1.detail.response.returnval;
-            alert(JSON.stringify(zoneitem));
+          //  alert(JSON.stringify(zoneitem));
             document.querySelector('zonetostudent-card').itemarr=zoneitem;
       },
       getfee:function(zone)
@@ -1452,6 +1452,7 @@
       getnameResponse:function(e1)  
           {
             var iditem=e1.detail.response.returnval;
+            alert(JSON.stringify(iditem));
             //document.querySelector('zonetostudent-card').studentidarr=iditem;
             document.querySelector('zonetostudent-card').autocompletearr(iditem);
             //document.querySelector('studentpass-card').autocompletearr(iditem);

@@ -39,34 +39,53 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <div class="routestudent">
     <div class="pickroute">
-    <paper-item><strong>By Pick-Up</strong></paper-item>
-     <div class="headtabs" id="tabs1">
+      <center>
+        <paper-item><strong>By Pick-Up</strong></paper-item>
+      </center>
+      
+      <div class="collapse1">
+        <div class="headtabs" id="tabs1">
           <paper-tabs selected="0">
             <paper-tab>Route</paper-tab>
             <paper-tab>Trip</paper-tab>
             <paper-tab>No. of Student</paper-tab>
           </paper-tabs>
+        </div>
+
+        
+         <template  is="dom-repeat" items="{{pickdetailarr}}" as="view">
+          <routestudent-item-card route="{{view.route_name}}" trip="{{view.school_type}}" noofstud="{{view.total}}"></routestudent-item-card>
+        </template>
       </div>
-      <template  is="dom-repeat" items="{{pickdetailarr}}" as="view">
-        <routestudent-item-card route="{{view.route_name}}" trip="{{view.school_type}}" noofstud="{{view.total}}"></routestudent-item-card>
-      </template>
-      </div>
+     
+       
+    </div>
       <paper-item>  </paper-item>
+
       <div class="droproute">
-      <paper-item><strong>By Drop</strong></paper-item>
-     <div class="headtabs" id="tabs1">
-          <paper-tabs selected="0">
-            <paper-tab>Route</paper-tab>
-            <paper-tab>Trip</paper-tab>
-            <paper-tab>No. of Student</paper-tab>
-          </paper-tabs>
+        <center>
+          <paper-item><strong>By Drop</strong></paper-item>
+        </center>
+        <div class="collapse1">
+          <div class="headtabs" id="tabs1">
+            <paper-tabs selected="0">
+              <paper-tab>Route</paper-tab>
+              <paper-tab>Trip</paper-tab>
+              <paper-tab>No. of Student</paper-tab>
+            </paper-tabs>
+          </div>
+
+           <template  is="dom-repeat" items="{{dropdetailarr}}" as="view">
+            <routestudent-item-card route="{{view.route_name}}" trip="{{view.school_type}}" noofstud="{{view.total}}"></routestudent-item-card>
+          </template>
+        </div>
+        
+        <!-- <div class="collapse1"> -->
+         
+        <!-- </div> -->
       </div>
-      <template  is="dom-repeat" items="{{dropdetailarr}}" as="view">
-        <routestudent-item-card route="{{view.route_name}}" trip="{{view.school_type}}" noofstud="{{view.total}}"></routestudent-item-card>
-      </template>
-      </div>
-      </div>
-      </template>
+    </div>
+  </template>
       <script>
   (function() {
     'use strict';

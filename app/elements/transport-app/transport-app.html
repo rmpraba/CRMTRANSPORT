@@ -350,7 +350,7 @@
    var name=sessionStorage.getItem("userinfo");
    //alert(name);
    var currpage=localStorage.getItem("curr_sess_page");
-   //alert(currpage);
+   //alert(currpage); 
     if(name=="Accounts Admin")  {
       document.querySelector('transportfee-service').ready();
       document.querySelector('transportfee-service').FnClear();
@@ -363,6 +363,7 @@
     if(currpage=="feereports"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+      document.querySelector('accountsadmin-card').FnRefresh();
      document.querySelector('feereports-card').FnClear();
       document.querySelector('feereports-card').ready();
       
@@ -379,6 +380,7 @@
       //document.querySelector('pending-card').FnClear();
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+      document.querySelector('accountsadmin-card').FnRefresh();
       document.querySelector('pending-card').ready();
       
     }
@@ -386,10 +388,12 @@
     {
      document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+      document.querySelector('accountsadmin-card').FnRefresh();
     }
     if(currpage=="receipt"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+      document.querySelector('accountsadmin-card').FnRefresh();
       document.querySelector('zonetostudent-card').FnClear();
       document.querySelector('zonetostudent-card').ready();
       if(sessionStorage.getItem("recflag")=="0")
@@ -412,6 +416,7 @@
     if(currpage=="addstudent"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+      document.querySelector('accountsadmin-card').FnRefresh();
       document.querySelector('student-detail-card').FnClear();
       document.querySelector('student-detail-card').ready();
       
@@ -419,6 +424,7 @@
     if(currpage=="zonechange"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+      document.querySelector('accountsadmin-card').FnRefresh();
       document.querySelector('zonechange-card').FnClear();
       document.querySelector('zonechange-card').ready();
       
@@ -438,6 +444,7 @@
      if(currpage=="zonetostudent"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+      document.querySelector('transportadmin-card').FnRefresh();
       document.querySelector('zonetostudent-card').FnClear();
       document.querySelector('zonetostudent-card').ready();
       document.querySelector('accountsadmin-card').FnRefresh();
@@ -556,7 +563,6 @@
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
        document.querySelector('transportadmin-card').FnRefresh();
-       document.querySelector('transportadmin-card').FnRefresh();
       document.querySelector('attendance-card').ready();
     }
     if(currpage=="addattendence"){
@@ -587,13 +593,19 @@
       document.querySelector('zonedistance-card').fnclear();
     }
    }
-    if(name=="Admin Manager")  {
+  if(name=="Admin Manager")  
+  {
     if(currpage=="approvediscount"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
       //document.querySelector('approveddiscount-card').FnClear();
       document.querySelector('approvediscount-card').ready();
       
+    }
+    if(currpage=="approval")
+    {
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
     }
     if(currpage=="nodata"){
       document.querySelector('app-card').setPage("transportapp");
@@ -613,6 +625,13 @@
       document.querySelector('password-card').FnClear();
       document.querySelector('password-card').ready();
       
+    }
+    if(currpage=="cancellation")
+    {
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
+      document.querySelector('cancellation-card').FnClear();
+       document.querySelector('cancellation-card').ready();
     }
     if(currpage=="consolidatedreport"){
       document.querySelector('app-card').setPage("transportapp");
@@ -634,6 +653,7 @@
     if(currpage="registrationreceipt"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+      document.querySelector('financemanager-card').Fnrefresh();
       document.querySelector('registration-card').FnClear();
       document.querySelector('registration-dob-card').FnClear();
       document.querySelector('registration-datepicker-card').FnClear();
@@ -642,6 +662,7 @@
     if(currpage="registration"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+      document.querySelector('financemanager-card').Fnrefresh();
       document.querySelector('registration-card').FnClear();
       document.querySelector('registration-dob-card').FnClear();
       document.querySelector('registration-datepicker-card').FnClear();
@@ -651,6 +672,7 @@
     if(currpage=="generatereport"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+      document.querySelector('financemanager-card').Fnrefresh();
       document.querySelector('genestureport-card').FnClear();
       document.querySelector('genestureport-card').ready();
       
@@ -658,6 +680,7 @@
     if(currpage=="chequedetail"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+      document.querySelector('financemanager-card').Fnrefresh();
       //document.querySelector('genestureport-card').FnClear();
       document.querySelector('chequedetail-card').ready();
 /*      document.querySelector('fchequedatepicker-card').ready();
@@ -667,6 +690,7 @@
     if(currpage=="bouncechequedetail"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+      document.querySelector('financemanager-card').Fnrefresh();
       //document.querySelector('genestureport-card').FnClear();
       document.querySelector('bouncecheque-card').ready();
       
@@ -675,11 +699,13 @@
      {
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+      document.querySelector('financemanager-card').Fnrefresh();
      }
   
     if(currpage=="discount"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+      document.querySelector('financemanager-card').Fnrefresh();
       document.querySelector('discountstudent-card').FnClear();
       document.querySelector('discountstudent-card').ready();
       
@@ -687,6 +713,7 @@
     if(currpage=="editcheque"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+      document.querySelector('financemanager-card').Fnrefresh();
       document.querySelector('editcheque-card').FnClear();
       document.querySelector('editcheque-card').ready();
       
@@ -694,12 +721,14 @@
     if(currpage=="discount"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+      document.querySelector('financemanager-card').Fnrefresh();
       document.querySelector('discountstudent-card').FnClear();
       document.querySelector('discountstudent-card').ready();
       
     }if(currpage=="nodata"){
       document.querySelector('app-card').setPage("transportapp");
      document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+     document.querySelector('financemanager-card').Fnrefresh();
       //document.querySelector('approveddiscount-card').FnClear();
       document.querySelector('nodata-card').ready();
       
@@ -707,6 +736,7 @@
     if(currpage=="refundverify"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+      document.querySelector('financemanager-card').Fnrefresh();
       //document.querySelector('refundverify-card').FnClear();
       document.querySelector('refundverify-card').ready();
       
@@ -714,6 +744,7 @@
     if(currpage=="feereports"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+      document.querySelector('financemanager-card').Fnrefresh();
       document.querySelector('feereports-card').FnClear();
       document.querySelector('feereports-card').ready();
       
@@ -721,6 +752,7 @@
      if(currpage=="pending"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+      document.querySelector('financemanager-card').Fnrefresh();
       //document.querySelector('pending-card').FnClear();
       document.querySelector('pending-card').ready();
       
@@ -728,18 +760,21 @@
      if(currpage=="generateroutereport"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+      document.querySelector('financemanager-card').Fnrefresh();
       document.querySelector('routereport-card').FnClear();
       document.querySelector('routereport-card').ready();
     }
     if(currpage=="excelreport"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+      document.querySelector('financemanager-card').Fnrefresh();
       document.querySelector('excelreport-card').FnRefresh();
       document.querySelector('excelreport-card').ready();
     }
 if(currpage=="attendance"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+      document.querySelector('financemanager-card').Fnrefresh();
       //document.querySelector('password-card').FnClear();
       document.querySelector('attendance-card').ready();
     }

@@ -23,29 +23,42 @@
     </style>
       <div class="pending-card">
       <div class="label"><paper-item><h1>Pick Up</h1></paper-item></div>
-      <div class="headtabs">
-        <paper-tabs selected="0">
-          <paper-tab>Route</paper-tab>
-          <paper-tab>Total No Students</paper-tab>
-          <paper-tab>Fee Paid</paper-tab>
-          <paper-tab>Total Fee</paper-tab>
-        </paper-tabs>
+      <div class="collapse1">
+        <div class="headtabs">
+          <paper-tabs selected="0">
+            <paper-tab>Route</paper-tab>
+            <paper-tab>Total No Students</paper-tab>
+            <paper-tab>Fee Paid</paper-tab>
+            <paper-tab>Total Fee</paper-tab>
+          </paper-tabs>
+        </div>
       </div>
-      <template  is="dom-repeat" items="{{summaryarr}}" as="view">
-        <summary-item-card route="{{view.route_name}}" totalstu="{{view.total_students}}" feepaid="{{view.fee_paid}}" fees="{{view.total_fee}}"></summary-item-card>
-      </template>
-      <div class="label"><paper-item><h1>Drop</h1></paper-item></div>
-      <div class="headtabs">
-        <paper-tabs selected="0">
-          <paper-tab>Route</paper-tab>
-          <paper-tab>Total No Students</paper-tab>
-          <paper-tab>Fee Paid</paper-tab>
-          <paper-tab>Total Fee</paper-tab>
-        </paper-tabs>
+      
+
+      <div class="collapse1">
+        <template  is="dom-repeat" items="{{summaryarr}}" as="view">
+          <summary-item-card route="{{view.route_name}}" totalstu="{{view.total_students}}" feepaid="{{view.fee_paid}}" fees="{{view.total_fee}}"></summary-item-card>
+        </template>
       </div>
-      <template  is="dom-repeat" items="{{summarydroparr}}" as="views">
-        <summarydrop-item-card routes="{{views.route_name}}" totalstus="{{views.total_students}}" feepaids="{{views.fee_paid}}" feess="{{views.total_fee}}"></summarydrop-item-card>
-      </template>
+            <div class="label"><paper-item><h1>Drop</h1></paper-item></div>
+
+      <div class="collapse1">
+        <div class="headtabs">
+          <paper-tabs selected="0">
+            <paper-tab>Route</paper-tab>
+            <paper-tab>Total No Students</paper-tab>
+            <paper-tab>Fee Paid</paper-tab>
+            <paper-tab>Total Fee</paper-tab>
+          </paper-tabs>
+        </div>
+      </div>      
+        
+      <div class="collapse1">
+        <template  is="dom-repeat" items="{{summarydroparr}}" as="views">
+          <summarydrop-item-card routes="{{views.route_name}}" totalstus="{{views.total_students}}" feepaids="{{views.fee_paid}}" feess="{{views.total_fee}}"></summarydrop-item-card>
+        </template>
+      </div>  
+      
       <div id="button">
         <paper-button class="button" style="margin-top: 0%; height: 35px;" id="print" on-click="print">Print</paper-button>
       </div>
