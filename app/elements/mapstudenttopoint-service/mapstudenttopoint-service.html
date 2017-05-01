@@ -192,8 +192,8 @@
         obj.schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.selectclassparam=obj;
-        alert(JSON.stringify(obj));  
-        alert('1'); 
+       // alert(JSON.stringify(obj));  
+        //alert('1'); 
         this.$.selectclassajax.generateRequest();
       },
       FnClear:function(){
@@ -245,7 +245,7 @@
         obj.schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.classpickparam=obj;
-        alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.classpickajax.generateRequest();
       },
       classpickResponse:function(e){
@@ -309,7 +309,7 @@
     updaterouteseqResponse:function(e){
       //alert('update response');
         var seq=pointcount;
-        var obj={"id":"","routes":"","schol":"","academic_year":""}
+        var obj={"id":"","routes":"","schol":"","academic_year":"",}
         obj.schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.id="r"+seq;
@@ -322,14 +322,17 @@
     createrouteResponse:function(e){
       var resd=e.detail.response.returnval;
       //alert(resd);
-      if(resd=='success'){
+      
+      if(resd=='Already Exit')
+      {
+          alert('This Route is already Exit');
+      }
+      else
+      {
           alert('The new route is created');
           this.FetchRoute();
       }
-      else{
-          alert('Route creation failed');
-      }
-      document.querySelector('routecreate-card').FnClear();
+     // document.querySelector('routecreate-card').FnClear();
       
     },
     getgradedata:function(temp){

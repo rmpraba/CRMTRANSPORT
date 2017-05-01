@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
-  database : 'transport'
+  database : 'transportcloud'
 
 
 });
@@ -3333,29 +3333,38 @@ app.post('/changepassword',  urlencodedParser,function (req, res){
   });
 });
 
-
 app.post('/createroute' ,  urlencodedParser,function (req, res)
-{
-    var scho={"school_id":req.query.schol,"id":req.query.id,"route_name":req.query.routes,"academic_year":req.query.academic_year};
-    //console.log(' in  route create'+scho);
-      connection.query('insert into route set ?',[scho],
-        function(err, rows)
-        {
-    if(!err)
+{  
+ var scho={"school_id":req.query.schol,"id":req.query.id,"route_name":req.query.routes,"academic_year":req.query.academic_year};
+   console.log(scho);
+connection.query('select * from route where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'" and id="'+req.query.id+'" or route_name="'+req.query.routes+'"',
+  function(err, rows)
     {
-      //console.log('inserted');
-      res.status(200).json({'returnval': 'success'});
+    if(rows.length==0)
+    {
+      connection.query('insert into route set ?',[scho],
+      function(err, rows)
+      {
+
+      if(!err)
+       {
+        console.log(rows);
+        res.status(200).json({'returnval': 'Inserted!'});
+        }
+      else 
+      {
+        console.log(err);
+        res.status(200).json({'returnval': 'Not Inserted!'});
+      }
+    });
     }
     else
     {
-      console.log("error");
-      console.log(err);
-      res.status(200).json({'returnval': 'invalid'});
+      res.status(200).json({'returnval': 'Already Exit'});
     }
-
-
-});
+    });
   });
+
 app.post('/driver_count' ,  urlencodedParser,function (req, res)
 {
   var scho={"school_id":req.query.schol};
