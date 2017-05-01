@@ -192,15 +192,15 @@
         obj.schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.selectclassparam=obj;
-        alert(JSON.stringify(obj));  
-        alert('1'); 
+      //  alert(JSON.stringify(obj));  
+     //   alert('1'); 
         this.$.selectclassajax.generateRequest();
       },
       FnClear:function(){
         len=0;
       },
       selectclassResponse:function(e){
-        alert(JSON.stringify(e.detail.response.returnval));
+    //    alert(JSON.stringify(e.detail.response.returnval));
 
         var classdetail=e.detail.response.returnval;
         document.querySelector('mapstudenttopoint-card').classarr=classdetail;
@@ -245,12 +245,12 @@
         obj.schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.classpickparam=obj;
-        alert(JSON.stringify(obj));
+   //     alert(JSON.stringify(obj));
         this.$.classpickajax.generateRequest();
       },
       classpickResponse:function(e){
         var student=e.detail.response.returnval;
-        alert(JSON.stringify(student));
+       // alert(JSON.stringify(student));
         document.querySelector('mapstudenttopoint-card').studentarr=student;
       },
       submit:function(itemarr){
