@@ -83,7 +83,7 @@
                 </template>
             </paper-menu>
           </paper-dropdown-menu>
-      </paper-dialog>
+      </paper-dialog>  
     </div>  
   </body>  
   <mapstudenttopoint-service id="maps"></mapstudenttopoint-service>
@@ -121,9 +121,10 @@
         document.querySelector('zonetostudent-card').hidetransport1=true;
         document.querySelector('zonetostudent-card').changeoption();
            this.$.transportservice.getname();
-          this.$.transportservice.getzone();
+           this.$.transportservice.getzone();
+           this.$.transportservice.gettermdate();
        }  
-
+   
        if(localStorage.getItem('curr_sess_acadmic')=="pointallocation")
          {
           document.querySelector('transport-app').setPage("mapstudenttopoint","Map Student to point");

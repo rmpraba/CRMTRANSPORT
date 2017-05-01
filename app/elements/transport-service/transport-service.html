@@ -1234,7 +1234,7 @@
       {
 
         var a2=e1.detail.response.returnval;
-       // alert(JSON.stringify(a2));
+        alert(JSON.stringify(a2));
         document.querySelector('mappointtoroute-card').routearr=a2;
         document.querySelector('vehicleroute-card').routes=a2;
         document.querySelector('staffallocation-card').routearr=a2;
@@ -1251,12 +1251,13 @@
         obj.routename=routevalue1;
         obj.tripnos=tripno;
         this.getroutedetailparam=obj;
+        alert(JSON.stringify(obj));
         this.$.getroutedetailajax.generateRequest();
       },
       getroutedetailResponse:function(e1)
           {
           var routedetails=e1.detail.response.returnval;
-         // alert(JSON.stringify(routedetails));
+          alert(JSON.stringify(routedetails));
           if(routedetails=='invalid'){
              document.querySelector('mappointtoroute-card').fn1();
            }
@@ -1452,7 +1453,7 @@
       getnameResponse:function(e1)  
           {
             var iditem=e1.detail.response.returnval;
-            alert(JSON.stringify(iditem));
+         //   alert(JSON.stringify(iditem));
             //document.querySelector('zonetostudent-card').studentidarr=iditem;
             document.querySelector('zonetostudent-card').autocompletearr(iditem);
             //document.querySelector('studentpass-card').autocompletearr(iditem);
@@ -1476,9 +1477,9 @@
         var obj={"studid":"","schol":"","academic_year":""};
         obj.studid=studid;
         obj.schol=sessionStorage.getItem("sch");
-        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
-
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.getstudetailparam=obj;
+        alert(JSON.stringify(obj));
         this.$.getstudetailajax.generateRequest();
        this.parentnameurl=sessionStorage.getItem("addrinfo")+"/getparentname";
         var obj={"studid":"","schol":"","academic_year":""};
@@ -1486,16 +1487,19 @@
         obj.schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.parentnameparam=obj;
+
         this.$.parentdetailajax.generateRequest();
       },
       parentnameResponse:function(e){
-       // alert("2");
-        var parentname= e.detail.response.returnval[0].father_name;
-       // alert((parentname));
-        document.querySelector('zonetostudent-card').parent=parentname;
+         alert(JSON.stringify(e.detail.response.returnval));
+           var parentname= e.detail.response.returnval[0].parent_name;
+       // alert((parentname
+
+               document.querySelector('zonetostudent-card').parent=parentname;
       },
       getstudetailResponse:function(e1)
           {
+        //    alert(JSON.stringify(e1.detail.response.returnval));
             var profilename=e1.detail.response.returnval[0].student_name;
             var gradename=e1.detail.response.returnval[0].school_type;
             var dob=e1.detail.response.returnval[0].dob;
