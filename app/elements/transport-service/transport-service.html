@@ -1234,7 +1234,9 @@
       {
 
         var a2=e1.detail.response.returnval;
+
    //     alert(JSON.stringify(a2));
+
         document.querySelector('mappointtoroute-card').routearr=a2;
         document.querySelector('vehicleroute-card').routes=a2;
         document.querySelector('staffallocation-card').routearr=a2;
@@ -1402,7 +1404,7 @@
         obj.status=statusx;
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.setzoneparam=obj;
-     //   alert(JSON.stringify(obj));
+        alert(JSON.stringify(obj));
         this.$.setzoneajax.generateRequest();
       },
       setzoneResponse:function(e){
@@ -2207,7 +2209,7 @@ this.getfeechequeurl=sessionStorage.getItem("addrinfo")+"/getfeecheque";
     if(actnumber.length>9){
         alert('Oops!!!! the Number is too big to covertes');
         return false;
-    }
+    }    
 
 
     j=0;
