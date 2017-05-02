@@ -17,22 +17,162 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <div>
+   <paper-checkbox  value="{{trip1}}" id="tripidz" on-change="fnsetvalue">TRIP1</paper-checkbox>
+     <paper-checkbox  value="{{trip2}}" id="tripidz1"  on-change="fnsetvalue1" id="tripidz2">TRIP2</paper-checkbox> 
+      <div id="set1">
+        <template is="dom-repeat" items="{{finaltrip}}" as="view">
+        <trip-to-grade-item-card id="ENRtripz{{view.class}}" gradename="{{view.class}}"  tripid="{{view.tripid}}" check="{{view.check}}" ></trip-to-grade-item-card>
+        </template>
+      </div>
+      <paper-button style="height:33px !important;" on-click="submit">submit</paper-button>
+     <!-- <p>SELECT THE GRADE</p>
+      <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">Nursary</paper-checkbox> 
+      <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">Juniour k.g</paper-checkbox> 
+     <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">Seniour k.g</paper-checkbox> 
+     <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">GRADE-1</paper-checkbox> 
+     <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">GRADE-1</paper-checkbox> 
+     <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">GRADE-1</paper-checkbox> 
+     <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">GRADE-1</paper-checkbox> 
+     <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">GRADE-1</paper-checkbox> 
+     <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">GRADE-1</paper-checkbox> 
+     <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">GRADE-1</paper-checkbox> 
+ -->
+ <iron-ajax
+      method="post"
+      id="rtip1ajax"
+      url="{{rtip1url}}"
+      params="{{rtip1param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="rtip1Response"
+      debounce-duration="300"
+      >
+      <iron-ajax
+      method="post"
+      id="rtip2ajax"
+      url="{{rtip2url}}"
+      params="{{rtip2param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="rtip2Response"
+      debounce-duration="300"
+      >
+       <iron-ajax
+      method="post"
+      id="finalrtipajax"
+      url="{{finalrtipurl}}"
+      params="{{finalrtipparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="finalrtipResponse"
+      debounce-duration="300"
+      >
+ </iron-ajax>
+    </div>
+<transport-service id="trans"></transport-service>
   </template>
   <script>
   (function() {
     'use strict';
-
+var triparrz=[];
     Polymer({
       is: 'trip-to-grade-card',
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'trip-to-grade-card',
-          notify: true
-        }
+      fnsetvalue:function(e){
+    if(tripidz.checked==true){
+        tripidz1.checked=false;
+       this.rtip1url=sessionStorage.getItem("addrinfo")+"/rtipz-service";
+        var obj={"schoolid":"","academic_year":""}
+         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+         obj.schoolid=sessionStorage.getItem("sch");
+         obj.trip='1';
+        this.rtip1param=obj;
+        alert(JSON.stringify(obj));
+        this.$.rtip1ajax.generateRequest();
+            
+       }
+      },
+      triptograde:function(arr){
+          triparrz=arr;
+      },
+      fnsetvalue1:function(e){
+           if(tripidz1.checked==true){
+               tripidz.checked=false;
+        this.rtip2url=sessionStorage.getItem("addrinfo")+"/rtipz-service";
+         var obj={"schoolid":"","academic_year":""}
+         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+         obj.schoolid=sessionStorage.getItem("sch");
+         obj.trip='2';
+        this.rtip2param=obj;
+       alert(JSON.stringify(obj));
+       this.$.rtip2ajax.generateRequest();
+     }
+      },
+       submit:function(e){
+          for(var i=0;i<triparrz.length;i++){
+          this.finalrtipurl=sessionStorage.getItem("addrinfo")+"/finalrtip-service";
+         var obj={"schoolid":"","academic_year":"","gradename":"","tripid":""}
+         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+         obj.schoolid=sessionStorage.getItem("sch");
+         obj.gradename=triparrz[i].gradename;
+         obj.tripid=triparrz[i].tripid;
+         this.finalrtipparam=obj;
+         alert(JSON.stringify(obj));
+         this.$.finalrtipajax.generateRequest();
       }
+              document.querySelector('trip-to-grade-item-card').triptograde1(triparr);
+ 
+    triparrz=[];  
+     },
+   finalrtipResponse:function(e){
+var res=e.detail.response.triparr;
+     alert(JSON.stringify(res));
+   },
+      rtip2Response:function(e){
+     var res=e.detail.response.triparr;
+      var res1=e.detail.response.gradearr;
+        for(var j=0;j<res1.length;j++){
+             var flag=0;
+                    res1[j].tripid='2';
+        
+          for(var i=0;i<res.length;i++){
+                       if(res[i].grade_name==res1[j].class){
+                              flag=1;
+                   
+                       res1[j].check=true;
+                }}
+                 if(flag==0){
+                  res1[j].check=false;
+                 } 
+    
+         }
+this.finaltrip=res1;
+alert(JSON.stringify(this.finaltrip));
+      },
+      rtip1Response:function(e){
+      var res=e.detail.response.triparr;
+      var res1=e.detail.response.gradearr;
+       alert(JSON.stringify(res));
+       alert(JSON.stringify(res1));
+        for(var j=0;j<res1.length;j++){
+             var flag=0;
+               res1[j].tripid='1';
+            for(var i=0;i<res.length;i++){
+                  if(res[i].grade_name==res1[j].class){
+                                   flag=1;
+             res1[j].check=true;
+
+                }}
+                 if(flag==0){
+                  res1[j].check=false;
+                 } 
+    
+      }
+      this.finaltrip=res1;
+      alert(JSON.stringify(this.finaltrip));
+
+          }
     });
   })();
   </script>

@@ -1,0 +1,73 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="trip-to-grade-item-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div> 
+    <paper-checkbox checked="{{check}}" tripid="{{tripid}}" id="{{id}}" on-change="fnsettrip">{{gradename}}</paper-checkbox>
+  </div>
+     <iron-ajax
+      method="post"
+      id="rtipretriveajax"
+      url="{{rtipretriveurl}}"
+      params="{{rtipretriveparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="rtipretriveResponse"
+      debounce-duration="300"
+      >
+   
+  </template>
+
+  <script>
+  (function() {
+    'use strict';
+  var triparr=[];
+    Polymer({
+      is: 'trip-to-grade-item-card',
+  fnsettrip:function(e){
+        if(document.querySelector('#'+this.id).checked==true){
+     this.rtipretriveurl=sessionStorage.getItem("addrinfo")+"/rtipretrive-service";
+         var obj={"schoolid":"","academic_year":""}
+         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+         obj.schoolid=sessionStorage.getItem("sch");
+         obj.gradename=this.gradename;
+         obj.gradename=this.tripid;
+         this.rtipretriveparam=obj;
+         alert(JSON.stringify(obj));
+        this.$.rtipretriveajax.generateRequest();
+    
+            var obj={"gradename":"","tripid":""};
+            obj.gradename=this.gradename;
+            obj.tripid=this.tripid;
+            triparr.push(obj);
+          document.querySelector('trip-to-grade-card').triptograde(triparr);
+       }  
+            if(document.querySelector('#'+this.id).checked==false){
+                 for(var i=0;i<triparr.length;i++){
+                   if(triparr[i].gradename==this.gradename){
+                      triparr.splice(i,1);
+                    }}
+      }
+       },
+   triptograde1:function(){
+    triparr=[];
+   }
+    });
+  })();
+  </script>
+</dom-module>

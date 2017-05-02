@@ -980,8 +980,9 @@ app.post('/pickpoints',  urlencodedParser,function (req, res)
     var academic_year=req.query.academic_year;
 
       var qur1='SELECT id, point_name from point where route_id="'+req.query.routept+'" and school_id="'+req.query.schol+'" and distance_from_school<=(select maxdistance from md_distance where id=(select distance_id from md_zone where id=(select zone_id from student_fee where student_id="'+req.query.studid+'" and school_id="'+req.query.schol+'") and school_id="'+req.query.schol+'")) and trip="'+req.query.schooltype+'" and school_id="'+req.query.schol+'"';
-
-       console.log(qur1);
+console.log("==========");
+console.log(qur1);
+console.log("===========");
 
         connection.query('SELECT id, point_name from point where route_id=? and school_id=? and academic_year=? and distance_from_school<=(select maxdistance from md_distance where id=(select distance_id from md_zone where id=(select zone_id from student_fee where student_id=? and school_id=? and academic_year=?) and school_id=? and academic_year=?)) and trip=? and school_id=? and academic_year=?',[route_id,schoolx,academic_year,studid,schoolx,academic_year,schoolx,academic_year,trip,schoolx,academic_year],
         function(err, rows)
@@ -1158,6 +1159,46 @@ app.post('/getrouteid' ,  urlencodedParser,function (req, res)
     }
 });
   });
+app.post('/rtipz-service' ,  urlencodedParser,function (req, res)
+{  
+ var  query;
+
+  if(req.query.trip=='1'){
+ query="select * from trip_to_grade where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and trip='"+req.query.trip+"'";
+  }
+  else if(req.query.trip=='2'){
+  query="select * from trip_to_grade where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and trip='"+req.query.trip+"'"; 
+  }
+  var gradearr=[];
+  var triparr=[];
+  
+  console.log(query);
+  var query1="select distinct  class from class_details where school_id='"+req.query.schoolid+"'";
+  console.log(query1);
+  
+    connection.query(query1,function(err, rows)
+        {
+    if(!err)
+    {
+      gradearr=rows;
+     connection.query(query,function(err, rows)
+        {
+    if(!err)
+    {
+      triparr=rows;
+      res.status(200).json({'triparr':triparr,'gradearr':gradearr});
+    }
+    else
+    {
+      console.log('No data Fetched'+err);
+    }
+   });
+   }
+  });
+  });
+
+
+
 
 app.post('/cancellation',  urlencodedParser,function (req, res)
 {
@@ -1219,6 +1260,24 @@ app.post('/proceedcancel',  urlencodedParser,function (req, res){
       }
   });
   });
+app.post('/finalrtip-service',  urlencodedParser,function (req, res){
+    var obj={"school_id":req.query.schoolid,"academic_year":req.query.academic_year,"grade_name":req.query.gradename,"trip":req.query.tripid};
+      console.log(obj);  
+    connection.query('insert into trip_to_grade set ?',[obj],
+  function(err, rows){
+
+    if(!err)
+      {
+      res.status(200).json({'returnval': 'success'});
+      }
+      else
+      {
+        console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+      }
+  });
+  });
+
 app.post('/transportrequiredstatus',  urlencodedParser,function (req, res)
 {
   var student_id = {"id":req.query.student_id};
@@ -1676,6 +1735,27 @@ app.post('/generateroutereport',  urlencodedParser,function (req, res)
   }
 });
   });
+app.post('/rtipretrive-service',  urlencodedParser,function (req, res)
+{
+  var schoolx={"school_id":req.query.schoolid};
+  connection.query('SELECT * from trip_to_grade  where ? and academic_year="'+req.query.academic_year+'" and grade_name="'+res.query.gradename+'"',[schoolx],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'empty'});
+    }
+  }
+});
+  });
+
 
 app.post('/route-report-card',  urlencodedParser,function (req, res){
 
