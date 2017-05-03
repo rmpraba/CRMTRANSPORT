@@ -163,12 +163,15 @@
         else {
           obj.schooltype=2;
         }
+       //// alert('7777');
        // alert(JSON.stringify(obj));
           this.routepickpointparam=obj;
         this.$.selectpointajax.generateRequest();
       },
       droproute:function(e){
         droproute = (e.target.selectedItem.value);
+
+        this.selectid=droproute;
         this.routedroppointurl = sessionStorage.getItem("addrinfo")+"/routedroppoint";
         var obj={"routedroppt":"","studid":"","schol":"","schooltype":"","academic_year":""};
         obj.schol=sessionStorage.getItem("sch");
@@ -184,17 +187,22 @@
           obj.schooltype=2;
         }
         this.routedroppointparam=obj;
+        
+       //alert(JSON.stringify(obj));
         this.$.routedroppoint.generateRequest();
          this.$.selectbox.disabled=true;
       },
       pickpointsResponse:function(e){
         var points=e.detail.response.returnval;
-          //this.droparr=points;
+      //  alert(JSON.stringify(points));
+          this.droparr=points;
+          this.pointarr=[];
         this.pointarr=points;
       },
       droppointsResponse:function(e){
 
         var points=e.detail.response.returnval;
+       // alert(JSON.stringify(points));
         this.droparr=[];
         this.droparr=points;
       },

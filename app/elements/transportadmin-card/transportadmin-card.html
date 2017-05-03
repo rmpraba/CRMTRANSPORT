@@ -129,7 +129,7 @@
        }  
    
        if(localStorage.getItem('curr_sess_acadmic')=="pointallocation")
-         {
+        { 
           document.querySelector('transport-app').setPage("mapstudenttopoint","Map Student to point");
         this.$.maps.selectclass();
 
@@ -137,8 +137,8 @@
          else if(localStorage.getItem('curr_sess_acadmic')=="changepointallocation") 
          {
          document.querySelector('transport-app').setPage("changepoint","Change Student Point");
-        this.$.chpoint.selectname1();
-       this.$.chpoint.selectclass();
+            this.$.chpoint.selectname1();
+            this.$.chpoint.selectclass();
 
          }
         else if(localStorage.getItem('curr_sess_acadmic')=="routeallocation") 

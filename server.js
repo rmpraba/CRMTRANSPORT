@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
-  database : 'transport'
+  database : 'transportcloud'
 
 
 });
@@ -180,10 +180,7 @@ app.post('/getroutedetail' ,  urlencodedParser,function (req, res)
   //console.log('hello trip...'+trip);
   var query='select * from point where route_id=(select id from route where id="'+req.query.routename+'" and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and trip="'+req.query.tripnos+'" and academic_year="'+req.query.academic_year+'"';
   
-  /*console.log("=============");
-  console.log(query);
-  console.log("=============");
-*/
+  
   connection.query(query,
     function(err, rows){
     if(!err){
@@ -945,29 +942,36 @@ app.post('/chnamepick',  urlencodedParser,function (req, res)
   });
 app.post('/chprevpick',  urlencodedParser,function (req, res)
 {
-  var id={"student_id":req.query.studentid};
+
+ /* var qur1=" SELECT student_id,school_type,(select route_name from route where id=pickup_route_id and school_id='"+req.query.schol+"') as pickuproutename,(select point_name from point where id=pickup_point and school_id='"+req.query.schol+"') as pickpointname,(select route_name from route where id=drop_route_id and school_id='"+req.query.schol+"') as droproutename,(select point_name from point where id=drop_point and school_id='"+req.query.schol+"') as droppointname FROM student_point where school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and student_id='"+req.query.studentid+"'";*/
+ var qur1="SELECT * FROM student_point where school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and  student_id='"+req.query.studentid+"'";
+ 
+    console.log("---------fetch ponits----------")
+    console.log(qur1);
+
+  /*var id={"student_id":req.query.studentid};
   var schoolx={"school_id":req.query.schol};
    var academicyear={"academic_year":req.query.academic_year};
-  console.log(req.query.schol);
-     connection.query('select * from student_point where ? and ? and ?',[id,schoolx,academicyear],
-          function(err, rows)
+  console.log(req.query.schol);*/
+     connection.query(qur1,
+      function(err, rows)
+      {
+        if(!err)
         {
-    if(!err)
-    {
-    if(rows.length>0)
-    {
-      res.status(200).json({'returnval': rows});
-      console.log(rows);
-    }
-    else
-    {
-      res.status(200).json({'returnval': ''});
-    }
-  }
-  else
-  {
-    console.log(err);
-  }
+        if(rows.length>0)
+        {
+          res.status(200).json({'returnval': rows});
+          console.log(rows);
+        }
+        else
+        {
+          res.status(200).json({'returnval': ''});
+        }
+      }
+      else
+      {
+        console.log(err);
+      }
 
 });
   });
@@ -978,8 +982,6 @@ app.post('/pickpoints',  urlencodedParser,function (req, res)
     var schoolx=req.query.schol;
     var trip=req.query.schooltype;
     var academic_year=req.query.academic_year;
-
-     
 
 var qur1='SELECT id, point_name from point where route_id="'+req.query.routept+'" and school_id="'+req.query.schol+'" and (select maxdistance from md_distance where id=(select distance_id from md_zone where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'" and  id=(select zone_id from student_fee where student_id="'+req.query.studid+'"  and school_id="'+req.query.schol+'") and school_id="'+req.query.schol+'") and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'")';
 
@@ -1011,20 +1013,24 @@ app.post('/routedroppoint',  urlencodedParser,function (req, res)
     var schoolx=req.query.schol;
     var academic_year=req.query.academic_year;
 
-    connection.query('SELECT id, point_name from point where route_id=? and school_id=? and academic_year=? and distance_from_school<=(select maxdistance from md_distance where id=(select distance_id from md_zone where id=(select zone_id from student_fee where student_id=? and school_id=? and academic_year=?) and school_id=? and academic_year=?)) and trip=? and school_id=? and academic_year=?',[route_id,schoolx,academic_year,studid,schoolx,academic_year,schoolx,academic_year,trip,schoolx,academic_year],
-    function(err, rows)
-    {
-    if(!err)
-    {
-    if(rows.length>0)
-    {
-      res.status(200).json({'returnval': rows});
-    }
-    else
-    {
-      res.status(200).json({'returnval': 'invalid'});
-    }
-  }
+
+var qur1='SELECT id, point_name from point where route_id="'+req.query.routedroppt+'" and school_id="'+req.query.schol+'" and (select maxdistance from md_distance where id=(select distance_id from md_zone where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'" and  id=(select zone_id from student_fee where student_id="'+req.query.studid+'"  and school_id="'+req.query.schol+'") and school_id="'+req.query.schol+'") and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'")';
+console.log("************");
+console.log(qur1);
+        connection.query(qur1,
+        function(err, rows)
+        {
+        if(!err)
+        {
+        if(rows.length>0)
+        {
+          res.status(200).json({'returnval': rows});
+        }
+        else
+        {
+          res.status(200).json({'returnval': 'invalid'});
+        }
+      }
 });
 });
 
@@ -1035,19 +1041,19 @@ app.post('/routepoint',  urlencodedParser,function (req, res)
   connection.query('SELECT * from route where ? and ?',[schoolx,academicyear],
         function(err, rows)
         {
-    if(!err)
-    {
-    if(rows.length>0)
-    {
+        if(!err)
+        {
+        if(rows.length>0)
+        {
 
-      res.status(200).json({'returnval': rows});
+          res.status(200).json({'returnval': rows});
 
-    }
-    else
-    {
-      res.status(200).json({'returnval': 'invalid'});
-    }
-  }
+        }
+        else
+        {
+          res.status(200).json({'returnval': 'invalid'});
+        }
+      }
 });
 });
 
@@ -1159,6 +1165,7 @@ app.post('/submitupdateurl',  urlencodedParser,function (req, res)
         {
     if(!err)
     {
+      console.log(rows);
       res.status(200).json({'returnval': 'success'});
     }
     else

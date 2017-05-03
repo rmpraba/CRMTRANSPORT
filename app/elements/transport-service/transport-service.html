@@ -1481,7 +1481,7 @@
         obj.schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.getstudetailparam=obj;
-        alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.getstudetailajax.generateRequest();
        this.parentnameurl=sessionStorage.getItem("addrinfo")+"/getparentname";
         var obj={"studid":"","schol":"","academic_year":""};
@@ -1493,7 +1493,7 @@
         this.$.parentdetailajax.generateRequest();
       },
       parentnameResponse:function(e){
-        // alert(JSON.stringify(e.detail.response.returnval));
+
            var parentname= e.detail.response.returnval[0].parent_name;
        // alert((parentname
 

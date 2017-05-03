@@ -89,7 +89,7 @@
           rootname:function(e){
             routename = (e.target.selectedItem.textContent).trim();
             routevalue1=e.target.selectedItem.value;
-       // alert(routevalue1);
+            alert(routevalue1);
             this.$.select.gettrip(routename,routevalue1);
             sessionStorage.setItem("route",routename);
             sessionStorage.setItem("routevalue",routevalue1);

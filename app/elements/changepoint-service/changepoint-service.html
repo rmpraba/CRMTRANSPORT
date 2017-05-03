@@ -144,6 +144,20 @@
       debounce-duration="300"
     >
     </iron-ajax>
+
+      <!-- below ajax is used to fetch previous route and points to the student -->
+
+    <iron-ajax
+        method="post"
+        id="prevpickajax"
+        url="{{prevpickurl}}"
+        params="{{prevpickparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="prevpickResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   </template>
   <script>
   (function() {
@@ -178,13 +192,13 @@
         this.$.selectname1ajax.generateRequest();
       },
       selectname1Response:function(e){
-        //alert('1');
+       // alert('1');
         var nameitem=e.detail.response.returnval;
-       // alert(JSON.stringify(nameitem));
+      // alert(JSON.stringify(nameitem));
         document.querySelector('changepoint-card').autocompletename(nameitem);
       },
       namepick:function(cla){
-        //alert(cla);
+        alert(cla);
         this.namepickurl = sessionStorage.getItem("addrinfo")+"/chnamepick";
         var obj={"id":"","schol":"","academic_year":""}
         obj.schol=sessionStorage.getItem("sch");
@@ -196,8 +210,9 @@
       },
       namepickResponse:function(e)
       {
-       // alert(e.detail.response.returnval);
         var student=e.detail.response.returnval;
+        //alert("nametest");
+        alert(JSON.stringify(student));
         document.querySelector('changepoint-card').studentarr=student;
       },
       classpick:function(cla){
@@ -302,7 +317,35 @@
         var starr = e.detail.response.returnval;
         //alert(JSON.stringify(starr));
         document.querySelector('passtemplate-card').fngetid(starr);
+      },
+
+      fnprepoints:function(stid)
+      {
+
+        alert("preponits");
+        //alert(stid);
+        this.prevpickurl=sessionStorage.getItem("addrinfo")+"/chprevpick";
+         var obj1={"schol":"","studentid":"","academic_year":""}
+         obj1.schol=sessionStorage.getItem("sch");
+         obj1.academic_year=localStorage.getItem("curr_sess_academicyear");
+         obj1.studentid=stid;
+         this.prevpickparam=obj1;
+       // alert(JSON.stringify(obj1));
+        this.$.prevpickajax.generateRequest();
+      },
+
+      prevpickResponse:function(e)
+      {
+        var res=e.detail.response.returnval;
+        //alert(333333);
+        alert(JSON.stringify(res));
+       
+       document.querySelector('changepoint-list').pkroutezz=res[0].pickup_route_id;
+       document.querySelector('changepoint-list').pkpointzz=res[0].pickup_point;
+       document.querySelector('changepoint-list').dproutezz=res[0].drop_route_id;
+       document.querySelector('changepoint-list').dppointzz=res[0].drop_point;
       }
+
     });
   })();
   </script>
