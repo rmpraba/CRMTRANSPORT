@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
-  database : 'transportcloud'
+  database : 'transport'
 
 
 });
@@ -942,19 +942,12 @@ app.post('/chnamepick',  urlencodedParser,function (req, res)
   });
 app.post('/chprevpick',  urlencodedParser,function (req, res)
 {
-
- /* var qur1=" SELECT student_id,school_type,(select route_name from route where id=pickup_route_id and school_id='"+req.query.schol+"') as pickuproutename,(select point_name from point where id=pickup_point and school_id='"+req.query.schol+"') as pickpointname,(select route_name from route where id=drop_route_id and school_id='"+req.query.schol+"') as droproutename,(select point_name from point where id=drop_point and school_id='"+req.query.schol+"') as droppointname FROM student_point where school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and student_id='"+req.query.studentid+"'";*/
- var qur1="SELECT * FROM student_point where school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and  student_id='"+req.query.studentid+"'";
- 
-    console.log("---------fetch ponits----------")
-    console.log(qur1);
-
-  /*var id={"student_id":req.query.studentid};
+  var id={"student_id":req.query.studentid};
   var schoolx={"school_id":req.query.schol};
    var academicyear={"academic_year":req.query.academic_year};
-  console.log(req.query.schol);*/
-     connection.query(qur1,
-      function(err, rows)
+ console.log(req.query.schol);
+     connection.query('select * from student_point where ? and ? and ?',[id,schoolx,academicyear],
+     function(err, rows)
       {
         if(!err)
         {
