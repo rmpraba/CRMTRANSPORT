@@ -19,28 +19,42 @@
     }
  </style>
   <legend align="center"></legend>
+   <div hidden>{{pointid}}</div>
+   <div hidden>{{routid}}</div>
     <ul>
       <li class="rows">
         <fieldset>
+          <div style="margin-top:-13px;margin-left:121%">
+          <paper-icon-button icon='create' on-click="fnedit" id="fnretiveeditidz">
+                </paper-icon-button>
+              </div>
+           <div style="margin-top:-13px;margin-left:121%" id="fnretivesaveidz">
+          <paper-icon-button icon='save' on-click="fnsave">
+                </paper-icon-button>
+              </div>
+                <div style="margin-top:-36px;margin-left:128%">
+                  <paper-icon-button icon="close" on-click="fndelete"></paper-icon-button>
+
+              </div>
           <ul class="rowss">
             <li class="row">
               <div class="detail">
                 <div class="layout">
-                  <paper-input id="point" readonly label="Point" class="field" value={{points}}></paper-input>
+                  <paper-input id="point" readonly$="{{asdsaddad}}" label="Point" class="field" value={{points}}></paper-input>
                 </div>
               </div>
             </li>
             <li class="row">
               <div class="detail">
                 <div class="layout">
-                  <paper-input id="point" readonly label="Pickup Time" class="field" value={{picktime}}></paper-input>
+                  <paper-input id="point" readonly$="{{asdsaddad}}" label="Pickup Time" class="field" value={{picktime}}></paper-input>
                 </div>
               </div>
             </li>
             <li class="row">
               <div class="detail">
                 <div class="layout">
-                  <paper-input id="point"  readonly label="Drop Time" class="field" value={{droptime}}></paper-input>
+                  <paper-input id="point"  readonly$="{{asdsaddad}}" label="Drop Time" class="field" value={{droptime}}></paper-input>
                 </div>
               </div>
             </li>
@@ -49,15 +63,45 @@
       </li>
       <li class="row">
         <div class="detail">
-         <!--<div class="field">
-            <paper-checkbox id="box" class="checkbox" on-change="changeHandler"></paper-checkbox>
-          </div>-->
         </div>
       </li>
     </ul>
     <div>
       <paper-input id="trip" class="field" label="Trip" value={{trip}}></paper-input>
     </div>
+    <iron-ajax
+      method="post"
+      id="fneditthepicuprootajax"
+      url="{{fneditthepicuprooturl}}"
+      params="{{fneditthepicuprootparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="fneditthepicuprootResponse"
+      debounce-duration="300"
+      >
+    <iron-ajax
+      method="post"
+      id="fndeletethepicuprootajax"
+      url="{{fndeletethepicuprooturl}}"
+      params="{{fndeletethepicuprootparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="fndeletethepicuprootResponse"
+      debounce-duration="300"
+      > <iron-ajax
+      method="post"
+      id="fndeletethepicuproot1ajax"
+      url="{{fndeletethepicuproot1url}}"
+      params="{{fndeletethepicuproot1param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="fndeletethepicuproot1Response"
+      debounce-duration="300"
+      >
+   
+    
+      <transport-service id="transportservice"></transport-service>
+ 
 </template>
   <script>
   (function() {
@@ -66,9 +110,72 @@
     Polymer({
       is: "fetch-card",
       ready:function(){
+         this.$.fnretiveeditidz.hidden=false;
+         this.$.fnretivesaveidz.hidden=true;
+     
         n=n+1;
-        this.$.point.readonly=true;
+        this.asdsaddad=true;
         this.$.trip.hidden=true;
+      },
+      fnsave:function(e){
+                    this.asdsaddad=true;
+
+      // alert(this.points+this.picktime+this.droptime+this.pointid+this.routid);
+         this.fneditthepicuprooturl=sessionStorage.getItem("addrinfo")+"/fneditthepicuproot-service";
+        var obj={"schol":"","academic_year":"","points":"","picktime":"","droptime":"","pointid":""}
+        obj.schol=schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+        obj.points=this.points;
+        obj.picktime=this.picktime;
+        obj.droptime=this.droptime;
+        obj.pointid=this.pointid;
+        obj.routid=this.routid;
+        this.fneditthepicuprootparam=obj; 
+
+     //   alert(JSON.stringify(obj));
+      this.$.fneditthepicuprootajax.generateRequest();
+           this.$.fnretiveeditidz.hidden=false;
+           this.$.fnretivesaveidz.hidden=true;
+  
+  
+     
+      },
+      fnedit:function(e){
+                this.asdsaddad=false;
+
+          this.$.fnretiveeditidz.hidden=true;
+         this.$.fnretivesaveidz.hidden=false;
+  
+    },
+    fndeletethepicuprootResponse:function(e){
+     alert(JSON.stringify(e.detail.response.returnval));
+   if(e.detail.response.returnval=="delete")
+   {
+   document.querySelector('mappointtoroute-card').fndeletethepicuprootref()
+   }
+    },
+  
+      fndelete:function(e){
+         // alert(this.points+this.picktime+this.droptime+this.pointid);
+             this.fndeletethepicuprooturl=sessionStorage.getItem("addrinfo")+"/fndeletethepicuproot-service";
+         var obj={"schol":"","academic_year":"","points":"","picktime":"","droptime":"","pointid":""}
+        obj.schol=schol=sessionStorage.getItem("sch");
+        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+        obj.points=this.points;
+        obj.picktime=this.picktime;
+        obj.droptime=this.droptime;
+        obj.pointid=this.pointid;
+        obj.routid=this.routid;
+       this.fndeletethepicuprootparam=obj; 
+     //  alert(JSON.stringify(obj)); 
+        this.$.fndeletethepicuprootajax.generateRequest();
+        // this.$.transportservice.fndeletethepicuproot(this.points,this.picktime,this.droptime,this.pointid);
+      
+      },
+      fneditthepicuprootResponse:function(e){
+        if(e.detail.response.returnval=="succ"){
+             document.querySelector('mappointtoroute-card').fndeletethepicuprootref()  
+        }
       },
       changeHandler:function(e){
         if(e.target.checked==true){

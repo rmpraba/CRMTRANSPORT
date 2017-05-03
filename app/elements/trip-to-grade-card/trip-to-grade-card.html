@@ -16,28 +16,51 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      .tb1{
+        display: flex;
+         border-collapse: collapse;
+         border: 1px solid #6699ff;
+          padding: 5px;
+         width: 35%;
+         margin-left: 31%;
+         margin-top: 1% !important;
+          }
     </style>
     <div>
-   <paper-checkbox  value="{{trip1}}" id="tripidz" on-change="fnsetvalue">TRIP1</paper-checkbox>
-     <paper-checkbox  value="{{trip2}}" id="tripidz1"  on-change="fnsetvalue1" id="tripidz2">TRIP2</paper-checkbox> 
+    <div class="tb1">
+       <div style="margin-top: 1%">
+          <label><b>SELECT THE TRIP</b></label></br>
+      
+    
+        <paper-checkbox  value="{{trip1}}" id="tripidz" on-change="fnsetvalue">TRIP1</paper-checkbox>
+         <paper-checkbox  value="{{trip2}}" id="tripidz1"  on-change="fnsetvalue1" id="tripidz2">TRIP2</paper-checkbox>
+         </div> 
       <div id="set1">
+          <div style="margin-left:-41%;margin-top:28%">
+          <label><b>SELECT THE GRADE</b></label>
+       <table>
         <template is="dom-repeat" items="{{finaltrip}}" as="view">
-        <trip-to-grade-item-card id="ENRtripz{{view.class}}" gradename="{{view.class}}"  tripid="{{view.tripid}}" check="{{view.check}}" ></trip-to-grade-item-card>
+        <tr>
+        <template is="dom-repeat" items="{{view}}" as="v">
+               
+               <td >
+              <trip-to-grade-item-card id="ENRtripz{{v.class}}" gradename="{{v.class}}"  tripid="{{v.tripid}}" check="{{v.check}}" ></trip-to-grade-item-card></td>
+                
         </template>
+        </tr>
+       </template>
+       </table>
+          
+    <!--    <template is="dom-repeat" items="{{finaltrip}}" as="view">
+        <trip-to-grade-item-card id="ENRtripz{{view.class}}" gradename="{{view.class}}"  tripid="{{view.tripid}}" check="{{view.check}}" ></trip-to-grade-item-card></br>
+        </template -->
+        
+           <paper-button style="height:33px !important;" on-click="submit">submit</paper-button>
+       </div>
+     
       </div>
-      <paper-button style="height:33px !important;" on-click="submit">submit</paper-button>
-     <!-- <p>SELECT THE GRADE</p>
-      <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">Nursary</paper-checkbox> 
-      <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">Juniour k.g</paper-checkbox> 
-     <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">Seniour k.g</paper-checkbox> 
-     <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">GRADE-1</paper-checkbox> 
-     <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">GRADE-1</paper-checkbox> 
-     <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">GRADE-1</paper-checkbox> 
-     <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">GRADE-1</paper-checkbox> 
-     <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">GRADE-1</paper-checkbox> 
-     <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">GRADE-1</paper-checkbox> 
-     <paper-checkbox  vlaue={{2}} on-change="fnsetvalue1" id="tripidz2">GRADE-1</paper-checkbox> 
- -->
+      </div>
+     
  <iron-ajax
       method="post"
       id="rtip1ajax"
@@ -68,7 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       on-response="finalrtipResponse"
       debounce-duration="300"
       >
- </iron-ajax>
+ </iron-ajax>  
     </div>
 <transport-service id="trans"></transport-service>
   </template>
@@ -78,8 +101,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 var triparrz=[];
     Polymer({
       is: 'trip-to-grade-card',
+   fnref:function(e){
+    this.$.set1.hidden=true;
 
+   },
+    
       fnsetvalue:function(e){
+     this.$.set1.hidden=false;
+    
     if(tripidz.checked==true){
         tripidz1.checked=false;
        this.rtip1url=sessionStorage.getItem("addrinfo")+"/rtipz-service";
@@ -97,6 +126,8 @@ var triparrz=[];
           triparrz=arr;
       },
       fnsetvalue1:function(e){
+          this.$.set1.hidden=false;
+   
            if(tripidz1.checked==true){
                tripidz.checked=false;
         this.rtip2url=sessionStorage.getItem("addrinfo")+"/rtipz-service";
@@ -121,12 +152,12 @@ var triparrz=[];
          alert(JSON.stringify(obj));
          this.$.finalrtipajax.generateRequest();
       }
-              document.querySelector('trip-to-grade-item-card').triptograde1(triparr);
+              document.querySelector('trip-to-grade-item-card').triptograde1();
  
     triparrz=[];  
      },
    finalrtipResponse:function(e){
-var res=e.detail.response.triparr;
+var res=e.detail.response.returnval;
      alert(JSON.stringify(res));
    },
       rtip2Response:function(e){
@@ -147,7 +178,27 @@ var res=e.detail.response.triparr;
                  } 
     
          }
-this.finaltrip=res1;
+
+
+       var overall=[];
+        var temp=[];
+        for(var i=0;i<res1.length;i++){
+        // alert(res[i].id);
+        temp.push(res1[i]);
+        
+         if(i!=0&&i%3==0){
+            // alert(i); 
+            overall.push(temp);           
+            temp=[];
+         }
+         if(i==(res1.length)-1)
+           {
+             // temp.push(res[i]);
+             overall.push(temp); 
+           } 
+        }
+        
+this.finaltrip=overall;
 alert(JSON.stringify(this.finaltrip));
       },
       rtip1Response:function(e){
@@ -169,7 +220,24 @@ alert(JSON.stringify(this.finaltrip));
                  } 
     
       }
-      this.finaltrip=res1;
+         var overall=[];
+        var temp=[];
+        for(var i=0;i<res1.length;i++){
+        // alert(res[i].id);
+        temp.push(res1[i]);
+        
+         if(i!=0&&i%3==0){
+            // alert(i); 
+            overall.push(temp);           
+            temp=[];
+         }
+         if(i==(res1.length)-1)
+           {
+             // temp.push(res[i]);
+             overall.push(temp); 
+           } 
+        }
+      this.finaltrip=overall;
       alert(JSON.stringify(this.finaltrip));
 
           }

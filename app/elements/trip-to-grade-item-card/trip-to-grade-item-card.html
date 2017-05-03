@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-
+<link rel="import" href="..\..\bower_components/paper-dialog/paper-dialog.html">
 <dom-module id="trip-to-grade-item-card">
   <template>
     <style>
@@ -30,41 +30,79 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       on-response="rtipretriveResponse"
       debounce-duration="300"
       >
-   
+  <iron-ajax
+      method="post"
+      id="rtipretrive1ajax"
+      url="{{rtipretrive1url}}"
+      params="{{rtipretrive1param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="rtipretrive1Response"
+      debounce-duration="300"
+      >
+
   </template>
 
   <script>
   (function() {
     'use strict';
   var triparr=[];
+  var m;
     Polymer({
       is: 'trip-to-grade-item-card',
   fnsettrip:function(e){
         if(document.querySelector('#'+this.id).checked==true){
+           m=this.id;
      this.rtipretriveurl=sessionStorage.getItem("addrinfo")+"/rtipretrive-service";
-         var obj={"schoolid":"","academic_year":""}
+var obj={"schoolid":"","academic_year":"","tripid":"","gradename":"","id":""}
          obj.academic_year=localStorage.getItem("curr_sess_academicyear");
          obj.schoolid=sessionStorage.getItem("sch");
          obj.gradename=this.gradename;
-         obj.gradename=this.tripid;
+         obj.tripid=this.tripid;
+          obj.id=this.id;
          this.rtipretriveparam=obj;
+
          alert(JSON.stringify(obj));
         this.$.rtipretriveajax.generateRequest();
     
-            var obj={"gradename":"","tripid":""};
-            obj.gradename=this.gradename;
-            obj.tripid=this.tripid;
-            triparr.push(obj);
-          document.querySelector('trip-to-grade-card').triptograde(triparr);
        }  
             if(document.querySelector('#'+this.id).checked==false){
+              
+                this.rtipretrive1url=sessionStorage.getItem("addrinfo")+"/rtipretrive1-service";
+          var obj={"schoolid":"","academic_year":"","tripid":"","gradename":"","id":""}
+         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+         obj.schoolid=sessionStorage.getItem("sch");
+         obj.gradename=this.gradename;
+         obj.tripid=this.tripid;
+        obj.id=this.id;
+         this.rtipretrive1param=obj;
+     this.$.rtipretrive1ajax.generateRequest();
+    
                  for(var i=0;i<triparr.length;i++){
                    if(triparr[i].gradename==this.gradename){
                       triparr.splice(i,1);
                     }}
       }
        },
+       rtipretriveResponse:function(e){
+         alert(JSON.stringify(e.detail.response.returnval));
+         if(e.detail.response.returnval=='empty'){
+            var obj={"gradename":"","tripid":""};
+            obj.gradename=this.gradename;
+            obj.tripid=this.tripid;
+            triparr.push(obj);
+         document.querySelector('trip-to-grade-card').triptograde(triparr);
+        }
+      else{
+          alert("all Ready mapping this grade in trip");
+             document.querySelector('#'+m).checked=false;
+            
+       }
+      },
    triptograde1:function(){
+    alert('1');
+     var obj={};
+    triparr.splice(obj); 
     triparr=[];
    }
     });
