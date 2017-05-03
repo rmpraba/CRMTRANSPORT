@@ -979,19 +979,17 @@ app.post('/pickpoints',  urlencodedParser,function (req, res)
     var trip=req.query.schooltype;
     var academic_year=req.query.academic_year;
 
-      var qur1='SELECT id, point_name from point where route_id="'+req.query.routept+'" and school_id="'+req.query.schol+'" and distance_from_school<=(select maxdistance from md_distance where id=(select distance_id from md_zone where id=(select zone_id from student_fee where student_id="'+req.query.studid+'" and school_id="'+req.query.schol+'") and school_id="'+req.query.schol+'")) and trip="'+req.query.schooltype+'" and school_id="'+req.query.schol+'"';
-console.log("==========");
-console.log(qur1);
-console.log("===========");
+     
 
-        connection.query('SELECT id, point_name from point where route_id=? and school_id=? and academic_year=? and distance_from_school<=(select maxdistance from md_distance where id=(select distance_id from md_zone where id=(select zone_id from student_fee where student_id=? and school_id=? and academic_year=?) and school_id=? and academic_year=?)) and trip=? and school_id=? and academic_year=?',[route_id,schoolx,academic_year,studid,schoolx,academic_year,schoolx,academic_year,trip,schoolx,academic_year],
+var qur1='SELECT id, point_name from point where route_id="'+req.query.routept+'" and school_id="'+req.query.schol+'" and (select maxdistance from md_distance where id=(select distance_id from md_zone where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'" and  id=(select zone_id from student_fee where student_id="'+req.query.studid+'"  and school_id="'+req.query.schol+'") and school_id="'+req.query.schol+'") and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'")';
+
+        connection.query(qur1,
         function(err, rows)
         {
     if(!err)
     {
     if(rows.length>0)
     {
-      //console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
