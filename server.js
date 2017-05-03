@@ -794,7 +794,10 @@ app.post('/selectclass',  urlencodedParser,function (req, res)
 
   
    var schoolx={"school_id":req.query.schol};
-       connection.query('SELECT distinct class from student_details where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"',
+   
+    console.log('SELECT distinct class,(select trip from trip_to_grade where grade_name=class and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'")as tripidz from student_details where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"');
+
+       connection.query('SELECT distinct class,(select trip from trip_to_grade where grade_name=class and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'")as tripidz from student_details where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"',
 
         function(err, rows)
         {

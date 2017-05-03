@@ -156,15 +156,6 @@
         obj.routept=pickroute;
         obj.studid=this.studentid;
         scholtype=this.schooltype;
-        if(scholtype=='Primary')
-        {
-          obj.schooltype=1;
-        }
-        else {
-          obj.schooltype=2;
-        }
-       //// alert('7777');
-       // alert(JSON.stringify(obj));
           this.routepickpointparam=obj;
         this.$.selectpointajax.generateRequest();
       },
@@ -179,13 +170,7 @@
         obj.studid=this.studentid;
        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
          scholtype=this.schooltype;
-        if(scholtype=='Primary')
-        {
-          obj.schooltype=1;
-        }
-        else {
-          obj.schooltype=2;
-        }
+       
         this.routedroppointparam=obj;
         
        //alert(JSON.stringify(obj));
@@ -220,7 +205,6 @@
         var box = document.querySelector("#selectbox");
         if(e.target.checked==true)
         {
-          //alert('sch'+this.schooltype);
         document.querySelector('mapstudenttopoint-card').FnGetItemsz(this.studentid,pickroute,droproute,pickpoint,droppoint,this.schooltype);
 
        this.$.set.disabled=true;
