@@ -182,6 +182,9 @@
           this.value=studname;
           this.$.submitbutton.hidden=false;
           this.$.maps.namepick(this.studid);
+           this.$.maps.fnset(this.studid);
+       
+          document.querySelector('changepoint-list').fnsetval();
           this.itemArray=[];
           this.querySelector('paper-listbox').selected=-1;
         },
