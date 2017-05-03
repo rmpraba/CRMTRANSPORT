@@ -1234,7 +1234,9 @@
       {
 
         var a2=e1.detail.response.returnval;
-        //alert(JSON.stringify(a2));
+
+   //     alert(JSON.stringify(a2));
+
         document.querySelector('mappointtoroute-card').routearr=a2;
         document.querySelector('vehicleroute-card').routes=a2;
         document.querySelector('staffallocation-card').routearr=a2;
@@ -1251,13 +1253,13 @@
         obj.routename=routevalue1;
         obj.tripnos=tripno;
         this.getroutedetailparam=obj;
-        alert(JSON.stringify(obj));
+       // alert(JSON.stringify(obj));
         this.$.getroutedetailajax.generateRequest();
       },
       getroutedetailResponse:function(e1)
           {
           var routedetails=e1.detail.response.returnval;
-          alert(JSON.stringify(routedetails));
+       //   alert(JSON.stringify(routedetails));
           if(routedetails=='invalid'){
              document.querySelector('mappointtoroute-card').fn1();
            }
@@ -1491,7 +1493,7 @@
         this.$.parentdetailajax.generateRequest();
       },
       parentnameResponse:function(e){
-         //alert(JSON.stringify(e.detail.response.returnval));
+
            var parentname= e.detail.response.returnval[0].parent_name;
        // alert((parentname
 
@@ -2207,7 +2209,7 @@ this.getfeechequeurl=sessionStorage.getItem("addrinfo")+"/getfeecheque";
     if(actnumber.length>9){
         alert('Oops!!!! the Number is too big to covertes');
         return false;
-    }
+    }    
 
 
     j=0;

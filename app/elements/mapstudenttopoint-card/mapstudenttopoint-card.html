@@ -9,7 +9,7 @@
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
 <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
-<link rel="import" href="../mapstudenttopoint-service/mapstudenttopoint-service.html">
+<link rel="import" href="../mapstudenttopoint-service/mapstudenttopoint-service.html">  
 <link rel="import" href="../studenttopoint-item-card/studenttopoint-item-card.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
 <dom-module id="mapstudenttopoint-card">
@@ -139,7 +139,7 @@
         classes1:function(e){  
           this.studentarr=[];
           this.class=(e.target.selectedItem.value);
-          alert(this.class);
+         // alert(this.class);
           this.$.maps.classpick(this.class);
           this.$.submitbutton.hidden=false;
            this.$.search.hidden=true;

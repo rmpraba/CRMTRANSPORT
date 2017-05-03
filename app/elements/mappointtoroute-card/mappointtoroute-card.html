@@ -43,19 +43,19 @@
           <paper-dropdown-menu label="Trip" id="tripnoo" required error-message="select the trip">
             <paper-menu id="tripmenu" class="dropdown-content" on-iron-select="tripnum" valueattr="value"  >
               <paper-item value="1">1</paper-item>
-                <paper-item value="2">2</paper-item>
+              <paper-item value="2">2</paper-item>
               
             </paper-menu>
           </paper-dropdown-menu>
         </div>
         <div hidden$="{{hide11}}">
           <template  is="dom-repeat" items="{{itemarr}}">
-            <fetch-card points="{{item.point_name}}" trip="{{item.trip}}" picktime="{{item.pickup_time}}" droptime="{{item.drop_time}}">
+            <fetch-card points="{{item.point_name}}" trip="{{item.trip}}" picktime="{{item.pickup_time}}" droptime="{{item.drop_time}}" pointid="{{item.id}}"  routid="{{item.route_id}}">
           </template>
         </div>
         <div id="cardnew" hidden$="{{hide}}">
           <item-card></item-card>
-        </div>
+        </div>   
         <div class="buttons">  
           <paper-button id="button" class="button" on-click="Fndeletepoint">Delete</paper-button>
           <paper-button id="create" class="button" on-click="clickfn">Create New</paper-button>
@@ -105,6 +105,10 @@
            // alert(sessionStorage.getItem("routevalue"));
                this.hide11=false;
      
+          },
+          fndeletethepicuprootref:function(e){
+            alert("2");
+          this.$.select.getroutedetail(tripno,routevalue1);
           },
           refreshdeletedata:function()
           {
