@@ -158,6 +158,7 @@
         scholtype=this.schooltype;
           this.routepickpointparam=obj;
         this.$.selectpointajax.generateRequest();
+        this.querySelector.set.selected=-1;
       },
       droproute:function(e){
         droproute = (e.target.selectedItem.value);
@@ -176,6 +177,7 @@
        //alert(JSON.stringify(obj));
         this.$.routedroppoint.generateRequest();
          this.$.selectbox.disabled=true;
+         this.querySelector.set1.selected=-1;
       },
       pickpointsResponse:function(e){
         var points=e.detail.response.returnval;
