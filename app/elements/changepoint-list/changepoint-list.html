@@ -6,6 +6,7 @@
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../changepoint-service/changepoint-service.html">
 <link rel="import" href="../../border-collapse: collapse;
     border: 1px solid #6699ff;
@@ -60,7 +61,8 @@
               <div class="detail">
                 <div class="field">
                   <paper-dropdown-menu id="set" label="Pick-up Route">
-                    <paper-menu class="dropdown-content" on-iron-select="pickroute" selected="{{selectproute}}" attr-for-selected="value" >
+                    <paper-menu id="pickrt1" class="dropdown-content" required    on-iron-select="pickroute" 
+                      attr-for-selected="value" selected="{{pkroutezz}}">
                       <template  is="dom-repeat" items="{{routearr}}" as="view">
                         <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
                       </template>
@@ -69,7 +71,8 @@
                 </div>
                 <div class="field" style="margin-left: 3em;">
                   <paper-dropdown-menu id="set1" label="Pick-up Point">
-                    <paper-menu class="dropdown-content" on-iron-select="pickpoints" selected="{{selectpick}}" attr-for-selected="value" >
+                    <paper-menu id="pickpnt1" class="dropdown-content" required on-iron-select="pickpoints" 
+                    attr-for-selected="value" selected="{{pkpointzz}}">  
                       <template  is="dom-repeat" items="{{pointarr}}" as="view">
                         <paper-item value="{{view.id}}">{{view.point_name}}</paper-item>
                       </template>
@@ -83,7 +86,8 @@
               <div class="detail">
                 <div class="field">
                   <paper-dropdown-menu id="set2" label="Drop Route">
-                    <paper-menu class="dropdown-content" on-iron-select="droproute" selected="{{selectid}}" attr-for-selected="value" >
+                    <paper-menu id="droprt2" class="dropdown-content" required on-iron-select="droproute" 
+                    attr-for-selected="value" selected="{{dproutezz}}">
                       <template  is="dom-repeat" items="{{routearr}}" as="view">
                         <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
                       </template>
@@ -92,7 +96,8 @@
                 </div>
                 <div class="field" style="margin-left: 3em;">
                   <paper-dropdown-menu id="set3" label="Drop Point">
-                    <paper-menu class="dropdown-content" on-iron-select="droppoints" selected="{{selectpoint}}" attr-for-selected="value" >
+                    <paper-menu id="droppnt2" class="dropdown-content" required on-iron-select="droppoints" 
+                    attr-for-selected="value" selected="{{dppointzz}}">
                       <template  is="dom-repeat" items="{{droparr}}" as="view">
                         <paper-item value="{{view.id}}">{{view.point_name}}</paper-item>
                       </template>
@@ -101,7 +106,7 @@
                 </div>
               </div>
               </li>
-
+                 <!-- <paper-input label="Pickip Route" value="{{pkroutezz}}"></paper-input>  -->
         </ul>
         </fieldset>
       </li>
@@ -122,7 +127,7 @@
   </iron-ajax>
     <iron-ajax
     method="post"
-    id="routedroppoint"
+    id="routedroppointajax"
     url="{{routedroppointurl}}"
     handle-as="json"
     content-type="application/json"
@@ -133,7 +138,7 @@
   </iron-ajax>
     <iron-ajax
         method="post"
-        id="routepoint"
+        id="routepointajax"
         url="{{routepointurl}}"
         params="{{routepointparam}}"
         handle-as="json"
@@ -142,7 +147,7 @@
         debounce-duration="300"
         >
   </iron-ajax>
-  <iron-ajax
+  <!-- <iron-ajax
         method="post"
         id="prevpickajax"
         url="{{prevpickurl}}"
@@ -152,7 +157,7 @@
         on-response="prevpickResponse"
         debounce-duration="300"
         >
-  </iron-ajax>
+  </iron-ajax> -->
   </template>
   <script>
   (function() {
@@ -162,70 +167,86 @@
       var droppoint;
     var scholtype;
       var school=sessionStorage.getItem("sch");
+
+      var pickrouteid;
+      var droprouteid;
     Polymer({
       is: "changepoint-list",
-      ready:function(){
+      ready:function()
+      {
         this.routepointurl =sessionStorage.getItem("addrinfo")+"/routepoint";
         var obj={"schol":"","academic_year":""}
          obj.schol=sessionStorage.getItem("sch");
          obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.routepointparam=obj;
-        // alert(JSON.stringify(obj));
-        this.$.routepoint.generateRequest();
+        //alert(JSON.stringify(obj));
+        this.$.routepointajax.generateRequest();
+
         this.$.selectbox.disabled=true;  
-        this.prevpickurl=sessionStorage.getItem("addrinfo")+"/chprevpick";
+
+        /*this.prevpickurl=sessionStorage.getItem("addrinfo")+"/chprevpick";
          var obj1={"schol":"","studentid":"","academic_year":""}
          obj1.schol=sessionStorage.getItem("sch");
          obj1.academic_year=localStorage.getItem("curr_sess_academicyear");
          obj1.studentid=this.studentid;
          this.prevpickparam=obj1;
-      //   alert("ee");
-        //alert(JSON.stringify(obj1));
+       // alert(JSON.stringify(obj1));
     
-        this.$.prevpickajax.generateRequest();
+        this.$.prevpickajax.generateRequest();*/
       },
-      prevpickResponse:function(e)
+      /*prevpickResponse:function(e)
       {
-  //alert(JSON.stringify(e.detail.response.returnval));
- this.selectproute=e.detail.response.returnval[0].pickup_route_id;
- this.selectpick=e.detail.response.returnval[0].pickup_point;
- this.selectid=e.detail.response.returnval[0].drop_route_id;
- this.selectpoint=e.detail.response.returnval[0].drop_point;
-      },
-      routepointResponse:function(e){
+        var res=e.detail.response.returnval;
+        alert(333333);
+        alert(JSON.stringify(res));
+
+        alert(this.selectproute+""+this.selectpick+""+this.selectid+""+this.selectpoint);
+       this.selectproute=res[0].pickuproutename;
+       this.selectpick=res[0].pickpointname;
+       this.selectid=res[0].droproutename;
+       this.selectpoint=res[0].droppointname;
+      },*/
+
+      routepointResponse:function(e)
+      {
         var route=e.detail.response.returnval;
+       // alert(2222222);
+        //alert(JSON.stringify(route));
         this.routearr=route;
       },
       pickroute:function(e){
-        pickroute = (e.target.selectedItem.value);
-     droproute=pickroute;
-        this.selectid=pickroute;
+        pickrouteid = e.target.selectedItem.value;
+        pickroute=(e.target.selectedItem.textContent).trim();
+        droproute=pickroute;
+        //this.selectid=pickroute;
         this.selectpointurl = sessionStorage.getItem("addrinfo")+"/pickpoints";
       var obj={"routept":"","studid":"","schol":"","schooltype":"","academic_year":""};
         obj.schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
-        obj.routept=pickroute;
+        obj.routept=pickrouteid;
         obj.studid=this.studentid;
-
+        
         scholtype=this.schooltype;
         if(scholtype=='Primary')
         {
           obj.schooltype=1;
         }
-        else {
+        else 
+        {
           obj.schooltype=2;
-         }
-
+        }
         this.routepickpointparam=obj;
+        alert(JSON.stringify(obj));
         this.$.selectpointajax.generateRequest();
       },
       droproute:function(e){
-        droproute = (e.target.selectedItem.value);
+        droprouteid = (e.target.selectedItem.value);
+        droproute=(e.target.selectedItem.textContent).trim();
         this.routedroppointurl = sessionStorage.getItem("addrinfo")+"/routedroppoint";
-   var obj={"routedroppt":"","studid":"","schol":"","schooltype":"","academic_year":""};
+        var obj={"routedroppt":"","studid":"","schol":"","schooltype":"","academic_year":""};
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.schol=sessionStorage.getItem("sch");
-        obj.routedroppt=droproute;
+        obj.routedroppt=droprouteid;
         obj.studid=this.studentid;
 
         scholtype=this.schooltype;
@@ -237,11 +258,14 @@
           obj.schooltype=2;
         }
         this.routedroppointparam=obj;
-        this.$.routedroppoint.generateRequest();
+        this.$.routedroppointajax.generateRequest();
          this.$.selectbox.disabled=true;
       },
-      pickpointsResponse:function(e){
+      pickpointsResponse:function(e)
+      {
         var points=e.detail.response.returnval;
+        alert("testtt");
+        alert(JSON.stringify(points));
           //this.droparr=points;
         this.pointarr=points;
       },
@@ -252,13 +276,15 @@
         this.droparr=points;
       },
       pickpoints:function(e){
-        pickpoint = (e.target.selectedItem.value);
-        this.selectpoint=pickpoint;
+        this.pickpointid = e.target.selectedItem.value;
+        pickpoint=(e.target.selectedItem.textContent).trim();
+        //this.selectpoint=pickpoint;
         droppoint=pickpoint;
         this.$.selectbox.disabled=false;
       },
       droppoints:function(e){
-        droppoint = (e.target.selectedItem.value);
+        this.droppointid = (e.target.selectedItem.value);
+        droppoint=(e.target.selectedItem.textContent).trim();
          this.$.selectbox.disabled=false;
       },
       changeHandler:function(e){
@@ -277,12 +303,50 @@
         {
           document.querySelector('changepoint-card').removestud(this.studentid);
 
-        this.$.set.disabled=false;
-       this.$.set1.disabled=false;
-       this.$.set2.disabled=false;
-       this.$.set3.disabled=false;
+            this.$.set.disabled=false;
+           this.$.set1.disabled=false;
+           this.$.set2.disabled=false;
+           this.$.set3.disabled=false;
         }
-    }
+    },
+
+      /*fnpickroute:function(e)
+      {
+        //alert("pickroute");
+        this.pkroutezz=e[0].pickuproutename;
+        alert(this.pkroutezz);
+      },
+
+      fnpickpoint:function(e)
+      {
+        //alert("pickpoint");
+        this.pkpointzz=e[0].pickpointname;
+        alert(this.pkpointzz);
+      },
+
+      fndroproute:function(e)
+      {
+        //alert("droproute");
+        this.dproutezz=e[0].droproutename;
+        alert(this.dproutezz);
+      },
+
+    fndroppint:function(e)
+    {
+      //alert("droppoint");
+     this.dppointzz=e[0].droppointname; 
+     alert(this.dppointzz);
+    }*/
+
+   /* fnrefresh:function()
+    {
+      document.querySelector('#pickrt1').selected=-1;
+      document.querySelector('#pickpnt1').selected=-1;
+      document.querySelector('#droprt2').selected=-1;
+      document.querySelector('#droppnt2').selected=-1;
+    }*/
+    
+  
   });
   })();
   </script>

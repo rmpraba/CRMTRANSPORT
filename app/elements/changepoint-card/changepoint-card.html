@@ -51,7 +51,7 @@
       <div class="template">
         <app-service studentarr="{{studentarr}}"></app-service>
           <template  is="dom-repeat" items="{{studentarr}}">
-            <changepoint-list schooltype="{{item.school_type}}" studentid="{{item.id}}" studentname="{{item.student_name}}"/>
+            <changepoint-list schooltype="{{item.school_type}}" studentid="{{item.id}}" studentname="{{item.student_name}}"></changepoint-list>
           </template>
           <div class="button" style="margin-left: 50%;margin-top: 3%; height: 40% !important;">
             <paper-button raised id="submitbutton" class="custom indigo" on-click="click">Submit</paper-button>
@@ -64,10 +64,12 @@
   <script>
     (function() {
       var itemarray=[];
+      var namearr=[];
       Polymer({
         is:"changepoint-card",
         ready:function(){
           this.$.submitbutton.disabled=true;
+          //this.$.maps.selectname1();
         },
         FnClear:function()
         {
@@ -181,6 +183,7 @@
           this.$.submitbutton.hidden=false;
           this.$.maps.namepick(this.studid);
           this.itemArray=[];
+          this.$.maps.fnprepoints(this.studid);
           this.querySelector('paper-listbox').selected=-1;
         },
         click:function(){
@@ -217,12 +220,12 @@
            removestud:function(std)
            {
               for(var i=0;i<itemarray.length;i++)
-       {
-       if(std==itemarray[i].studentid)
-       {
-        itemarray.splice(i,1);
-       }
-       }
+             {
+               if(std==itemarray[i].studentid)
+               {
+                itemarray.splice(i,1);
+               }
+             }
              this.$.submitbutton.disabled=true;
              document.getElementById("submitbutton").style.background="grey";
            }
