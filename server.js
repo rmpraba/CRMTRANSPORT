@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
-  database : 'transport'
+  database : 'transportcloud'
 
 
 });
@@ -180,10 +180,7 @@ app.post('/getroutedetail' ,  urlencodedParser,function (req, res)
   //console.log('hello trip...'+trip);
   var query='select * from point where route_id=(select id from route where id="'+req.query.routename+'" and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and trip="'+req.query.tripnos+'" and academic_year="'+req.query.academic_year+'"';
   
-  /*console.log("=============");
-  console.log(query);
-  console.log("=============");
-*/
+  
   connection.query(query,
     function(err, rows){
     if(!err){
