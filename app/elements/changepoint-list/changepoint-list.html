@@ -155,8 +155,6 @@
       {
       this.$.selectbox.disabled=true;  
       },
-    
-    
    
       pickroute:function(e){
         pickroute= e.target.selectedItem.value;
@@ -179,7 +177,7 @@
           obj.schooltype=2;
         }
         this.routepickpointparam=obj;
-        alert(JSON.stringify(obj));
+       // alert(JSON.stringify(obj));
         this.$.selectpointajax.generateRequest();
       },
       droproute:function(e){
@@ -206,8 +204,8 @@
       pickpointsResponse:function(e)
       {
         var points=e.detail.response.returnval;
-        alert("testtt");
-        alert(JSON.stringify(points));
+       // alert("testtt");
+        //alert(JSON.stringify(points));
           //this.droparr=points;
         this.pointarr=points;
       },
@@ -231,7 +229,7 @@
         var box = document.querySelector("#selectbox");
         if(e.target.checked==true)
         {
-        document.querySelector('changepoint-card').FnGetItemsz(this.studentid,pickroute,droproute,pickpoint,droppoint);
+        document.querySelector('changespoint-card').FnGetItemsz(this.studentid,pickroute,droproute,pickpoint,droppoint);
 
        this.$.set.disabled=true;
        this.$.set1.disabled=true;

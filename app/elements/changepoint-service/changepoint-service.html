@@ -165,6 +165,20 @@
         on-response="prevpickResponse"
         debounce-duration="300"
         >
+   </iron-ajax>     
+        <iron-ajax
+        method="post"
+        id="deletepointajax"
+        url="{{deletepointurl}}"
+        params="{{deletepointparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="deletepointResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+        
   </template>
   <script>
   (function() {
@@ -172,6 +186,7 @@
     var routenamez;
     var school=sessionStorage.getItem("sch");
     var pointcount;
+    var len1;
     Polymer({
       is: "changepoint-service",
       selectclass:function(){
@@ -203,7 +218,7 @@
     prevpickResponse:function(e)
       {
         var res=e.detail.response.returnval;
-        alert(JSON.stringify(res));
+       // alert(JSON.stringify(res));
               document.querySelector('changepoint-list').qxqxqq(res);
            
       },
@@ -211,7 +226,7 @@
       routepointResponse:function(e)
       {
         var route=e.detail.response.returnval;
-        alert(JSON.stringify(route));
+       // alert(JSON.stringify(route));
             document.querySelector('changepoint-list').routearr=route;
         },
       FnClear:function(){
@@ -270,7 +285,8 @@
       },
       submit:function(itemarr){
           len=itemarr.length;
-          for(var i=0;i<itemarr.length;i++){
+          for(var i=0;i<itemarr.length;i++)
+          {
             var obj={"studentid":"","class_id":"","pickroute":"","droproute":"","pickpoint":"","droppoint":"","flag":"","schol":"","academic_year":""};
             obj.studentid=itemarr[i].studentid;
             obj.class_id=itemarr[i].class_id;
@@ -281,7 +297,7 @@
             obj.academic_year=localStorage.getItem("curr_sess_academicyear");
    
             obj.flag=1;
-            obj.schol=sessionStorage.getItem("sch");;
+            obj.schol=sessionStorage.getItem("sch");
             this.studentpointurl=sessionStorage.getItem("addrinfo")+"/submitupdateurl";
                  this.studentpointparam=obj;
             this.$.studentpointajax.generateRequest();
@@ -299,8 +315,37 @@
         {
        alert('insertion failed');
        }
-      document.querySelector('changepoint-card').refreshmappoint();
+      document.querySelector('changepoint-card').fnrefreshpoint();
     },
+
+    delete:function(studentid1)
+    {
+     // alert("deleting");
+      this.deletepointurl = sessionStorage.getItem("addrinfo")+"/deletepoint-service";
+      var obj={"stid":"","scholid":"","academic_year":""}
+      obj.stid=studentid1;
+      obj.scholid=sessionStorage.getItem("sch");
+      obj.academic_year=localStorage.getItem("curr_sess_academicyear");
+     // alert(JSON.stringify(obj));
+      this.deletepointparam=obj;
+      this.$.deletepointajax.generateRequest();
+    },
+
+    deletepointResponse:function(e)
+    {
+        var res=e.detail.response.returnval;
+       // alert(JSON.stringify(res));
+        if(res=='success')
+        {
+          alert("Deleted Point Successfully");
+        }
+        else
+        {
+          alert("Failed");
+        }
+        document.querySelector('changepoint-card').fnrefreshpoint();
+    },
+
     createroute:function(route){
         routenamez=route;
        this.getroutesequrl = sessionStorage.getItem("addrinfo")+"/routeid";

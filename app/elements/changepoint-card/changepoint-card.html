@@ -49,12 +49,16 @@
           </div>
       </div>  
       <div class="template">
-        <app-service studentarr="{{studentarr}}"></app-service>
+        <!-- <app-service studentarr="{{studentarr}}"></app-service> -->
           <template  is="dom-repeat" items="{{studentarr}}">
             <changepoint-list schooltype="{{item.school_type}}" studentid="{{item.id}}" studentname="{{item.student_name}}" tripid="{{school_type}}" ></changepoint-list>
           </template>
           <div class="button" style="margin-left: 50%;margin-top: 3%; height: 40% !important;">
             <paper-button raised id="submitbutton" class="custom indigo" on-click="click">Submit</paper-button>
+          </div>
+
+          <div class="button" style="margin-left: 58%;margin-top: -2.5%; height: 40% !important;">
+            <paper-button raised id="deletebutton" class="custom indigo" on-click="fndelete">Delete</paper-button>
           </div>
         </div>
       </div>
@@ -69,11 +73,13 @@
         is:"changepoint-card",
         ready:function(){
           this.$.submitbutton.disabled=true;
+          this.$.deletebutton.disabled=true;
           //this.$.maps.selectname1();
         },
         FnClear:function()
         {
           this.$.submitbutton.hidden=true;
+          this.$.deletebutton.hidden=true;
           this.classarr="";
           this.value="";
           this.itemArray="";
@@ -81,7 +87,7 @@
           //document.querySelector('#gradeselect').selected=-1;
           //document.querySelector('#selectbox').checked=false;
         },
-        refreshmappoint:function(){
+        fnrefreshpoint:function(){
           this.studentarr=[];
           this.$.maps.selectclass();
         },
@@ -93,6 +99,7 @@
           this.studentarr=[];
           document.querySelector('#gradeselect').selected=-1;
           document.getElementById("submitbutton").style.background="grey";
+          document.getElementById("deletebutton").style.background="grey";
 
         }
         else
@@ -106,9 +113,12 @@
           this.class = (e.target.selectedItem.value);
           this.$.maps.classpick(this.class);
           this.$.submitbutton.hidden=false;
+          this.$.deletebutton.hidden=false;
+
            this.$.search.hidden=true;
            document.querySelector("#selectbox").checked=false;
           document.getElementById("submitbutton").style.background="grey";
+          document.getElementById("deletebutton").style.background="grey";
         },
         autocompletename(nameitem){
           namearr=nameitem;
@@ -181,6 +191,7 @@
           var studname=(e.target.selectedItem.textContent).trim();
           this.value=studname;
           this.$.submitbutton.hidden=false;
+          this.$.deletebutton.hidden=false;
           this.$.maps.namepick(this.studid);
            this.$.maps.fnset(this.studid);
        
@@ -190,10 +201,11 @@
         },
         click:function(){
           this.$.maps.submit(itemarray);
-         // alert(JSON.stringify(itemarray));
+          //alert(JSON.stringify(itemarray));
           itemarray=[];
           document.querySelector('#gradeselect').selected=-1;
           this.value="";
+          this.$.submitbutton.disabled=true;
           // this.$.submitbutton.hidden=true;
         },
         FnGetItemsz:function(studentid,pickroute,droproute,pickpoint,droppoint)
@@ -218,6 +230,8 @@
            // alert(JSON.stringify(obj));
             this.$.submitbutton.disabled=false;
              document.getElementById("submitbutton").style.background="black";
+             this.$.deletebutton.disabled=false;
+             document.getElementById("deletebutton").style.background="black";
            },
            removestud:function(std)
            {
@@ -230,7 +244,17 @@
              }
              this.$.submitbutton.disabled=true;
              document.getElementById("submitbutton").style.background="grey";
-           }
+             this.$.deletebutton.disabled=true;
+             document.getElementById("deletebutton").style.background="grey";
+           },
+           fndelete:function()
+           {
+              this.$.maps.delete(this.studid);
+              itemarray=[];
+              this.value="";
+              this.$.deletebutton.disabled=true;
+           },
+
       });
     })();
   </script>

@@ -5060,6 +5060,29 @@ connection.query("SELECT * FROM trip_to_grade WHERE school_id='"+req.query.schoo
 
 
 
+
+app.post('/deletepoint-service',  urlencodedParser,function (req, res)
+{
+    var  qur1="DELETE FROM student_point where student_id='"+req.query.stid+"' and school_id='"+req.query.scholid+"' and academic_year='"+req.query.academic_year+"'";
+    console.log(qur1);
+      connection.query(qur1,
+      function(err, rows)
+      {
+        if(!err)
+        {
+          console.log(rows);
+          res.status(200).json({'returnval': 'success'});
+        }
+        else
+        {
+          //console.log(err);
+          res.status(200).json({'returnval': 'invalid'});
+        }
+
+});
+  });
+
+
 function setvalue(){
   console.log("calling setvalue.....");
 }
