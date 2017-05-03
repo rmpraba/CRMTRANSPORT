@@ -148,10 +148,14 @@
   
     },
     fndeletethepicuprootResponse:function(e){
-     alert(JSON.stringify(e.detail.response.returnval));
+    // alert(JSON.stringify(e.detail.response.returnval));
    if(e.detail.response.returnval=="delete")
    {
    document.querySelector('mappointtoroute-card').fndeletethepicuprootref()
+   }
+   else if(e.detail.response.returnval=="notempty"){
+
+    alert("ALL READY  STUDENT MAPPING IN THE POINT ");
    }
     },
   

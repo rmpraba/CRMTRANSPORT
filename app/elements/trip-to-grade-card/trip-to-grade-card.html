@@ -117,7 +117,7 @@ var triparrz=[];
          obj.schoolid=sessionStorage.getItem("sch");
          obj.trip='1';
         this.rtip1param=obj;
-        alert(JSON.stringify(obj));
+       // alert(JSON.stringify(obj));
         this.$.rtip1ajax.generateRequest();
             
        }
@@ -136,7 +136,7 @@ var triparrz=[];
          obj.schoolid=sessionStorage.getItem("sch");
          obj.trip='2';
         this.rtip2param=obj;
-       alert(JSON.stringify(obj));
+    //   alert(JSON.stringify(obj));
        this.$.rtip2ajax.generateRequest();
      }
       },
@@ -149,7 +149,7 @@ var triparrz=[];
          obj.gradename=triparrz[i].gradename;
          obj.tripid=triparrz[i].tripid;
          this.finalrtipparam=obj;
-         alert(JSON.stringify(obj));
+        // alert(JSON.stringify(obj));
          this.$.finalrtipajax.generateRequest();
       }
               document.querySelector('trip-to-grade-item-card').triptograde1();
@@ -158,7 +158,7 @@ var triparrz=[];
      },
    finalrtipResponse:function(e){
 var res=e.detail.response.returnval;
-     alert(JSON.stringify(res));
+    alert(JSON.stringify(res));
    },
       rtip2Response:function(e){
      var res=e.detail.response.triparr;
@@ -199,13 +199,13 @@ var res=e.detail.response.returnval;
         }
         
 this.finaltrip=overall;
-alert(JSON.stringify(this.finaltrip));
+//alert(JSON.stringify(this.finaltrip));
       },
       rtip1Response:function(e){
       var res=e.detail.response.triparr;
       var res1=e.detail.response.gradearr;
-       alert(JSON.stringify(res));
-       alert(JSON.stringify(res1));
+     //  alert(JSON.stringify(res));
+     //  alert(JSON.stringify(res1));
         for(var j=0;j<res1.length;j++){
              var flag=0;
                res1[j].tripid='1';
@@ -238,7 +238,7 @@ alert(JSON.stringify(this.finaltrip));
            } 
         }
       this.finaltrip=overall;
-      alert(JSON.stringify(this.finaltrip));
+      //alert(JSON.stringify(this.finaltrip));
 
           }
     });
