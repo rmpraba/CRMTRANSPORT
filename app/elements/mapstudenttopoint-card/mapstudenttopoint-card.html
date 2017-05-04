@@ -54,7 +54,7 @@
         <div class="hrlayout">
           <div id="selectclass" style="margin-top: 5%; margin-left: 6%;">
             <paper-dropdown-menu   label="Select Grade">
-              <paper-menu class="dropdown-content" id="gradeselect" on-iron-select="classes1" attr-for-selected="value" >
+              <paper-menu class="dropdown-content" id="mapstudpointgradeselect" on-iron-select="FnSelectgrade" attr-for-selected="value" >
                 <template  is="dom-repeat" items="{{classarr}}" as="view">
                   <paper-item value="{{view.tripidz}}">{{view.class}}</paper-item>
                 </template>
@@ -95,6 +95,8 @@
   <script>
     (function() {
       var itemarray=[];
+      var selclass="";
+      var seltrip="";
       Polymer({
         is:"mapstudenttopoint-card",
         ready:function(){
@@ -109,7 +111,9 @@
           this.value="";
           this.itemArray="";
           this.studentarr="";
-          document.querySelector('#gradeselect').selected=-1;
+          selclass="";
+          seltrip="";
+          document.querySelector('#mapstudpointgradeselect').selected=-1;
           document.querySelector('#selectbox').checked=false;
         },
         refreshmappoint:function(){
@@ -122,7 +126,7 @@
             this.$.search.hidden=false;
             this.$.maps.selectname();
             this.studentarr=[];
-            document.querySelector('#gradeselect').selected=-1;
+            document.querySelector('#mapstudpointgradeselect').selected=-1;
             document.getElementById("submitbutton").style.background="grey";
             document.querySelector('#spin').open();
             this.$.spinner.active=true;
@@ -136,12 +140,12 @@
           this.$.spinner.active=false;
           document.querySelector('#spin').close();
         },
-        classes1:function(e){  
+        FnSelectgrade:function(e){  
           this.studentarr=[];
-          this.class=(e.target.selectedItem.textContent).trim();
-          this.trip=(e.target.selectedItem.value);
-          alert(this.class+this.trip);
-          this.$.maps.classpick(this.class);
+          selclass=(e.target.selectedItem.textContent).trim();
+          seltrip=(e.target.selectedItem.value);
+          // alert(this.class+this.trip);
+          this.$.maps.classpick(selclass);
           this.$.submitbutton.hidden=false;
            this.$.search.hidden=true;
            document.querySelector("#selectbox").checked=false;
@@ -226,7 +230,7 @@
         click:function(){
           this.$.maps.submit(itemarray);
           itemarray=[];
-          document.querySelector('#gradeselect').selected=-1;
+          document.querySelector('#mapstudpointgradeselect').selected=-1;
           this.value="";
           this.$.maps.selectname();
          },
