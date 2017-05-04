@@ -59,10 +59,25 @@
             <li class="row">
               <div class="detail">
                 <div class="field">
+                  <paper-input label="Pickup Sequence" value="{{pickupseq}}" id="mstppickseq"></paper-input>
+                </div>
+              </div>
+            </li>
+            <li class="row">
+              <div class="detail">
+                <div class="field">
+                  <paper-input label="Drop Sequence" value="{{dropseq}}" id="mstpdropseq"></paper-input>
+                </div>
+              </div>
+            </li>
+            <li class="row">
+              <div class="detail">
+                <div class="field">
                   <paper-button id="new-button" class="button item-card" on-click="insert">Add</paper-button>
                 </div>
               </div>
             </li>
+            
           </ul>
         </fieldset>
       </li>
@@ -91,7 +106,7 @@ else
         //alert('Add button is clicked');
         var route=sessionStorage.getItem("route");
         var tripn=sessionStorage.getItem("trip");
-        this.$.insert.insertpoint(route,this.points,localStorage.getItem("curr_sess_pickuptime"),localStorage.getItem("curr_sess_droptime"),tripn,this.distance);
+        this.$.insert.insertpoint(route,this.points,localStorage.getItem("curr_sess_pickuptime"),localStorage.getItem("curr_sess_droptime"),tripn,this.distance,this.pickupseq,this.dropseq);
         this.points="";
         this.distance="";
         document.querySelector('timepicker-card').FnClear();

@@ -1269,7 +1269,7 @@
            }
       },
 
-      insertpoint:function(route,pt,pickuptime,droptime,tripp,dist)
+      insertpoint:function(route,pt,pickuptime,droptime,tripp,dist,pickupseq,dropseq)
       {
         //alert('insert');
         point=pt;
@@ -1277,6 +1277,8 @@
         pick=pickuptime;
         drop=droptime;
         distance=dist;
+        this.pickupseq=pickupseq;
+        this.dropseq=dropseq;
         this.routeidurl=sessionStorage.getItem("addrinfo")+"/routeid";
         var obj={"id":"","academic_year":""};
       obj.id='point'; 
@@ -1322,6 +1324,8 @@
         obj.pick=pick;
         obj.drop=drop;
         obj.distance=distance;
+        obj.pickupseq=this.pickupseq;
+        obj.dropseq=this.dropseq;
         this.insertpointparam=obj;
        // alert(JSON.stringify(obj));
         this.insertpointurl=sessionStorage.getItem("addrinfo")+"/insertpoint";
