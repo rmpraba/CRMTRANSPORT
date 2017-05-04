@@ -229,7 +229,7 @@
         var box = document.querySelector("#selectbox");
         if(e.target.checked==true)
         {
-        document.querySelector('changespoint-card').FnGetItemsz(this.studentid,pickroute,droproute,pickpoint,droppoint);
+        document.querySelector('changepoint-card').FnGetItemsz(this.studentid,pickroute,droproute,pickpoint,droppoint);
 
        this.$.set.disabled=true;
        this.$.set1.disabled=true;
@@ -247,7 +247,9 @@
            this.$.set3.disabled=false;
         }
     },
-qxqxqq:function(e){
+qxqxqq:function(e)
+{
+      //alert("pre results");
        this.pkroutezz=e[0].pickup_route_id;
        this.pkpointzz=e[0].pickup_point;
        this.dproutezz=e[0].drop_route_id;

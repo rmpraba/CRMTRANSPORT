@@ -54,11 +54,11 @@
             <changepoint-list schooltype="{{item.school_type}}" studentid="{{item.id}}" studentname="{{item.student_name}}" tripid="{{school_type}}" ></changepoint-list>
           </template>
           <div class="button" style="margin-left: 50%;margin-top: 3%; height: 40% !important;">
-            <paper-button raised id="submitbutton" class="custom indigo" on-click="click">Submit</paper-button>
+            <paper-button raised id="submitbutn1" class="custom indigo" on-click="click">Submit</paper-button>
           </div>
 
           <div class="button" style="margin-left: 58%;margin-top: -2.5%; height: 40% !important;">
-            <paper-button raised id="deletebutton" class="custom indigo" on-click="fndelete">Delete</paper-button>
+            <paper-button raised id="deletebutn1" class="custom indigo" on-click="fndelete">Delete</paper-button>
           </div>
         </div>
       </div>
@@ -72,14 +72,17 @@
       Polymer({
         is:"changepoint-card",
         ready:function(){
-          this.$.submitbutton.disabled=true;
-          this.$.deletebutton.disabled=true;
+          this.$.submitbutn1.disabled=true;
+          this.$.deletebutn1.disabled=true;
+          this.$.submitbutn1.hidden=true;
+          this.$.deletebutn1.hidden=true;
+          this.querySelector('paper-listbox').style.visibility='hidden';
           //this.$.maps.selectname1();
         },
         FnClear:function()
         {
-          this.$.submitbutton.hidden=true;
-          this.$.deletebutton.hidden=true;
+          this.$.submitbutn1.hidden=true;
+          this.$.deletebutn1.hidden=true;
           this.classarr="";
           this.value="";
           this.itemArray="";
@@ -98,8 +101,8 @@
           this.$.maps.selectname();
           this.studentarr=[];
           document.querySelector('#gradeselect').selected=-1;
-          document.getElementById("submitbutton").style.background="grey";
-          document.getElementById("deletebutton").style.background="grey";
+          document.getElementById("submitbutn1").style.background="grey";
+          document.getElementById("deletebutn1").style.background="grey";
 
         }
         else
@@ -112,13 +115,13 @@
           this.studentarr=[];
           this.class = (e.target.selectedItem.value);
           this.$.maps.classpick(this.class);
-          this.$.submitbutton.hidden=false;
-          this.$.deletebutton.hidden=false;
+          this.$.submitbutn1.hidden=false;
+          this.$.deletebutn1.hidden=false;
 
            this.$.search.hidden=true;
            document.querySelector("#selectbox").checked=false;
-          document.getElementById("submitbutton").style.background="grey";
-          document.getElementById("deletebutton").style.background="grey";
+          document.getElementById("submitbutn1").style.background="grey";
+          document.getElementById("deletebutn1").style.background="grey";
         },
         autocompletename(nameitem){
           namearr=nameitem;
@@ -186,16 +189,18 @@
             }
           }
         },
-        FnItemSelected:function(e){
+        FnItemSelected:function(e)
+        {
+          this.querySelector('paper-listbox').style.visibility='hidden';
           this.studid= e.target.selectedItem.value;
           var studname=(e.target.selectedItem.textContent).trim();
           this.value=studname;
-          this.$.submitbutton.hidden=false;
-          this.$.deletebutton.hidden=false;
+          this.$.submitbutn1.hidden=false;
+          this.$.deletebutn1.hidden=false;
           this.$.maps.namepick(this.studid);
            this.$.maps.fnset(this.studid);
        
-          document.querySelector('changepoint-list').fnsetval();
+          //document.querySelector('changepoint-list').fnsetval();
           this.itemArray=[];
           this.querySelector('paper-listbox').selected=-1;
         },
@@ -205,11 +210,12 @@
           itemarray=[];
           document.querySelector('#gradeselect').selected=-1;
           this.value="";
-          this.$.submitbutton.disabled=true;
-          // this.$.submitbutton.hidden=true;
+          //this.$.submitbutn1.disabled=true;
+          this.$.submitbutton.hidden=true;
         },
         FnGetItemsz:function(studentid,pickroute,droproute,pickpoint,droppoint)
            {
+           // alert("test");
             var trip;
             if(this.class=="Primary")
             {
@@ -227,11 +233,11 @@
             obj.pickpoint=pickpoint;
             obj.droppoint=droppoint;
             itemarray.push(obj);
-           // alert(JSON.stringify(obj));
-            this.$.submitbutton.disabled=false;
-             document.getElementById("submitbutton").style.background="black";
-             this.$.deletebutton.disabled=false;
-             document.getElementById("deletebutton").style.background="black";
+         //  alert(JSON.stringify(obj));
+            this.$.submitbutn1.disabled=false;
+             document.getElementById("submitbutn1").style.background="black";
+             this.$.deletebutn1.disabled=false;
+             document.getElementById("deletebutn1").style.background="black";
            },
            removestud:function(std)
            {
@@ -242,17 +248,17 @@
                 itemarray.splice(i,1);
                }
              }
-             this.$.submitbutton.disabled=true;
-             document.getElementById("submitbutton").style.background="grey";
-             this.$.deletebutton.disabled=true;
-             document.getElementById("deletebutton").style.background="grey";
+             this.$.submitbutn1.disabled=true;
+             document.getElementById("submitbutn1").style.background="grey";
+             this.$.deletebutn1.disabled=true;
+             document.getElementById("deletebutn1").style.background="grey";
            },
            fndelete:function()
            {
               this.$.maps.delete(this.studid);
               itemarray=[];
               this.value="";
-              this.$.deletebutton.disabled=true;
+              this.$.deletebutn1.hidden=true;
            },
 
       });

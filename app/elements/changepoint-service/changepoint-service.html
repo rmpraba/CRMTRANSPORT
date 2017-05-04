@@ -197,13 +197,15 @@
         this.selectclassparam=obj;
         this.$.selectclassajax.generateRequest();
       },
-      fnset:function(studentid){
+      fnset:function(studentid)
+      {
+       // alert("test1");
         this.routepointurl =sessionStorage.getItem("addrinfo")+"/routepoint";
         var obj={"schol":"","academic_year":""}
          obj.schol=sessionStorage.getItem("sch");
          obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.routepointparam=obj;
-       // alert(JSON.stringify(obj));
+       //alert(JSON.stringify(obj));
         this.$.routepointajax.generateRequest();
        this.prevpickurl=sessionStorage.getItem("addrinfo")+"/chprevpick";
          var obj1={"schol":"","studentid":"","academic_year":""}
@@ -211,14 +213,15 @@
          obj1.academic_year=localStorage.getItem("curr_sess_academicyear");
          obj1.studentid=studentid;
          this.prevpickparam=obj1;
-       //   alert(JSON.stringify(obj1));
+       //alert(JSON.stringify(obj1));
           this.$.prevpickajax.generateRequest();
     },
 
     prevpickResponse:function(e)
       {
+        //alert("Previous");
         var res=e.detail.response.returnval;
-       // alert(JSON.stringify(res));
+       //alert(JSON.stringify(res));
               document.querySelector('changepoint-list').qxqxqq(res);
            
       },
