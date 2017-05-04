@@ -89,7 +89,7 @@
           rootname:function(e){
             routename = (e.target.selectedItem.textContent).trim();
             routevalue1=e.target.selectedItem.value;
-            alert(routevalue1);
+         //   alert(routevalue1);
             this.$.select.gettrip(routename,routevalue1);
             sessionStorage.setItem("route",routename);
             sessionStorage.setItem("routevalue",routevalue1);
@@ -106,14 +106,21 @@
                this.hide11=false;
      
           },
+         refz:function(e){
+        //  alert
+      this.$.select.getroutedetail(tripno,routevalue1);
+      
+          },
           fndeletethepicuprootref:function(e){
-            alert("2");
+        //    alert("2");
           this.$.select.getroutedetail(tripno,routevalue1);
           },
           refreshdeletedata:function()
           {
              this.$.select.getroutedetail(tripno,routevalue1);
+             this.hide11=false;
              this.hide=true;
+          
 
            },
           Fndeletepoint:function()
@@ -139,7 +146,7 @@
             } else {
               this.hide=false;
               this.hide11=false;
-                   this.$.select.getroutedetail(tripno,routevalue1);
+                this.$.select.getroutedetail(tripno,routevalue1);
   
      
 
