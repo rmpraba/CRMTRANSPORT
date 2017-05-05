@@ -177,13 +177,14 @@ app.post('/getroutedetail' ,  urlencodedParser,function (req, res)
   var schoolx={"school_id":req.query.schol};
   //console.log('hello trip...'+trip);
   var query='select * from point where route_id=(select id from route where id="'+req.query.routename+'" and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and trip="'+req.query.tripnos+'" and academic_year="'+req.query.academic_year+'"';
-  
+  console.log(query);
   
   connection.query(query,
     function(err, rows){
     if(!err){
-      if(rows.length>0){
-        //console.log(rows);
+      if(rows.length>0)
+      {
+        console.log(rows);
         res.status(200).json({'returnval': rows});
       } else {
         res.status(200).json({'returnval': 'invalid'});
@@ -1074,14 +1075,15 @@ app.post('/fneditthepicuproot-service',  urlencodedParser,function (req, res)
 {  
        
                         
-      console.log("update point set point_name='"+req.query.points+"',pickup_time='"+req.query.picktime+"',drop_time='"+req.query.droptime+"' where school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and academic_year='"+req.query.academic_year+"'");
+      console.log("update point set point_name='"+req.query.points+"',pickup_time='"+req.query.picktime+"',drop_time='"+req.query.droptime+"',pickup_seq='"+req.query.pickseq+"',drop_seq='"+req.query.dropseq+"' where school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and pickup_seq='"+req.query.pickseq+"' and drop_seq='"+req.query.dropseq+"' and academic_year='"+req.query.academic_year+"'");
 
-  connection.query("update point set point_name='"+req.query.points+"',pickup_time='"+req.query.picktime+"',drop_time='"+req.query.droptime+"' where school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and academic_year='"+req.query.academic_year+"'",
+  connection.query("update point set point_name='"+req.query.points+"',pickup_time='"+req.query.picktime+"',drop_time='"+req.query.droptime+"',pickup_seq='"+req.query.pickseq+"',drop_seq='"+req.query.dropseq+"' where school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and academic_year='"+req.query.academic_year+"'",
     function(err, rows)
     {
     if(!err)
     {    
-      res.status(200).json({'returnval': 'succ'});
+      console.log(rows);
+      res.status(200).json({'returnval': 'success'});
     }
     else
     {
@@ -1114,7 +1116,7 @@ var qur="DELETE FROM  point where point_name='"+req.query.points+"'and pickup_ti
 app.post('/fndeletethepicuproot-service' ,  urlencodedParser,function (req, res)
 {  
  
-      var qur1="DELETE FROM  point where point_name='"+req.query.points+"'and pickup_time='"+req.query.picktime+"'and drop_time='"+req.query.droptime+"' and school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and academic_year='"+req.query.academic_year+"'";
+      var qur1="DELETE FROM  point where point_name='"+req.query.points+"'and pickup_time='"+req.query.picktime+"'and drop_time='"+req.query.droptime+"' and school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and  pickup_seq='"+req.query.pickseq+"' and drop_seq='"+req.query.dropseq+"' and academic_year='"+req.query.academic_year+"'";
 connection.query('select * from student_point where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'" and drop_point="'+req.query.pointid+'" or pickup_point="'+req.query.pointid+'"',
   function(err, rows)
     {

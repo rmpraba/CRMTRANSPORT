@@ -50,7 +50,7 @@
         </div>
         <div hidden$="{{hide11}}">
           <template  is="dom-repeat" items="{{itemarr}}">
-            <fetch-card points="{{item.point_name}}" trip="{{item.trip}}" picktime="{{item.pickup_time}}" droptime="{{item.drop_time}}" pointid="{{item.id}}"  routid="{{item.route_id}}">
+            <fetch-card points="{{item.point_name}}" trip="{{item.trip}}" picktime="{{item.pickup_time}}" droptime="{{item.drop_time}}" pointid="{{item.id}}"  routid="{{item.route_id}}" pickseq="{{item.pickup_seq}}" dropseq="{{item.drop_seq}}"></fetch-card>
           </template>
         </div>
         <div id="cardnew" hidden$="{{hide}}">
@@ -111,9 +111,10 @@
       this.$.select.getroutedetail(tripno,routevalue1);
       
           },
-          fndeletethepicuprootref:function(e){
-        //    alert("2");
-          this.$.select.getroutedetail(tripno,routevalue1);
+          fndeletethepicuprootref:function(e)
+          {
+            //alert("2");
+            this.$.select.getroutedetail(tripno,routevalue1);
           },
           refreshdeletedata:function()
           {

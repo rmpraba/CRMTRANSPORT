@@ -1253,13 +1253,13 @@
         obj.routename=routevalue1;
         obj.tripnos=tripno;
         this.getroutedetailparam=obj;
-       // alert(JSON.stringify(obj));
+      // alert(JSON.stringify(obj));
         this.$.getroutedetailajax.generateRequest();
       },
       getroutedetailResponse:function(e1)
           {
           var routedetails=e1.detail.response.returnval;
-      //   alert(JSON.stringify(routedetails));
+       //alert(JSON.stringify(routedetails));
           if(routedetails=='invalid'){
              document.querySelector('mappointtoroute-card').fn1();
            }
@@ -1285,6 +1285,7 @@
        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
     
         this.routeidparam=obj;
+       // alert(JSON.stringify(obj));
         this.$.routeidajax.generateRequest();
       },
       insertpointResponse:function(e){
