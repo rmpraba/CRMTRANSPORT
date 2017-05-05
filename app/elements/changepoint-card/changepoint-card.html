@@ -47,7 +47,7 @@
               </template>
             </paper-listbox>
           </div>
-      </div>  
+      </div>    
       <div class="template">
         <!-- <app-service studentarr="{{studentarr}}"></app-service> -->
           <template  is="dom-repeat" items="{{studentarr}}">
@@ -165,7 +165,7 @@
             if(this.itemflag=="true") {
               this.itemval = (this.value).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
               this.itemflag="false";
-            }
+            }   
             else
             this.itemval = this.value +String.fromCharCode((e.keyCode));
             if(this.itemval.length>0)

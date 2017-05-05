@@ -166,18 +166,8 @@
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.routept=pickroute;
         obj.studid=this.studentid;
-        
-        scholtype=this.schooltype;
-        if(scholtype=='Primary')
-        {
-          obj.schooltype=1;
-        }
-        else 
-        {
-          obj.schooltype=2;
-        }
-        this.routepickpointparam=obj;
-       // alert(JSON.stringify(obj));
+         this.routepickpointparam=obj;
+        alert(JSON.stringify(obj));
         this.$.selectpointajax.generateRequest();
       },
       droproute:function(e){
@@ -188,16 +178,7 @@
         obj.schol=sessionStorage.getItem("sch");
         obj.routedroppt=droproute;
         obj.studid=this.studentid;
-
-        scholtype=this.schooltype;
-        if(scholtype=='Primary')
-        {
-          obj.schooltype=1;
-        }
-        else {
-          obj.schooltype=2;
-        }
-        this.routedroppointparam=obj;
+       this.routedroppointparam=obj;
         this.$.routedroppointajax.generateRequest();
          this.$.selectbox.disabled=true;
       },
@@ -206,19 +187,18 @@
         var points=e.detail.response.returnval;
        // alert("testtt");
         //alert(JSON.stringify(points));
-          //this.droparr=points;
+        this.droparr=points;
         this.pointarr=points;
       },
       droppointsResponse:function(e){
-
-        var points=e.detail.response.returnval;
+       var points=e.detail.response.returnval;
         this.droparr=[];
         this.droparr=points;
       },
       pickpoints:function(e){
         pickpoint= e.target.selectedItem.value;
-        //this.selectpoint=pickpoint;
-       // droppoint=pickpoint;
+       // this.selectpoint=pickpoint;
+       //droppoint=pickpoint;
         this.$.selectbox.disabled=false;
       },
       droppoints:function(e){
@@ -230,7 +210,7 @@
         if(e.target.checked==true)
         {
         document.querySelector('changepoint-card').FnGetItemsz(this.studentid,pickroute,droproute,pickpoint,droppoint);
-
+      alert(this.studentid+" "+pickroute+" "+droproute+" "+pickpoint+" "+droppoint);
        this.$.set.disabled=true;
        this.$.set1.disabled=true;
        this.$.set2.disabled=true;
@@ -249,11 +229,13 @@
     },
 qxqxqq:function(e)
 {
-      //alert("pre results");
+  //  alert("pre results");
+  //   alert(JSON.stringify(e));
        this.pkroutezz=e[0].pickup_route_id;
        this.pkpointzz=e[0].pickup_point;
        this.dproutezz=e[0].drop_route_id;
-       this.dppointzz=e[0].drop_point;;
+       this.dppointzz=e[0].drop_point;
+     //  alert(this.dppointzz);
      
 },
      

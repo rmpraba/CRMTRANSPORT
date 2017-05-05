@@ -817,7 +817,7 @@ app.post('/selectclass',  urlencodedParser,function (req, res)
 app.post('/selectnameforpoint',  urlencodedParser,function (req, res)
 { 
 
-    var query1="SELECT s.id, s.student_name from student_details s join student_fee f on(s.id=f.student_id) "+
+    var query1="SELECT s.id, s.student_name ,s.class,(select trip from trip_to_grade where grade_name=s.class and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as tripidz from student_details s join student_fee f on(s.id=f.student_id) "+
     " WHERE s.school_id='"+req.query.schol+"' and f.school_id='"+req.query.schol+"' and  s.academic_year='"+req.query.academic_year+"' and "+
     " f.academic_year='"+req.query.academic_year+"' and f.installment_1>0 ";
     var query2="select student_id from student_point where school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"'";

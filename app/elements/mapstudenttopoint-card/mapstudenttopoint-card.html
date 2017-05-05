@@ -82,7 +82,7 @@
           </template>  
           <div class="button" style="margin-left: 47%;margin-top: 3%; height: 40% !important;">
             <paper-button raised id="submitbutton" class="custom indigo" on-click="click">Submit</paper-button>
-          </div>
+          </div>   
         </div>    
       </div> 
       <paper-dialog id="spin">
@@ -239,6 +239,7 @@
             
              this.seltripsz=this.itemArray[i].trip;
             } 
+          alert(this.seltripsz);
           this.value=studname;  
           this.$.submitbutton.hidden=false;
           this.$.maps.namepick(this.studid);
@@ -246,7 +247,7 @@
           this.querySelector('#itemlist').selected=-1;
         },
         click:function(){
-          // alert(JSON.stringify(itemarray));
+          alert(JSON.stringify(itemarray));
           this.$.maps.submit(itemarray);
           itemarray=[];
           document.querySelector('#mapstudpointgradeselect').selected=-1;

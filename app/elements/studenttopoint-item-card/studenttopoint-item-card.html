@@ -158,6 +158,7 @@
         obj.studid=this.studentid;
         scholtype=this.schooltype;
         this.routepickpointparam=obj;
+        alert(JSON.stringify(obj));
         this.$.selectpointajax.generateRequest();
         this.querySelector.set.selected=-1;
       },
@@ -170,9 +171,8 @@
         obj.routedroppt=droproute;
         obj.studid=this.studentid;
        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
-         scholtype=this.schooltype;
-       
-        this.routedroppointparam=obj;
+        scholtype=this.schooltype;
+       this.routedroppointparam=obj;
         
        //alert(JSON.stringify(obj));
         this.$.routedroppoint.generateRequest();
@@ -181,7 +181,7 @@
       },
       pickpointsResponse:function(e){
         var points=e.detail.response.returnval;
-      //  alert(JSON.stringify(points));
+        alert(JSON.stringify(points));
           this.droparr=points;
           this.pointarr=[];
         this.pointarr=points;
