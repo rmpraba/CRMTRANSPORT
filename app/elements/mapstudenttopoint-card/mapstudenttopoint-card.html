@@ -74,12 +74,11 @@
                 <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
               </template>
             </paper-listbox>  
-          </div>
+          </div>  
       </div>
       <div class="template">
-      <!--   <app-service studentarr="{{studentarr}}"></app-service>
-       -->    <template  is="dom-repeat" items="{{studentarr}}">
-              <studenttopoint-item-card schooltype="{{trip}}" studentid="{{item.id}}" studentname="{{item.student_name}}"></studenttopoint-item-card>
+        <template  is="dom-repeat" items="{{studentarr}}">
+              <studenttopoint-item-card schooltype="{{seltripsz}}" studentid="{{item.id}}" studentname="{{item.student_name}}"></studenttopoint-item-card>
           </template>  
           <div class="button" style="margin-left: 47%;margin-top: 3%; height: 40% !important;">
             <paper-button raised id="submitbutton" class="custom indigo" on-click="click">Submit</paper-button>
@@ -141,15 +140,13 @@
           document.querySelector('#spin').close();
         },
         FnSelectgrade:function(e){
-          // alert(this.selectedgrade);  
           this.studentarr=[];
           selclass=(e.target.selectedItem.textContent).trim();
-          // alert(JSON.stringify(this.classarr));
           for(var i=0;i<this.classarr.length;i++){
             if(this.classarr[i].class==selclass)
-              seltrip=this.classarr[i].tripidz;
-          }          
-          // alert(selclass+"  "+seltrip);
+              this.seltripsz=this.classarr[i].tripidz;
+          } 
+          alert(this.seltripsz+" "+selclass);         
           this.$.maps.classpick(selclass);
           this.$.submitbutton.hidden=false;
           this.$.search.hidden=true;
