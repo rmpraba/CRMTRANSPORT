@@ -1082,7 +1082,7 @@ app.post('/fneditthepicuproot-service',  urlencodedParser,function (req, res)
     {
     if(!err)
     {    
-      console.log(rows);
+      //console.log(rows);
       res.status(200).json({'returnval': 'success'});
     }
     else
@@ -1128,7 +1128,7 @@ connection.query('select * from student_point where school_id="'+req.query.schol
 
       if(!err)
        {
-        console.log(rows);
+        //console.log(rows);
         res.status(200).json({'returnval': 'delete'});
         }
       else 
