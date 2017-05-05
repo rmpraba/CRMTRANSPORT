@@ -3440,12 +3440,11 @@ app.post('/getclasspass',  urlencodedParser,function (req, res)
   var clasx=req.query.id;
   var schoolx=req.query.schol;
 
-  connection.query('Select * from student_point where school_type=? and school_id=?',[clasx,schoolx],
+  connection.query('Select * from student_point where school_type=? and school_id=? and academic_year="'+req.query.academic_year+'"',[clasx,schoolx],
     function(err, rows){
-      if(!err){
+      if(!err){ 
         if(rows.length>0)
         {
-          //console.log(rows);
           res.status(200).json({'returnval': rows});
         } else {
           console.log(err);
@@ -3614,7 +3613,7 @@ app.post('/getpasssec',  urlencodedParser,function (req, res)
 {
   //console.log('In server..');
   var role={"id":req.query.stid};
-  connection.query("select sd.student_name,(select class from class_details where id=sd.class_id and school_id='"+req.query.schol+"') as standard,(select section from class_details where id=sd.class_id and school_id='"+req.query.schol+"') as section,(select zone_name from md_zone where id=sf.zone_id and school_id='"+req.query.schol+"') as zone_name,(select route_name from route where id=sp.pickup_route_id and school_id='"+req.query.schol+"') as pickup_route_id,(select route_name from route where id=sp.drop_route_id and school_id='"+req.query.schol+"') as drop_route_id,(select point_name from point where id=sp.pickup_point and school_id='"+req.query.schol+"') as pickup_point,(select point_name from point where id=sp.drop_point and school_id='"+req.query.schol+"') as drop_point,p.parent_name,p.mobile,p.address1,p.address2,p.address3,p.city,p.pincode from student_details sd join student_fee sf on (sd.id=sf.student_id) join student_point sp on(sf.student_id=sp.student_id) join parent p on(p.student_id=sp.student_id) where sp.student_id='"+req.query.stid+"' and sp.school_id='"+req.query.schol+"'",
+  connection.query("select sd.student_name,(select class from class_details where id=sd.class and school_id='"+req.query.schol+"') as standard,(select zone_name from md_zone where id=sf.zone_id and school_id='"+req.query.schol+"') as zone_name,(select route_name from route where id=sp.pickup_route_id and school_id='"+req.query.schol+"') as pickup_route_id,(select route_name from route where id=sp.drop_route_id and school_id='"+req.query.schol+"') as drop_route_id,(select point_name from point where id=sp.pickup_point and school_id='"+req.query.schol+"') as pickup_point,(select point_name from point where id=sp.drop_point and school_id='"+req.query.schol+"') as drop_point,p.parent_name,p.mobile,p.address1,p.address2,p.address3,p.city,p.pincode from student_details sd join student_fee sf on (sd.id=sf.student_id) join student_point sp on(sf.student_id=sp.student_id) join parent p on(p.student_id=sp.student_id) where sp.student_id='"+req.query.stid+"' and sp.school_id='"+req.query.schol+"'",
     function(err, rows){
     if(!err){
       if(rows.length>0)

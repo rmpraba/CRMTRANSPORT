@@ -51,9 +51,10 @@
       <div id="selectclass" >
         <paper-dropdown-menu   label="Select Grade">
           <paper-menu class="dropdown-content" id="gradeselect" on-iron-select="class" attr-for-selected="value" >
-              <paper-item value="1">Primary</paper-item>            
-              <paper-item value="2">Pre-Primary</paper-item>
-            
+              <template is="dom-repeat" items="{{classarr}}" as="item">
+                  <paper-item value="{{item.class}}">{{item.class}}</paper-item>
+              </template>
+           </paper-listbox>
           </paper-menu>
         </paper-dropdown-menu>
       </div>
@@ -293,7 +294,7 @@ this.$.selectclass.hidden=true;
         this.droprout="";
        },
      FnItemSelected:function(e)
-   {
+   {  
        this.querySelector('paper-listbox').style.visibility='hidden';
     this.studid = e.target.selectedItem.textContent.trim();
     this.itemArray=[];
@@ -307,7 +308,6 @@ this.$.selectclass.hidden=true;
   {
    //alert('hello');
     if(e.target.checked==true){
-     // alert('select by class is clicked');
       this.$.selectclass.hidden=false;
       this.$.text.hidden=true;
       this.$.pass.hidden=true;
@@ -324,16 +324,15 @@ this.$.selectclass.hidden=true;
   class:function(e){
 
     var val=(e.target.selectedItem.textContent).trim();
-    if(val=='Primary')
-    {
-        num=1;
-    }
-    else
-    {
-        num=2; 
-    }
-    //alert(num);
-    this.$.maps.getgradedata(num);
+  
+
+     for(var i=0;i<this.classarr.length;i++){
+            if(this.classarr[i].class==val)
+              this.seltripsz=this.classarr[i].tripidz;
+          } 
+       // alert(val+" "+this.seltripsz);
+
+    this.$.maps.getgradedata(this.seltripsz);
   }
 
 
