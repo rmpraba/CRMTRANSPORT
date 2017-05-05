@@ -100,19 +100,15 @@
             tripno=(e.target.selectedItem.textContent).trim();
             this.$.select.getroutedetail(tripno,routevalue1);
             sessionStorage.setItem("trip",tripno);
-            //this.$.button.hidden=false;
             this.$.create.hidden=false;
-           // alert(sessionStorage.getItem("routevalue"));
-               this.hide11=false;
+              this.hide11=false;
      
           },
          refz:function(e){
-        //  alert
       this.$.select.getroutedetail(tripno,routevalue1);
       
           },
           fndeletethepicuprootref:function(e){
-        //    alert("2");
           this.$.select.getroutedetail(tripno,routevalue1);
           },
           refreshdeletedata:function()
