@@ -71,11 +71,12 @@
       var namearr=[];
       Polymer({
         is:"changepoint-card",
-        ready:function(){
-          this.$.submitbutn1.disabled=true;
-          this.$.deletebutn1.disabled=true;
+        ready:function()
+        {
           this.$.submitbutn1.hidden=true;
           this.$.deletebutn1.hidden=true;
+          this.$.submitbutn1.disabled=true;
+          this.$.deletebutn1.disabled=true;
           this.querySelector('paper-listbox').style.visibility='hidden';
           //this.$.maps.selectname1();
         },
@@ -123,7 +124,8 @@
           document.getElementById("submitbutn1").style.background="grey";
           document.getElementById("deletebutn1").style.background="grey";
         },
-        autocompletename(nameitem){
+        autocompletename(nameitem)
+        {
           namearr=nameitem;
         },
         FnInputChanged:function(e){
@@ -210,8 +212,9 @@
           itemarray=[];
           document.querySelector('#gradeselect').selected=-1;
           this.value="";
-          //this.$.submitbutn1.disabled=true;
-          this.$.submitbutton.hidden=true;
+          this.$.submitbutn1.disabled=true;
+          this.$.deletebutn1.disabled=true;
+
         },
         FnGetItemsz:function(studentid,pickroute,droproute,pickpoint,droppoint)
            {
@@ -258,7 +261,8 @@
               this.$.maps.delete(this.studid);
               itemarray=[];
               this.value="";
-              this.$.deletebutn1.hidden=true;
+              this.$.deletebutn1.disabled=true;
+              this.$.submitbutn1.disabled=true;
            },
 
       });
