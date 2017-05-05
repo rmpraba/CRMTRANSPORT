@@ -168,19 +168,17 @@
         var obj={"routedroppt":"","studid":"","schol":"","schooltype":"","academic_year":""};
         obj.schol=sessionStorage.getItem("sch");
         obj.routedroppt=droproute;
-        obj.studid=this.studentid;
+        obj.studid=this.studentid;    
        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         scholtype=this.schooltype;
        this.routedroppointparam=obj;
         
-       //alert(JSON.stringify(obj));
         this.$.routedroppoint.generateRequest();
          this.$.selectbox.disabled=true;
          this.querySelector.set1.selected=-1;
       },
       pickpointsResponse:function(e){
         var points=e.detail.response.returnval;
-        // alert(JSON.stringify(points));
           this.droparr=points;
           this.pointarr=[];
         this.pointarr=points;
@@ -188,7 +186,6 @@
       droppointsResponse:function(e){
 
         var points=e.detail.response.returnval;
-       // alert(JSON.stringify(points));
         this.droparr=[];
         this.droparr=points;
       },
