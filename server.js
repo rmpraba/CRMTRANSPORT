@@ -843,9 +843,9 @@ app.post('/selectnameforpoint',  urlencodedParser,function (req, res)
 });
   });
 
-app.post('/selectnameforchpoint',  urlencodedParser,function (req, res)
+/*app.post('/',  urlencodedParser,function (req, res)
 {
-   var qur1='SELECT id, student_name from student_details where id in(select student_id from student_fee where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and id  in (Select student_id from student_point) and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"';
+   var qur1='SELECT id, student_name from student_details where id in(select student_id from student_fee where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and id  in (Select student_id from student_point and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"';
 
    console.log(qur1);
 
@@ -864,6 +864,38 @@ app.post('/selectnameforchpoint',  urlencodedParser,function (req, res)
   }
 });
   });
+*/
+
+app.post('/selectnameforchpoint',  urlencodedParser,function (req, res)
+{ 
+
+    var query1="SELECT s.id, s.student_name ,s.class,(select trip from trip_to_grade where grade_name=s.class and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as tripidz from student_details s join student_fee f on(s.id=f.student_id) "+
+    " WHERE s.school_id='"+req.query.schol+"' and f.school_id='"+req.query.schol+"' and  s.academic_year='"+req.query.academic_year+"' and "+
+    " f.academic_year='"+req.query.academic_year+"' and f.installment_1>0 ";
+    var query2="select student_id from student_point where school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"'";
+    var studarr=[];
+    connection.query(query1,function(err, rows) {
+
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      studarr=rows;
+      connection.query(query2,function(err, rows) {
+      if(!err){
+      res.status(200).json({'studarr':studarr,'returnval': rows});
+      }
+      });
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  }
+});
+  });
+
+
 app.post('/classpick',  urlencodedParser,function (req, res)
 {
   var schoolx={"school_id":req.query.schol};

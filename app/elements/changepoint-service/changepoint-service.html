@@ -239,22 +239,33 @@
         var classdetail=e.detail.response.returnval;
         document.querySelector('changepoint-card').classarr=classdetail;
       },
-      selectname1:function()
-      {
-        //alert(111);
-        this.selectname1url=sessionStorage.getItem("addrinfo")+"/selectnameforchpoint";
+  selectname1:function()
+    {
+      this.selectname1url=sessionStorage.getItem("addrinfo")+"/selectnameforchpoint";
         var obj={"schol":"","academic_year":""}
         obj.schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.selectname1param=obj;
-        // alert(JSON.stringify(obj));
+         alert(JSON.stringify(obj));
         this.$.selectname1ajax.generateRequest();
       },
       selectname1Response:function(e){
-       // alert('1');
         var nameitem=e.detail.response.returnval;
-       // alert(JSON.stringify(nameitem));
-        document.querySelector('changepoint-card').autocompletename(nameitem);
+   
+       var studarr=e.detail.response.studarr;
+       var temmarrwwwww=[];
+         if(nameitem.length>0){
+         for(var i=0;i<studarr.length;i++){
+          for(var j=0;j<nameitem.length;j++){
+            if(studarr[i].id==nameitem[j].student_id){
+                  temmarrwwwww.push(studarr[i]);
+            }
+          }
+         }
+         } 
+              alert(JSON.stringify(temmarrwwwww));
+
+        document.querySelector('changepoint-card').autocompletename(temmarrwwwww);
       },
       namepick:function(cla){
        // alert(cla);

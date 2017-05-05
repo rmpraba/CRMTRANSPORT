@@ -216,7 +216,6 @@
         obj.schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.selectnameparam=obj;
-        //  alert(JSON.stringify(obj));
       
         this.$.selectnameajax.generateRequest();
         },
@@ -239,7 +238,7 @@
          // alert(studarr.length);
        //  alert(JSON.stringify(nameitem));
          document.querySelector('mapstudenttopoint-card').autocompletename(studarr);
-
+         
          document.querySelector('mapstudenttopoint-card').spinner();
       },
       namepick:function(cla)
