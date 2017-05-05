@@ -52,11 +52,11 @@
       <div class = "mapstudenttopoint-card">
       <div class="card">
         <div class="hrlayout">
-          <div id="selectclass" style="margin-top: 5%; margin-left: 6%;">
+          <div id="selectclasss" style="margin-top: 5%; margin-left: 6%;">
             <paper-dropdown-menu   label="Select Grade">
-              <paper-menu class="dropdown-content" id="mapstudpointgradeselect" on-iron-select="FnSelectgrade" attr-for-selected="value" >
+              <paper-menu class="dropdown-content" id="mapstudpointgradeselect" on-iron-select="FnSelectgrade" attr-for-selected="value" selected="{{selectedgrade}}">
                 <template  is="dom-repeat" items="{{classarr}}" as="view">
-                  <paper-item value="{{view.tripidz}}">{{view.class}}</paper-item>
+                  <paper-item value="{{view.class}}">{{view.class}}</paper-item>
                 </template>
               </paper-menu>
             </paper-dropdown-menu>
@@ -140,15 +140,20 @@
           this.$.spinner.active=false;
           document.querySelector('#spin').close();
         },
-        FnSelectgrade:function(e){  
+        FnSelectgrade:function(e){
+          // alert(this.selectedgrade);  
           this.studentarr=[];
           selclass=(e.target.selectedItem.textContent).trim();
-          seltrip=(e.target.selectedItem.value);
-          // alert(this.class+this.trip);
+          // alert(JSON.stringify(this.classarr));
+          for(var i=0;i<this.classarr.length;i++){
+            if(this.classarr[i].class==selclass)
+              seltrip=this.classarr[i].tripidz;
+          }          
+          // alert(selclass+"  "+seltrip);
           this.$.maps.classpick(selclass);
           this.$.submitbutton.hidden=false;
-           this.$.search.hidden=true;
-           document.querySelector("#selectbox").checked=false;
+          this.$.search.hidden=true;
+          document.querySelector("#selectbox").checked=false;
           document.getElementById("submitbutton").style.background="grey";
         },
         autocompletename(nameitem){

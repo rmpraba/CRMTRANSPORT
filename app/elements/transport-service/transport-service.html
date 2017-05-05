@@ -1253,13 +1253,13 @@
         obj.routename=routevalue1;
         obj.tripnos=tripno;
         this.getroutedetailparam=obj;
-       // alert(JSON.stringify(obj));
+      // alert(JSON.stringify(obj));
         this.$.getroutedetailajax.generateRequest();
       },
       getroutedetailResponse:function(e1)
           {
           var routedetails=e1.detail.response.returnval;
-      //   alert(JSON.stringify(routedetails));
+       //alert(JSON.stringify(routedetails));
           if(routedetails=='invalid'){
              document.querySelector('mappointtoroute-card').fn1();
            }
@@ -1269,7 +1269,7 @@
            }
       },
 
-      insertpoint:function(route,pt,pickuptime,droptime,tripp,dist)
+      insertpoint:function(route,pt,pickuptime,droptime,tripp,dist,pickupseq,dropseq)
       {
         //alert('insert');
         point=pt;
@@ -1277,12 +1277,15 @@
         pick=pickuptime;
         drop=droptime;
         distance=dist;
+        this.pickupseq=pickupseq;
+        this.dropseq=dropseq;
         this.routeidurl=sessionStorage.getItem("addrinfo")+"/routeid";
         var obj={"id":"","academic_year":""};
       obj.id='point'; 
        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
     
         this.routeidparam=obj;
+       // alert(JSON.stringify(obj));
         this.$.routeidajax.generateRequest();
       },
       insertpointResponse:function(e){
@@ -1322,6 +1325,8 @@
         obj.pick=pick;
         obj.drop=drop;
         obj.distance=distance;
+        obj.pickupseq=this.pickupseq;
+        obj.dropseq=this.dropseq;
         this.insertpointparam=obj;
        // alert(JSON.stringify(obj));
         this.insertpointurl=sessionStorage.getItem("addrinfo")+"/insertpoint";

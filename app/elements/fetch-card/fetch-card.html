@@ -17,6 +17,10 @@
     {
        box-shadow: 0 0 3px 3px rgb(184, 209, 249); -moz-box-shadow: 0 0 3px 3px rgb(184, 209, 249); -webkit-box-shadow: 0 0 3px 3px gb(184, 209, 249); -o-box-shadow: 0 0 3px 3px rgb(184, 209, 249);
     }
+    .row
+    {
+      @apply(--layout-horizontal);
+    }
  </style>
   <legend align="center"></legend>
    <div hidden>{{pointid}}</div>
@@ -24,7 +28,7 @@
     <ul>
       <li class="rows">
         <fieldset>
-          <div style="margin-top:-13px;margin-left:121%">
+          <div style="margin-top:9px;margin-left:121%">
           <paper-icon-button icon='create' on-click="fnedit" id="fnretiveeditidz">
                 </paper-icon-button>
               </div>
@@ -45,26 +49,31 @@
               </div>
             </li>
             <li class="row">
-              <div class="detail">
-                <div class="layout">
+              <div class="date" style="margin-left: 2%;">
+                <!-- <div class="layout"> -->
                   <paper-input id="point" readonly$="{{asdsaddad}}" label="Pickup Time" class="field" value={{picktime}}></paper-input>
-                </div>
+                <!-- </div> -->
+              </div>
+            <!-- </li> -->
+              <div class="date" style="position: absolute;margin-left: 23% !important;">
+                <!-- <div class="layout"> -->
+                  <paper-input id="point"  readonly$="{{asdsaddad}}" label="Drop Time" class="field" value={{droptime}}></paper-input>
+                <!-- </div> -->
               </div>
             </li>
             <li class="row">
               <div class="detail">
-                <div class="layout">
-                  <paper-input id="point"  readonly$="{{asdsaddad}}" label="Drop Time" class="field" value={{droptime}}></paper-input>
-                </div>
+                <paper-input id="pickseq1" readonly$="{{asdsaddad}}" label="Pickup Sequence" class="field" value={{pickseq}}></paper-input>
+              </div>
+
+              <div class="detail">
+                <paper-input id="dropseq1" readonly$="{{asdsaddad}}" label="Drop Sequence" class="field" value={{dropseq}}></paper-input>
               </div>
             </li>
           </ul>
         </fieldset>
       </li>
-      <li class="row">
-        <div class="detail">
-        </div>
-      </li>
+      
     </ul>
     <div>
       <paper-input id="trip" class="field" label="Trip" value={{trip}}></paper-input>
@@ -122,7 +131,7 @@
 
       // alert(this.points+this.picktime+this.droptime+this.pointid+this.routid);
          this.fneditthepicuprooturl=sessionStorage.getItem("addrinfo")+"/fneditthepicuproot-service";
-        var obj={"schol":"","academic_year":"","points":"","picktime":"","droptime":"","pointid":""}
+        var obj={"schol":"","academic_year":"","points":"","picktime":"","droptime":"","pointid":"","pickseq":"","dropseq":""}
         obj.schol=schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.points=this.points;
@@ -130,13 +139,14 @@
         obj.droptime=this.droptime;
         obj.pointid=this.pointid;
         obj.routid=this.routid;
+        obj.pickseq=this.pickseq;
+        obj.dropseq=this.dropseq;
         this.fneditthepicuprootparam=obj; 
 
-     //   alert(JSON.stringify(obj));
-      this.$.fneditthepicuprootajax.generateRequest();
+         // alert(JSON.stringify(obj));
+          this.$.fneditthepicuprootajax.generateRequest();
            this.$.fnretiveeditidz.hidden=false;
            this.$.fnretivesaveidz.hidden=true;
-  
   
      
       },
@@ -148,7 +158,7 @@
   
     },
     fndeletethepicuprootResponse:function(e){
-    // alert(JSON.stringify(e.detail.response.returnval));
+     alert(JSON.stringify(e.detail.response.returnval));
    if(e.detail.response.returnval=="delete")
    {
    document.querySelector('mappointtoroute-card').fndeletethepicuprootref()
@@ -170,18 +180,24 @@
         obj.droptime=this.droptime;
         obj.pointid=this.pointid;
         obj.routid=this.routid;
+        obj.pickseq=this.pickseq;
+        obj.dropseq=this.dropseq;
        this.fndeletethepicuprootparam=obj; 
-     //  alert(JSON.stringify(obj)); 
+       // alert(JSON.stringify(obj)); 
         this.$.fndeletethepicuprootajax.generateRequest();
         // this.$.transportservice.fndeletethepicuproot(this.points,this.picktime,this.droptime,this.pointid);
       
       },
-      fneditthepicuprootResponse:function(e){
-        if(e.detail.response.returnval=="succ"){
+      fneditthepicuprootResponse:function(e)
+      {
+       alert(JSON.stringify(e.detail.response.returnval));
+        if(e.detail.response.returnval=="success")
+        {
              document.querySelector('mappointtoroute-card').fndeletethepicuprootref()  
         }
       },
-      changeHandler:function(e){
+      changeHandler:function(e)
+      {
         if(e.target.checked==true){
            document.querySelector('mappointtoroute-card').FnGetpoints(this.points,"true");
         } else {
