@@ -168,6 +168,8 @@
         obj.studid=this.studentid;
          this.routepickpointparam=obj;
          alert(JSON.stringify(obj));
+        // alert(JSON.stringify(obj));
+
         this.$.selectpointajax.generateRequest();
       },
       droproute:function(e){
@@ -211,6 +213,7 @@
         {
         document.querySelector('changepoint-card').FnGetItemsz(this.studentid,pickroute,droproute,pickpoint,droppoint);
    //alert(this.studentid+" "+pickroute+" "+droproute+" "+pickpoint+" "+droppoint);
+      // alert(this.studentid+" "+pickroute+" "+droproute+" "+pickpoint+" "+droppoint);
        this.$.set.disabled=true;
        this.$.set1.disabled=true;
        this.$.set2.disabled=true;

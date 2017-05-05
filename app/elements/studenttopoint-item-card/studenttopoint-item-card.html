@@ -157,7 +157,7 @@
         obj.studid=this.studentid;
         scholtype=this.schooltype;
         this.routepickpointparam=obj;
-        alert(JSON.stringify(obj));
+        // alert(JSON.stringify(obj));
         this.$.selectpointajax.generateRequest();
         this.querySelector.set.selected=-1;
       },
@@ -180,7 +180,7 @@
       },
       pickpointsResponse:function(e){
         var points=e.detail.response.returnval;
-        alert(JSON.stringify(points));
+        // alert(JSON.stringify(points));
           this.droparr=points;
           this.pointarr=[];
         this.pointarr=points;
