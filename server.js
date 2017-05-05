@@ -3549,7 +3549,7 @@ app.post('/createroute' ,  urlencodedParser,function (req, res)
 {  
  var scho={"school_id":req.query.schol,"id":req.query.id,"route_name":req.query.routes,"academic_year":req.query.academic_year};
    console.log(scho);
-connection.query('select * from route where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'" and id="'+req.query.id+'" or route_name="'+req.query.routes+'"',
+connection.query('select * from route where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'" and id="'+req.query.id+'" and route_name="'+req.query.routes+'"',
   function(err, rows)
     {
     if(rows.length==0)
