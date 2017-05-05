@@ -146,7 +146,7 @@
             if(this.classarr[i].class==selclass)
               this.seltripsz=this.classarr[i].tripidz;
           } 
-          alert(this.seltripsz+" "+selclass);         
+         // alert(this.seltripsz+" "+selclass);         
           this.$.maps.classpick(selclass);
           this.$.submitbutton.hidden=false;
           this.$.search.hidden=true;
@@ -180,9 +180,10 @@
                 var subval=((namearr[i].student_name).trim()).substring(0,backsubval.length);
                 if((subval).toUpperCase()==(backsubval).toUpperCase())
                 {
-                  var obj={"itemdes":"","itemid":""};
+                  var obj={"itemdes":"","itemid":"","trip":""};
                   obj.itemdes=namearr[i].student_name;
                   obj.itemid=namearr[i].id;
+                  obj.trip=namearr[i].tripidz; 
                   arr.push(obj);
                 }
               }
@@ -201,18 +202,21 @@
               for(var i=0;i<namearr.length;i++){
                 var subval=((namearr[i].student_name).trim()).substring(0,this.itemval.length);
                 if((subval).toUpperCase()==(this.itemval).toUpperCase()){
-                  var obj={"itemdes":"","itemid":""};
+                  var obj={"itemdes":"","itemid":"","trip":""};
                   obj.itemdes=namearr[i].student_name;
                   obj.itemid=namearr[i].id;
+                  obj.trip=namearr[i].tripidz; 
+              
                   arr.push(obj);
                 }
               }
               if(arr.length>0)
                 this.itemArray=arr;
               else {
-                var obj={"itemdes":"","itemid":""};
+                var obj={"itemdes":"","itemid":"","trip":""};
                   obj.itemdes=namearr[i].student_name;
                   obj.itemid=namearr[i].id;
+                  obj.trip=namearr[i].tripidz; 
                   arr.push(obj);
                 this.itemArray=arr;
               }
@@ -222,7 +226,14 @@
         FnItemSelected:function(e){
           this.studid= e.target.selectedItem.value;
           var studname = (e.target.selectedItem.textContent).trim();
-          //alert(e.target.selectedItem.value);
+        //    alert(JSON.stringify(this.itemArray));
+
+        for(var i=0;i<this.itemArray.length;i++){
+
+            if(this.itemArray[i].itemid==this.studid)
+            
+             this.seltripsz=this.itemArray[i].trip;
+            } 
           this.value=studname;  
           this.$.submitbutton.hidden=false;
           this.$.maps.namepick(this.studid);

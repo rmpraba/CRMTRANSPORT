@@ -816,10 +816,13 @@ app.post('/selectclass',  urlencodedParser,function (req, res)
 
 app.post('/selectnameforpoint',  urlencodedParser,function (req, res)
 { var schoolx={"school_id":req.query.schol};
- var qur1='SELECT id, student_name from student_details where id in(select student_id from student_fee where ? and academic_year="'+req.query.academic_year+'") and id not in (Select student_id from student_point where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"';
-   console.log(qur1);
+ var qur1='SELECT id, class,(select trip from trip_to_grade where grade_name=class  and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") as tripidz ,student_name from student_details where id in(select student_id from student_fee where (installment_1>0 or fees-discount_fee=0)  and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and id not in (Select student_id from student_point where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"';
+  console.log("dssddsddddsssssssssssssss");
 
-       connection.query('SELECT id, student_name from student_details where id in(select student_id from student_fee where (installment_1>0 or fees-discount_fee=0)  and ? and academic_year="'+req.query.academic_year+'") and id not in (Select student_id from student_point where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"' ,[schoolx],
+   console.log(qur1);
+ console.log("sssssssssssssssssssssssssssssssss");
+
+       connection.query('SELECT id,class,(select trip from trip_to_grade where grade_name=class  and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") as tripidz ,student_name from student_details where id in(select student_id from student_fee where (installment_1>0 or fees-discount_fee=0)  and ? and academic_year="'+req.query.academic_year+'") and id not in (Select student_id from student_point where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"' ,[schoolx],
         function(err, rows)
         {
     if(!err)
