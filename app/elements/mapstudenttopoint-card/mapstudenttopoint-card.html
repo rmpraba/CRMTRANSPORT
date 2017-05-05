@@ -104,6 +104,7 @@
           this.$.search.hidden=true;  
           //this.$.maps.selectclass();
           this.$.submitbutton.disabled=true;
+          // this.$.maps.selectname();
         },
         FnClear:function(){
           this.$.submitbutton.hidden=true;
@@ -124,12 +125,13 @@
           if(e.target.checked==true)
           {
             this.$.search.hidden=false;
+            this.$.itemlist.hidden=true;
             this.$.maps.selectname();
             this.studentarr=[];
             document.querySelector('#mapstudpointgradeselect').selected=-1;
             document.getElementById("submitbutton").style.background="grey";
-            document.querySelector('#spin').open();
-            this.$.spinner.active=true;
+            // document.querySelector('#spin').open();
+            // this.$.spinner.active=true;
           }
           else
           {
@@ -158,25 +160,26 @@
         },
         autocompletename(nameitem){
           namearr=nameitem;
+          // alert(JSON.stringify(namearr));
         },
         FnInputChanged:function(e){
           if(e.keyCode==13|| e.keyCode==40)
-            this.querySelector('paper-listbox').focus();
+            this.querySelector('#itemlist').focus();
           var arr=[];
           arr.push({"itemdes":"-----Select-----"});
-          this.querySelector('paper-listbox').style.visibility='visible';
+          this.querySelector('#itemlist').style.visibility='visible';
           if(e.keyCode==8){
             this.itemflag="true";
             this.itemval="";
             //alert('yes');
             var len=(this.value).length;
             if(len<=1){
-              this.querySelector('paper-listbox').style.visibility='hidden';
+              this.querySelector('#itemlist').style.visibility='hidden';
               this.itemArray="";
               this.itemval="";
             }
             if(len>1){
-              this.querySelector('paper-listbox').style.visibility='visible';
+              this.querySelector('#itemlist').style.visibility='visible';
               var backsubval=(((this.value).substring(0,(len-1))).trim()).toUpperCase();
               for(var i=0;i<namearr.length;i++)
               {
@@ -221,6 +224,8 @@
               }
             }
           }
+          // alert(JSON.stringify(this.itemArray));
+          this.$.itemlist.hidden=false;
         },
         FnItemSelected:function(e){
           this.studid= e.target.selectedItem.value;
@@ -230,11 +235,11 @@
           this.$.submitbutton.hidden=false;
           this.$.maps.namepick(this.studid);
           this.itemArray=[];
-          this.querySelector('paper-listbox').selected=-1;
+          this.querySelector('#itemlist').selected=-1;
         },
         click:function(){
           this.$.maps.submit(itemarray);
-          itemarray=[];
+          this.itemarray=[];
           document.querySelector('#mapstudpointgradeselect').selected=-1;
           this.value="";
           this.$.maps.selectname();

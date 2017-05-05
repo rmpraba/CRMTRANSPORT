@@ -817,15 +817,22 @@ app.post('/selectnameforpoint',  urlencodedParser,function (req, res)
 { var schoolx={"school_id":req.query.schol};
  var qur1='SELECT id, student_name from student_details where id in(select student_id from student_fee where ? and academic_year="'+req.query.academic_year+'") and id not in (Select student_id from student_point where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"';
    console.log(qur1);
-
-       connection.query('SELECT id, student_name from student_details where id in(select student_id from student_fee where (installment_1>0 or fees-discount_fee=0)  and ? and academic_year="'+req.query.academic_year+'") and id not in (Select student_id from student_point where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"' ,[schoolx],
-        function(err, rows)
-        {
+    var query1="SELECT s.id, s.student_name from student_details s join student_fee f on(s.id=f.student_id) "+
+    " WHERE s.school_id='"+req.query.schol+"' and f.school_id='"+req.query.schol+"' and  s.academic_year='"+req.query.academic_year+"' and "+
+    " f.academic_year='"+req.query.academic_year+"' and f.installment_1>0 ";
+    var query2="select student_id from student_point where school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"'";
+    var studarr=[];
+    connection.query(query1,function(err, rows) {
     if(!err)
     {
     if(rows.length>0)
     {
-      res.status(200).json({'returnval': rows});
+      studarr=rows;
+      connection.query(query2,function(err, rows) {
+      if(!err){
+      res.status(200).json({'studarr':studarr,'returnval': rows});
+      }
+      });
     }
     else
     {
@@ -860,21 +867,29 @@ app.post('/classpick',  urlencodedParser,function (req, res)
 {
   var schoolx={"school_id":req.query.schol};
   var class_id={"class":req.query.classes};
-   var academic_year={"academic_year":req.query.academic_year};
+  var academic_year={"academic_year":req.query.academic_year};
 
-var query='select id , student_name, class from student_details  where id in(select student_id from student_fee where (installment_1>0 or fees-discount_fee=0) and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and id not in (Select student_id from student_point) and class="'+req.query.classes+'"and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"'
+var queryy='select id , student_name, class from student_details  where id in(select student_id from student_fee where (installment_1>0) and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and id not in (Select student_id from student_point where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and class="'+req.query.classes+'" and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"';
+var qur1="select s.id , s.student_name, s.class from student_details s join student_fee f on(s.id=f.student_id) "+
+" where s.school_id='"+req.query.schol+"' and f.school_id='"+req.query.schol+"' and s.academic_year='"+req.query.academic_year+"' and "+
+" f.academic_year='"+req.query.academic_year+"' and f.installment_1>0 and s.class='"+req.query.classes+"' ";
+var qur2="Select student_id from student_point where school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"'";
 console.log("+++++++++");
-console.log(query);
+console.log(qur1);
+console.log(qur2);
 console.log("==========");
-     
-        connection.query('select id , student_name, school_type from student_details  where id in(select student_id from student_fee where (installment_1>0 or fees-discount_fee=0) and ? and ?) and id not in (Select student_id from student_point) and ? and ? and ?',[schoolx,academic_year,class_id,schoolx,academic_year],
-          function(err, rows)
-        {
+    var studarr=[]; 
+    connection.query(qur1,function(err, rows)
+    {
     if(!err)
     {
     if(rows.length>0)
     {
-      res.status(200).json({'returnval': rows});
+      studarr=rows;
+      connection.query(qur2,function(err, rows){
+      if(!err)
+      res.status(200).json({'studarr':studarr,'returnval': rows});
+      });
     }
     else
     {
@@ -977,8 +992,9 @@ app.post('/pickpoints',  urlencodedParser,function (req, res)
     var trip=req.query.schooltype;
     var academic_year=req.query.academic_year;
 
-var qur1='SELECT id, point_name from point where route_id="'+req.query.routept+'" and school_id="'+req.query.schol+'" and (select maxdistance from md_distance where id=(select distance_id from md_zone where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'" and  id=(select zone_id from student_fee where student_id="'+req.query.studid+'"  and school_id="'+req.query.schol+'") and school_id="'+req.query.schol+'") and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'")';
-
+    var qur1='SELECT id, point_name from point where route_id="'+req.query.routept+'" and school_id="'+req.query.schol+'" and distance_from_school <= (select maxdistance from md_distance where id=(select distance_id from md_zone where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'" and  id=(select zone_id from student_fee where student_id="'+req.query.studid+'"  and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and school_id="'+req.query.schol+'") and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'")';
+    console.log('--------------pick points-------------');
+    console.log(qur1);
     connection.query(qur1,function(err, rows)
     {
     if(!err)
@@ -1032,16 +1048,14 @@ app.post('/routepoint',  urlencodedParser,function (req, res)
 {
       var schoolx={"school_id":req.query.schol};
       var academicyear={"academic_year":req.query.academic_year};
-  connection.query('SELECT * from route where ? and ?',[schoolx,academicyear],
+      connection.query('SELECT * from route where ? and ?',[schoolx,academicyear],
         function(err, rows)
         {
         if(!err)
         {
         if(rows.length>0)
         {
-
           res.status(200).json({'returnval': rows});
-
         }
         else
         {

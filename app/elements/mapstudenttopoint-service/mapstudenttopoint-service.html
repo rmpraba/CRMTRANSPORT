@@ -184,6 +184,7 @@
     var routenamez;
     var school=sessionStorage.getItem("sch");
     var pointcount;
+    var count1=0,count2=0;
     Polymer({
       is: "mapstudenttopoint-service",
       selectclass:function(){
@@ -219,8 +220,22 @@
         },
         selectnameResponse:function(e){;
          var nameitem=e.detail.response.returnval;
+         var studarr=e.detail.response.studarr;
+         // alert(studarr.length);
+         if(nameitem.length>0){
+         for(var i=0;i<studarr.length;i++){
+          for(var j=0;j<nameitem.length;j++){
+            if(studarr[i].id==nameitem[j].student_id){
+              studarr.splice(i,1);
+              i--;
+              break;
+            }
+          }
+         }
+         } 
+         // alert(studarr.length);
        //  alert(JSON.stringify(nameitem));
-         document.querySelector('mapstudenttopoint-card').autocompletename(nameitem);
+         document.querySelector('mapstudenttopoint-card').autocompletename(studarr);
          document.querySelector('mapstudenttopoint-card').spinner();
       },
       namepick:function(cla)
@@ -234,8 +249,7 @@
         this.$.namepickajax.generateRequest();
       },
       namepickResponse:function(e)
-      {
-        
+      {        
         var student=e.detail.response.returnval;
         //alert(JSON.stringify(student));
         document.querySelector('mapstudenttopoint-card').studentarr=student;
@@ -247,17 +261,32 @@
         obj.schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.classpickparam=obj;
-   //     alert(JSON.stringify(obj));
-
+        //alert(JSON.stringify(obj));
         this.$.classpickajax.generateRequest();
       },
       classpickResponse:function(e){
-        var student=e.detail.response.returnval;
-       // alert(JSON.stringify(student));
-        document.querySelector('mapstudenttopoint-card').studentarr=student;
+        var studarr=e.detail.response.studarr;
+        var nameitem=e.detail.response.returnval;        
+        // alert(JSON.stringify(studarr));
+        // alert(JSON.stringify(nameitem));
+        if(nameitem.length>0){
+         for(var i=0;i<studarr.length;i++){
+          for(var j=0;j<nameitem.length;j++){
+            // alert(studarr[i].id+" "+nameitem[j].student_id);
+            if(studarr[i].id==nameitem[j].student_id){
+              studarr.splice(i,1);
+              i--;
+              break;
+            }
+          }
+         }
+        }
+        // alert(JSON.stringify(student));
+        document.querySelector('mapstudenttopoint-card').studentarr=studarr;
       },
       submit:function(itemarr){
           len=itemarr.length;
+          count1=itemarr.length;
           for(var i=0;i<itemarr.length;i++){
             var obj={"studentid":"","class_id":"","pickroute":"","droproute":"","pickpoint":"","droppoint":"","flag":"","schol":"","academic_year":""};
             obj.studentid=itemarr[i].studentid;
@@ -267,8 +296,7 @@
             obj.pickpoint=itemarr[i].pickpoint;
             obj.droppoint=itemarr[i].droppoint;
             obj.flag=1;
-            obj.academic_year=localStorage.getItem("curr_sess_academicyear");
-     
+            obj.academic_year=localStorage.getItem("curr_sess_academicyear")
             obj.schol=sessionStorage.getItem("sch");;
             this.studentpointurl=sessionStorage.getItem("addrinfo")+"/submiturl";
                  this.studentpointparam=obj;
@@ -279,15 +307,14 @@
     {
       var result=e.detail.response.returnval;
       var j=0;
-      if(result=='success'){
-
-        alert('Mapping is done Successfully');
-        }
-        else
-        {
-       alert('insertion failed');
-       }
-      document.querySelector('mapstudenttopoint-card').refreshmappoint();
+      count2++;
+      // alert(count1+" "+count2);
+      if(count1==count2){
+        alert('Mapping Done... Successfully!!');
+        document.querySelector('mapstudenttopoint-card').refreshmappoint();
+        count1=0;
+        count2=0;
+      }      
     },
     createroute:function(route){
         routenamez=route;

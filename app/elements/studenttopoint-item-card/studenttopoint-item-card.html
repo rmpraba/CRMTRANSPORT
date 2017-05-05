@@ -137,12 +137,13 @@
         var obj={"schol":"","academic_year":""}
         obj.schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
-       this.routepointparam=obj;
+        this.routepointparam=obj;
         this.$.routepoint.generateRequest();
         this.$.selectbox.disabled=true;
       },
       routepointResponse:function(e){
         var route=e.detail.response.returnval;
+        // alert(JSON.stringify(route));
         this.routearr=route;
       },
       pickroute:function(e){
@@ -150,19 +151,18 @@
         droproute=pickroute;
         this.selectid=pickroute;
         this.selectpointurl = sessionStorage.getItem("addrinfo")+"/pickpoints";
-    var obj={"routept":"","studid":"","schol":"","schooltype":"","academic_year":""};
+        var obj={"routept":"","studid":"","schol":"","schooltype":"","academic_year":""};
         obj.schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.routept=pickroute;
         obj.studid=this.studentid;
         scholtype=this.schooltype;
-          this.routepickpointparam=obj;
+        this.routepickpointparam=obj;
         this.$.selectpointajax.generateRequest();
         this.querySelector.set.selected=-1;
       },
       droproute:function(e){
         droproute = (e.target.selectedItem.value);
-
         this.selectid=droproute;
         this.routedroppointurl = sessionStorage.getItem("addrinfo")+"/routedroppoint";
         var obj={"routedroppt":"","studid":"","schol":"","schooltype":"","academic_year":""};
