@@ -119,6 +119,7 @@
         refreshmappoint:function(){
           this.studentarr=[];
           this.$.maps.selectclass();
+          itemarray=[];
         },
         changeHandler:function(e){
           if(e.target.checked==true)
@@ -246,8 +247,9 @@
           this.querySelector('#itemlist').selected=-1;
         },
         click:function(){
+          // alert(JSON.stringify(itemarray));
           this.$.maps.submit(itemarray);
-          this.itemarray=[];
+          itemarray=[];
           document.querySelector('#mapstudpointgradeselect').selected=-1;
           this.value="";
           this.$.maps.selectname();
