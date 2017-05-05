@@ -74,12 +74,11 @@
                 <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
               </template>
             </paper-listbox>  
-          </div>
+          </div>  
       </div>
       <div class="template">
-      <!--   <app-service studentarr="{{studentarr}}"></app-service>
-       -->    <template  is="dom-repeat" items="{{studentarr}}">
-              <studenttopoint-item-card schooltype="{{trip}}" studentid="{{item.id}}" studentname="{{item.student_name}}"></studenttopoint-item-card>
+        <template  is="dom-repeat" items="{{studentarr}}">
+              <studenttopoint-item-card schooltype="{{seltripsz}}" studentid="{{item.id}}" studentname="{{item.student_name}}"></studenttopoint-item-card>
           </template>  
           <div class="button" style="margin-left: 47%;margin-top: 3%; height: 40% !important;">
             <paper-button raised id="submitbutton" class="custom indigo" on-click="click">Submit</paper-button>
@@ -143,15 +142,13 @@
           document.querySelector('#spin').close();
         },
         FnSelectgrade:function(e){
-          // alert(this.selectedgrade);  
           this.studentarr=[];
           selclass=(e.target.selectedItem.textContent).trim();
-          // alert(JSON.stringify(this.classarr));
           for(var i=0;i<this.classarr.length;i++){
             if(this.classarr[i].class==selclass)
-              seltrip=this.classarr[i].tripidz;
-          }          
-          // alert(selclass+"  "+seltrip);
+              this.seltripsz=this.classarr[i].tripidz;
+          } 
+         // alert(this.seltripsz+" "+selclass);         
           this.$.maps.classpick(selclass);
           this.$.submitbutton.hidden=false;
           this.$.search.hidden=true;
@@ -186,9 +183,10 @@
                 var subval=((namearr[i].student_name).trim()).substring(0,backsubval.length);
                 if((subval).toUpperCase()==(backsubval).toUpperCase())
                 {
-                  var obj={"itemdes":"","itemid":""};
+                  var obj={"itemdes":"","itemid":"","trip":""};
                   obj.itemdes=namearr[i].student_name;
                   obj.itemid=namearr[i].id;
+                  obj.trip=namearr[i].tripidz; 
                   arr.push(obj);
                 }
               }
@@ -207,18 +205,21 @@
               for(var i=0;i<namearr.length;i++){
                 var subval=((namearr[i].student_name).trim()).substring(0,this.itemval.length);
                 if((subval).toUpperCase()==(this.itemval).toUpperCase()){
-                  var obj={"itemdes":"","itemid":""};
+                  var obj={"itemdes":"","itemid":"","trip":""};
                   obj.itemdes=namearr[i].student_name;
                   obj.itemid=namearr[i].id;
+                  obj.trip=namearr[i].tripidz; 
+              
                   arr.push(obj);
                 }
               }
               if(arr.length>0)
                 this.itemArray=arr;
               else {
-                var obj={"itemdes":"","itemid":""};
+                var obj={"itemdes":"","itemid":"","trip":""};
                   obj.itemdes=namearr[i].student_name;
                   obj.itemid=namearr[i].id;
+                  obj.trip=namearr[i].tripidz; 
                   arr.push(obj);
                 this.itemArray=arr;
               }
@@ -230,7 +231,14 @@
         FnItemSelected:function(e){
           this.studid= e.target.selectedItem.value;
           var studname = (e.target.selectedItem.textContent).trim();
-          //alert(e.target.selectedItem.value);
+        //    alert(JSON.stringify(this.itemArray));
+
+        for(var i=0;i<this.itemArray.length;i++){
+
+            if(this.itemArray[i].itemid==this.studid)
+            
+             this.seltripsz=this.itemArray[i].trip;
+            } 
           this.value=studname;  
           this.$.submitbutton.hidden=false;
           this.$.maps.namepick(this.studid);

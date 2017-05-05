@@ -220,6 +220,7 @@
         },
         selectnameResponse:function(e){;
          var nameitem=e.detail.response.returnval;
+
          var studarr=e.detail.response.studarr;
          // alert(studarr.length);
          if(nameitem.length>0){
@@ -236,6 +237,7 @@
          // alert(studarr.length);
        //  alert(JSON.stringify(nameitem));
          document.querySelector('mapstudenttopoint-card').autocompletename(studarr);
+
          document.querySelector('mapstudenttopoint-card').spinner();
       },
       namepick:function(cla)

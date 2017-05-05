@@ -22,7 +22,6 @@
         background-color: white; 
         box-shadow: 0 0 3px 3px rgb(184, 209, 249); -moz-box-shadow: 0 0 3px 3px rgb(184, 209, 249); -webkit-box-shadow: 0 0 3px 3px gb(184, 209, 249); -o-box-shadow: 0 0 3px 3px rgb(184, 209, 249); 
       }
-      
       paper-dropdown-menu
       {
        margin-left: 9%;
@@ -50,7 +49,7 @@
         </div>
         <div hidden$="{{hide11}}">
           <template  is="dom-repeat" items="{{itemarr}}">
-            <fetch-card points="{{item.point_name}}" trip="{{item.trip}}" picktime="{{item.pickup_time}}" droptime="{{item.drop_time}}" pointid="{{item.id}}"  routid="{{item.route_id}}">
+            <fetch-card points="{{item.point_name}}" trip="{{item.trip}}" picktime="{{item.pickup_time}}" droptime="{{item.drop_time}}" pointid="{{item.id}}"  routid="{{item.route_id}}" pickseq="{{item.pickup_seq}}" dropseq="{{item.drop_seq}}"></fetch-card>
           </template>
         </div>
         <div id="cardnew" hidden$="{{hide}}">
@@ -100,19 +99,15 @@
             tripno=(e.target.selectedItem.textContent).trim();
             this.$.select.getroutedetail(tripno,routevalue1);
             sessionStorage.setItem("trip",tripno);
-            //this.$.button.hidden=false;
             this.$.create.hidden=false;
-           // alert(sessionStorage.getItem("routevalue"));
-               this.hide11=false;
+              this.hide11=false;
      
           },
          refz:function(e){
-        //  alert
       this.$.select.getroutedetail(tripno,routevalue1);
       
           },
           fndeletethepicuprootref:function(e){
-        //    alert("2");
           this.$.select.getroutedetail(tripno,routevalue1);
           },
           refreshdeletedata:function()

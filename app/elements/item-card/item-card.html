@@ -20,53 +20,56 @@
  width: 100%;
    margin-left: 2%;
  }
+ .row
+ {
+  @apply(--layout-horizontal);
+ }
+
     </style>
 <template>
   <legend align="center"></legend>
     <ul>
-      <li class="rows">
+      <li class="rows" style="margin-top: 3%;">
         <fieldset>
           <ul class="rowss">
            
             <li class="row">
               <div class="detail">
                 <div class="layout">
-                  <paper-input label="Point" id="pt" class="field"required error-message="needs Point Name!" value={{points}}></paper-input>
+                  <paper-input label="Point" id="pt" class="field" required error-message="needs Point Name!" value={{points}}></paper-input>
                 </div>
               </div>
-            </li>
-            <li class="row">
-              <div class="detail">
-                <div class="layout">
-                  <timepicker-card></timepicker-card>
-                </div>
-              </div>
-            </li>
-            <li class="row">
-              <div class="detail"> 
-                <div class="layout">
-                  <timepicker1-card></timepicker1-card>
-                </div>
-              </div>
-            </li>
-            <li class="row">
+
               <div class="detail"> 
                 <div class="layout">
                  <paper-input label="distance" id="dist" required allowed-pattern="[0-9]" class="field"  error-message="needs Distance!" value={{distance}}></paper-input>
                 </div>
               </div>
             </li>
-            <li class="row">
-              <div class="detail">
-                <div class="field">
-                  <paper-input label="Pickup Sequence" value="{{pickupseq}}" id="mstppickseq"></paper-input>
-                </div>
+            <li class="row" style="margin-top: -3%;">
+              <div class="date" style="margin-left: -7%;width: 46%;">
+                <!-- <div class="layout"> -->
+                  <timepicker-card></timepicker-card>
+                <!-- </div> -->
+              </div>
+
+              <div class="date" style="margin-left: 4%;width: 47%;"> 
+                <!-- <div class="layout"> -->
+                  <timepicker1-card></timepicker1-card>
+                <!-- </div> -->
               </div>
             </li>
+            
             <li class="row">
               <div class="detail">
                 <div class="field">
-                  <paper-input label="Drop Sequence" value="{{dropseq}}" id="mstpdropseq"></paper-input>
+                  <paper-input label="Pickup Sequence"  required error-message="needs Pickup Sequence!" value="{{pickupseq}}" id="mstppickseq"></paper-input>
+                </div>
+              </div>
+
+              <div class="detail">
+                <div class="field">
+                  <paper-input label="Drop Sequence"  required error-message="needs Drop Sequence!" value="{{dropseq}}" id="mstpdropseq"></paper-input>
                 </div>
               </div>
             </li>
@@ -95,34 +98,43 @@
       ready:function(){
         n=n+1;
       },
-      insert:function(e){
-if(this.points=="" || this.distance=="")
+      insert:function(e)
+      {
+        //alert(111111);
+        if(this.points=="" || this.distance=="" || this.pickupseq=="" || this.dropseq=="" )
         {
            this.$.pt.validate();
            this.$.dist.validate();
+           this.$.mstppickseq.validate();
+           this.$.mstpdropseq.validate();
         }
-else
-{
-        //alert('Add button is clicked');
-        var route=sessionStorage.getItem("route");
-        var tripn=sessionStorage.getItem("trip");
-        this.$.insert.insertpoint(route,this.points,localStorage.getItem("curr_sess_pickuptime"),localStorage.getItem("curr_sess_droptime"),tripn,this.distance,this.pickupseq,this.dropseq);
-        this.points="";
-        this.distance="";
-        document.querySelector('timepicker-card').FnClear();
-        document.querySelector('timepicker1-card').FnClear();
-        document.querySelector('mappointtoroute-card').refz();
-      
-        this.points="";
-        this.distance="";
+  else
+        {
+       // alert('Add button is clicked');
+          var route=sessionStorage.getItem("route");
+          var tripn=sessionStorage.getItem("trip");
+          //alert(route+""+this.points+""+pickuptime+""+droptime+""+tripn+""+this.distance+""+this.pickupseq+""+this.dropseq);
+            this.$.insert.insertpoint(route,this.points,localStorage.getItem("curr_sess_pickuptime"),localStorage.getItem("curr_sess_droptime"),tripn,this.distance,this.pickupseq,this.dropseq);
+          this.points="";
+          this.distance="";
+          this.pickupseq="";
+          this.dropseq="";
+          document.querySelector('timepicker-card').FnClear();
+          document.querySelector('timepicker1-card').FnClear();
+          document.querySelector('mappointtoroute-card').refz();
+        
+          //this.points="";
+          //this.distance="";   
        // document.querySelector('mappointtoroute-card').FnClear();
 
-      }
+        }
       },
       Fnclear:function()
       {
         this.points="";
         this.distance="";
+        this.pickupseq="";
+        this.dropseq="";
       }
     });
   })();
