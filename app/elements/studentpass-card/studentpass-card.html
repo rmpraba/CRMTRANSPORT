@@ -7,15 +7,13 @@
 <link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../transport-service/transport-service.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
-<link rel="import" href="../mapstudenttopoint-service/mapstudenttopoint-service.html">
-
- <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
+<link rel="import" href="../mapstudenttopoint-service/mapstudenttopoint-service.html"><script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
       <script type="text/javascript" src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
       <script type="text/javascript" src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
 
 <style type="text/css">
-  .horlayout
+  .horlayout    
   {
       @apply(--layout-horizontal);
   }
@@ -38,7 +36,7 @@
   <div class="student-image" >
    <img id="imgRes">
   </div>
-    <div class="left" >
+    <div class="left">   
       <paper-input id="text" class="field" label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
       <paper-listbox class="dropdown-content" id="fetchname" on-iron-select="FnItemSelected">
         <template is="dom-repeat" items="{{itemArray}}" as="item">
@@ -63,8 +61,8 @@
 <div id="passtemp">
        <template  is="dom-repeat" items="{{passarr1}}" as="view">
       <div class="itemcards">
-        <passtemplate-card schoolname="{{view.schoolname}}" schooladdr="{{view.schooladdr}}" sid="{{view.stid}}" studname="{{view.stname}}" stnd="{{view.stnd}}" sec="{{view.sec}}" zone="{{view.zonename}}" parent="{{view.dad1}}" address1="{{view.add1}}" address2="{{view.add2}}" address3="{{view.add3}}" town="{{view.add4}}" pin="{{view.pin}}" pickuprout="{{view.pickr}}" pickup="{{view.pickp}}" droprout="{{view.dropr}}" drop="{{view.dropp}}" mobno="{{view.mob}}" coorno="{{view.coorno}}">
-       </passtemplate-card>
+        <passtemplate-get-item-card schoolname="{{view.schoolname}}" schooladdr="{{view.schooladdr}}" sid="{{view.stid}}" studname="{{view.stname}}" stnd="{{view.stnd}}" sec="{{view.sec}}" zone="{{view.zonename}}" parent="{{view.dad1}}" address1="{{view.add1}}" address2="{{view.add2}}" address3="{{view.add3}}" town="{{view.add4}}" pin="{{view.pin}}" pickuprout="{{view.pickr}}" pickup="{{view.pickp}}" droprout="{{view.dropr}}" drop="{{view.dropp}}" mobno="{{view.mob}}" coorno="{{view.coorno}}">
+       </passtemplate-get-item-card>
       </div>
     </template>
 </div>
@@ -305,7 +303,12 @@ this.$.selectclass.hidden=true;
     this.$.root.getpassdetail(this.studid);
     this.$.root.getzonedetail(this.studid);
   },
-  changehandler:function(e)
+ /* passarrgetarr:function(arr){
+   this.passarr1=arr;
+    alert('1');
+  alert(JSON.stringify(this.passarr1));
+     },
+ */ changehandler:function(e)
   {
    //alert('hello');
     if(e.target.checked==true){
@@ -325,15 +328,12 @@ this.$.selectclass.hidden=true;
   class:function(e){
 
     var val=(e.target.selectedItem.textContent).trim();
-  
-
      for(var i=0;i<this.classarr.length;i++){
             if(this.classarr[i].class==val)
               this.seltripsz=this.classarr[i].tripidz;
           } 
-       // alert(val+" "+this.seltripsz);
-
-    this.$.maps.getgradedata(this.seltripsz);
+          document.querySelector('passtemplate-card').fnsetclear();
+    this.$.maps.getgradedata(this.seltripsz,val);
   }
 
 
