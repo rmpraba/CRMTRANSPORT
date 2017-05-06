@@ -843,9 +843,9 @@ app.post('/selectnameforpoint',  urlencodedParser,function (req, res)
 });
   });
 
-app.post('/selectnameforchpoint',  urlencodedParser,function (req, res)
+/*app.post('/',  urlencodedParser,function (req, res)
 {
-   var qur1='SELECT id, student_name from student_details where id in(select student_id from student_fee where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and id  in (Select student_id from student_point) and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"';
+   var qur1='SELECT id, student_name from student_details where id in(select student_id from student_fee where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and id  in (Select student_id from student_point and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"';
 
    console.log(qur1);
 
@@ -864,6 +864,38 @@ app.post('/selectnameforchpoint',  urlencodedParser,function (req, res)
   }
 });
   });
+*/
+
+app.post('/selectnameforchpoint',  urlencodedParser,function (req, res)
+{ 
+
+    var query1="SELECT s.id, s.student_name ,s.class,(select trip from trip_to_grade where grade_name=s.class and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as tripidz from student_details s join student_fee f on(s.id=f.student_id) "+
+    " WHERE s.school_id='"+req.query.schol+"' and f.school_id='"+req.query.schol+"' and  s.academic_year='"+req.query.academic_year+"' and "+
+    " f.academic_year='"+req.query.academic_year+"' and f.installment_1>0 ";
+    var query2="select student_id from student_point where school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"'";
+    var studarr=[];
+    connection.query(query1,function(err, rows) {
+
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      studarr=rows;
+      connection.query(query2,function(err, rows) {
+      if(!err){
+      res.status(200).json({'studarr':studarr,'returnval': rows});
+      }
+      });
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  }
+});
+  });
+
+
 app.post('/classpick',  urlencodedParser,function (req, res)
 {
   var schoolx={"school_id":req.query.schol};
@@ -1023,9 +1055,9 @@ app.post('/routedroppoint',  urlencodedParser,function (req, res)
     var trip=req.query.schooltype;
     var schoolx=req.query.schol;
     var academic_year=req.query.academic_year;
-
    
-var qur1='SELECT id, point_name from point where route_id="'+req.query.routedroppt+'" and school_id="'+req.query.schol+'" and (select maxdistance from md_distance where id=(select distance_id from md_zone where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'" and  id=(select zone_id from student_fee where student_id="'+req.query.studid+'"  and school_id="'+req.query.schol+'") and school_id="'+req.query.schol+'") and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'")';
+ var qur1='SELECT id, point_name from point where route_id="'+req.query.routedroppt+'" and school_id="'+req.query.schol+'" and distance_from_school <= (select maxdistance from md_distance where id=(select distance_id from md_zone where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'" and  id=(select zone_id from student_fee where student_id="'+req.query.studid+'"  and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and school_id="'+req.query.schol+'") and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'")';
+
 console.log("************");
 console.log(qur1);
         connection.query(qur1,
@@ -1089,9 +1121,9 @@ app.post('/fneditthepicuproot-service',  urlencodedParser,function (req, res)
 {  
        
                         
-      console.log("update point set point_name='"+req.query.points+"',pickup_time='"+req.query.picktime+"',drop_time='"+req.query.droptime+"',pickup_seq='"+req.query.pickseq+"',drop_seq='"+req.query.dropseq+"' where school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and pickup_seq='"+req.query.pickseq+"' and drop_seq='"+req.query.dropseq+"' and academic_year='"+req.query.academic_year+"'");
+      console.log("update point set point_name='"+req.query.points+"',distance_from_school='"+req.query.distance+"',pickup_time='"+req.query.picktime+"',drop_time='"+req.query.droptime+"',pickup_seq='"+req.query.pickseq+"',drop_seq='"+req.query.dropseq+"' where school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and pickup_seq='"+req.query.pickseq+"' and drop_seq='"+req.query.dropseq+"' and academic_year='"+req.query.academic_year+"'");
 
-  connection.query("update point set point_name='"+req.query.points+"',pickup_time='"+req.query.picktime+"',drop_time='"+req.query.droptime+"',pickup_seq='"+req.query.pickseq+"',drop_seq='"+req.query.dropseq+"' where school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and academic_year='"+req.query.academic_year+"'",
+  connection.query("update point set point_name='"+req.query.points+"',distance_from_school='"+req.query.distance+"',pickup_time='"+req.query.picktime+"',drop_time='"+req.query.droptime+"',pickup_seq='"+req.query.pickseq+"',drop_seq='"+req.query.dropseq+"' where school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and academic_year='"+req.query.academic_year+"'",
     function(err, rows)
     {
     if(!err)
@@ -1130,7 +1162,8 @@ var qur="DELETE FROM  point where point_name='"+req.query.points+"'and pickup_ti
 app.post('/fndeletethepicuproot-service' ,  urlencodedParser,function (req, res)
 {  
  
-      var qur1="DELETE FROM  point where point_name='"+req.query.points+"'and pickup_time='"+req.query.picktime+"'and drop_time='"+req.query.droptime+"' and school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and  pickup_seq='"+req.query.pickseq+"' and drop_seq='"+req.query.dropseq+"' and academic_year='"+req.query.academic_year+"'";
+      var qur1="DELETE FROM  point where point_name='"+req.query.points+"'and distance_from_school='"+req.query.distance+"' and pickup_time='"+req.query.picktime+"'and drop_time='"+req.query.droptime+"' and school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and  pickup_seq='"+req.query.pickseq+"' and drop_seq='"+req.query.dropseq+"' and academic_year='"+req.query.academic_year+"'";
+      console.log(qur1);
 connection.query('select * from student_point where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'" and drop_point="'+req.query.pointid+'" or pickup_point="'+req.query.pointid+'"',
   function(err, rows)
     {
@@ -3517,7 +3550,7 @@ app.post('/createroute' ,  urlencodedParser,function (req, res)
 {  
  var scho={"school_id":req.query.schol,"id":req.query.id,"route_name":req.query.routes,"academic_year":req.query.academic_year};
    console.log(scho);
-connection.query('select * from route where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'" and id="'+req.query.id+'" or route_name="'+req.query.routes+'"',
+connection.query('select * from route where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'" and id="'+req.query.id+'" and route_name="'+req.query.routes+'"',
   function(err, rows)
     {
     if(rows.length==0)
@@ -5104,3 +5137,4 @@ var server = app.listen(8081, function () {
   var port = server.address().port
   console.log("Example app listening at http://%s:%s", host, port)
 })
+ 

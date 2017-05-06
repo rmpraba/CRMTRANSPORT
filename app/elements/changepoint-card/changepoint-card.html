@@ -78,19 +78,16 @@
           this.$.submitbutn1.disabled=true;
           this.$.deletebutn1.disabled=true;
           this.querySelector('paper-listbox').style.visibility='hidden';
-          //this.$.maps.selectname1();
-        },
-        FnClear:function()
-        {
+         },
+         FnClear:function()
+         {
           this.$.submitbutn1.hidden=true;
           this.$.deletebutn1.hidden=true;
           this.classarr="";
           this.value="";
           this.itemArray="";
           this.studentarr="";
-          //document.querySelector('#gradeselect').selected=-1;
-          //document.querySelector('#selectbox').checked=false;
-        },
+         },
         fnrefreshpoint:function(){
           this.studentarr=[];
           this.$.maps.selectclass();
@@ -259,7 +256,9 @@
            fndelete:function()
            {
               this.$.maps.delete(this.studid);
-              itemarray=[];
+            //  alert('1');
+               this.$.maps.selectname1();
+                itemarray=[];
               this.value="";
               this.$.deletebutn1.disabled=true;
               this.$.submitbutn1.disabled=true;

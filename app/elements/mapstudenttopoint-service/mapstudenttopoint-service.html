@@ -216,7 +216,6 @@
         obj.schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.selectnameparam=obj;
-        //  alert(JSON.stringify(obj));
       
         this.$.selectnameajax.generateRequest();
         },
@@ -239,7 +238,7 @@
          // alert(studarr.length);
        //  alert(JSON.stringify(nameitem));
          document.querySelector('mapstudenttopoint-card').autocompletename(studarr);
-
+         
          document.querySelector('mapstudenttopoint-card').spinner();
       },
       namepick:function(cla)
@@ -326,7 +325,7 @@
        var obj={"id":""};
         obj.id='route';
         this.getrouteseqparam=obj;
-        //alert(JSON.stringify(obj));
+        alert(JSON.stringify(obj));
         this.$.getrouteseqajax.generateRequest();
     },
     getrouteseqResponse:function(e){
@@ -349,13 +348,13 @@
         obj.id="r"+seq;
         obj.routes=routenamez;
         this.createrouteparam=obj;
-        //alert(JSON.stringify(obj));
+        alert(JSON.stringify(obj));
         this.createrouteurl=sessionStorage.getItem("addrinfo")+"/createroute";
         this.$.createrouteajax.generateRequest();
     },
     createrouteResponse:function(e){
       var resd=e.detail.response.returnval;
-      //alert(resd);
+      alert(resd);
       
       if(resd=='Already Exit')
       {

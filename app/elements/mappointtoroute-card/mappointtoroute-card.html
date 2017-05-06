@@ -13,7 +13,7 @@
 <link rel="import" href="../transport-service/transport-service.html">
 <dom-module id="mappointtoroute-card">
   <template>  
-    <style>
+    <style> 
       .card
       {
         width:50%;
@@ -49,7 +49,7 @@
         </div>
         <div hidden$="{{hide11}}">
           <template  is="dom-repeat" items="{{itemarr}}">
-            <fetch-card points="{{item.point_name}}" trip="{{item.trip}}" picktime="{{item.pickup_time}}" droptime="{{item.drop_time}}" pointid="{{item.id}}"  routid="{{item.route_id}}" pickseq="{{item.pickup_seq}}" dropseq="{{item.drop_seq}}"></fetch-card>
+            <fetch-card points="{{item.point_name}}" distance="{{item.distance_from_school}}" trip="{{item.trip}}" picktime="{{item.pickup_time}}" droptime="{{item.drop_time}}" pointid="{{item.id}}"  routid="{{item.route_id}}" pickseq="{{item.pickup_seq}}" dropseq="{{item.drop_seq}}"></fetch-card>
           </template>
         </div>
         <div id="cardnew" hidden$="{{hide}}">
@@ -167,3 +167,5 @@
     })();
     </script>
 </dom-module>
+
+

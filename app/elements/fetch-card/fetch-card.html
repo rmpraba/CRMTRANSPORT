@@ -13,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <dom-module id="fetch-card">
-<template>
+<template> 
  <style>
     .rows
     {
@@ -49,11 +49,17 @@
                   <paper-input id="point" readonly$="{{asdsaddad}}" label="Point" class="field" value={{points}}></paper-input>
                 </div>
               </div>
+
+              <div class="detail">
+                <div class="layout">
+                  <paper-input id="distance1" readonly$="{{asdsaddad}}" label="Distance" class="field" value={{distance}}></paper-input>
+                </div>
+              </div>
             </li>
             <li class="row">
               <div class="date" style="margin-left: 2%;">
                 <!-- <div class="layout"> -->
-                  <paper-input id="point" readonly$="{{asdsaddad}}" hidden$="{{fntimepeackidz1}}"label="Pickup Time" class="field" value={{picktime}}></paper-input>
+                  <paper-input id="point" readonly$="{{asdsaddad}}" hidden$="{{fntimepeackidz1}}" label="Pickup Time" class="field" value={{picktime}}></paper-input>
                   <timepicker-card hidden$="{{fntimepeackidz}}"></timepicker-card>
             </div>
           <div class="date" style="position: absolute;margin-left: 23% !important;">
@@ -131,16 +137,18 @@
                     this.asdsaddad=true;
      // alert(this.points+this.picktime+this.droptime+this.pointid+this.routid);
          this.fneditthepicuprooturl=sessionStorage.getItem("addrinfo")+"/fneditthepicuproot-service";
-        var obj={"schol":"","academic_year":"","points":"","picktime":"","droptime":"","pointid":"","pickseq":"","dropseq":""}
+        var obj={"schol":"","academic_year":"","points":"","distance":"","picktime":"","droptime":"","pointid":"","pickseq":"","dropseq":""}
         obj.schol=schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.points=this.points;
+        obj.distance=this.distance;
         obj.picktime=localStorage.getItem("curr_sess_pickuptime");
         obj.droptime=localStorage.getItem("curr_sess_droptime");
         obj.pointid=this.pointid;
         obj.routid=this.routid;
         obj.pickseq=this.pickseq;
         obj.dropseq=this.dropseq;
+       // alert(JSON.stringify(obj));
         this.fneditthepicuprootparam=obj; 
           this.$.fneditthepicuprootajax.generateRequest();
            this.$.fnretiveeditidz.hidden=false;
@@ -171,10 +179,11 @@
       fndelete:function(e){
          // alert(this.points+this.picktime+this.droptime+this.pointid);
              this.fndeletethepicuprooturl=sessionStorage.getItem("addrinfo")+"/fndeletethepicuproot-service";
-         var obj={"schol":"","academic_year":"","points":"","picktime":"","droptime":"","pointid":""}
+         var obj={"schol":"","academic_year":"","points":"","distance":"","picktime":"","droptime":"","pointid":"","pickseq":"","dropseq":""}
         obj.schol=schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         obj.points=this.points;
+        obj.distance=this.distance;
         obj.picktime=this.picktime;
         obj.droptime=this.droptime;
         obj.pointid=this.pointid;
@@ -182,7 +191,7 @@
         obj.pickseq=this.pickseq;
         obj.dropseq=this.dropseq;
        this.fndeletethepicuprootparam=obj; 
-       // alert(JSON.stringify(obj)); 
+       alert(JSON.stringify(obj)); 
         this.$.fndeletethepicuprootajax.generateRequest();
         // this.$.transportservice.fndeletethepicuproot(this.points,this.picktime,this.droptime,this.pointid);
       
@@ -211,3 +220,4 @@
   })();
   </script>
 </dom-module>
+
