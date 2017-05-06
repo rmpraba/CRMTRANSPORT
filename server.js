@@ -3471,6 +3471,7 @@ app.post('/geteditcheque',  urlencodedParser,function (req, res)
 app.post('/getclasspass',  urlencodedParser,function (req, res)
 {
     var query='Select * from student_point where  student_id in (select id from student_details where class="'+req.query.grade+'" and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"';
+    console.log(query);
 
 connection.query(query,
     function(err, rows){

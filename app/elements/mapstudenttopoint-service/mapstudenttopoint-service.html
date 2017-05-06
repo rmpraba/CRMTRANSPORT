@@ -368,11 +368,12 @@
       //document.querySelector('routecreate-card').FnClear();
       
     },
-    getgradedata:function(temp){
+    getgradedata:function(temp,grade){
     this.getclasspassurl = sessionStorage.getItem("addrinfo")+"/getclasspass";
       var obj={"id":"","schol":"","academic_year":""}
       obj.schol=sessionStorage.getItem("sch");
       obj.id=temp;
+      obj.grade=grade;
        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
      
       this.getclasspassparams=obj;
@@ -381,7 +382,7 @@
       },
       getclasspassResponse:function(e) {
         var starr = e.detail.response.returnval;
-      //  alert(JSON.stringify(starr));
+        alert(JSON.stringify(starr));
         document.querySelector('passtemplate-card').fngetid(starr);
       },
       routedetail:function(){
