@@ -8,7 +8,7 @@
             url="{{getrouteurl}}"
             params="{{getrouteparam}}"
             handle-as="json"
-            content-type="application/json"
+            content-type="application/json"   
             on-response="getrouteResponse"
             debounce-duration="300"
             > 
@@ -1441,7 +1441,6 @@
       },
         stupassgetname:function()
       {
-        //alert('hi service');
         this.stupassgetnameurl=sessionStorage.getItem("addrinfo")+"/stupassgetname";
         var obj={"schol":"","academic_year":""}
         obj.schol=sessionStorage.getItem("sch");
