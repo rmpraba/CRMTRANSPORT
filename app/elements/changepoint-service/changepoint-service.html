@@ -246,7 +246,7 @@
         obj.schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.selectname1param=obj;
-         alert(JSON.stringify(obj));
+        // alert(JSON.stringify(obj));
         this.$.selectname1ajax.generateRequest();
       },
       selectname1Response:function(e){
@@ -263,7 +263,7 @@
           }
          }
          } 
-              alert(JSON.stringify(temmarrwwwww));
+             // alert(JSON.stringify(temmarrwwwww));
 
         document.querySelector('changepoint-card').autocompletename(temmarrwwwww);
       },
