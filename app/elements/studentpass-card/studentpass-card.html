@@ -126,7 +126,7 @@
      <transport-service id="root"></transport-service>
      <mapstudenttopoint-service id="maps"></mapstudenttopoint-service>
 
-     <iron-ajax
+     <!-- <iron-ajax
         auto
         id="numberreadajax"
         url="../../configfile/coordinator.json"
@@ -136,7 +136,7 @@
         on-response="numberreadResponse"
         debounce-duration="300"
         >
-    </iron-ajax>
+    </iron-ajax> -->
   </template>
 
 
@@ -149,6 +149,7 @@
     'use strict';
     var namearr=[];
     var num;
+    
     Polymer({
       is: 'studentpass-card',
     ready:function(){
@@ -185,6 +186,9 @@
           this.$.pass.hidden=false;
           document.querySelector("#checkbox").checked=false;
            this.$.text.hidden=false;
+           this.passarr1=[];
+           this.studname="";
+       
       },
        email:function(e){
               //alert('sending email');
@@ -328,17 +332,16 @@ this.$.selectclass.hidden=true;
     }
   },
   class:function(e){
-
+    this.passarr1="";
     var val=(e.target.selectedItem.textContent).trim();
      for(var i=0;i<this.classarr.length;i++){
             if(this.classarr[i].class==val)
               this.seltripsz=this.classarr[i].tripidz;
           } 
-          document.querySelector('passtemplate-card').fnsetclear();
+          // document.querySelector('passtemplate-card').fnsetclear();
     this.$.maps.getgradedata(this.seltripsz,val);
   }
-
-
+  
 
     });
   })();

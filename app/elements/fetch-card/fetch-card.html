@@ -133,6 +133,15 @@
     
       },
       fnsave:function(e){
+        if(this.points==""||this.distance==""||this.pickseq==""||this.dropseq==""){
+
+           alert('Please Enter the values');
+            /*this.$.points.validate();
+           this.$.dist.validate();
+           this.$.mstppickseq.validate();
+           this.$.mstpdropseq.validate();*/
+        }
+        else{
                     this.asdsaddad=true;
      // alert(this.points+this.picktime+this.droptime+this.pointid+this.routid);
          this.fneditthepicuprooturl=sessionStorage.getItem("addrinfo")+"/fneditthepicuproot-service";
@@ -152,8 +161,7 @@
           this.$.fneditthepicuprootajax.generateRequest();
            this.$.fnretiveeditidz.hidden=false;
            this.$.fnretivesaveidz.hidden=true;
-           
-     
+         }
       },
       fnedit:function(e){
           this.asdsaddad=false;
@@ -171,7 +179,7 @@
    }
    else if(e.detail.response.returnval=="notempty"){
 
-    alert("ALL READY  STUDENT MAPPING IN THE POINT ");
+       alert("ALREADY STUDENTS MAPPED TO THIS POINT ");
    }
     },
   
@@ -190,7 +198,7 @@
         obj.pickseq=this.pickseq;
         obj.dropseq=this.dropseq;
        this.fndeletethepicuprootparam=obj; 
-       alert(JSON.stringify(obj)); 
+       //alert(JSON.stringify(obj)); 
         this.$.fndeletethepicuprootajax.generateRequest();
         // this.$.transportservice.fndeletethepicuproot(this.points,this.picktime,this.droptime,this.pointid);
       

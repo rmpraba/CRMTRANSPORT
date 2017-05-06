@@ -63,13 +63,13 @@
             <li class="row">
               <div class="detail">
                 <div class="field">
-                  <paper-input label="Pickup Sequence"  required error-message="needs Pickup Sequence!" value="{{pickupseq}}" id="mstppickseq"></paper-input>
+                  <paper-input label="Pickup Sequence"  allowed-pattern="[0-9]" required error-message="needs Pickup Sequence!" value="{{pickupseq}}" id="mstppickseq"></paper-input>
                 </div>
               </div>
 
               <div class="detail">
                 <div class="field">
-                  <paper-input label="Drop Sequence"  required error-message="needs Drop Sequence!" value="{{dropseq}}" id="mstpdropseq"></paper-input>
+                  <paper-input label="Drop Sequence"  allowed-pattern="[0-9]" required error-message="needs Drop Sequence!" value="{{dropseq}}" id="mstpdropseq"></paper-input>
                 </div>
               </div>
             </li>
@@ -103,10 +103,11 @@
         //alert(111111);
         if(this.points=="" || this.distance=="" || this.pickupseq=="" || this.dropseq=="" )
         {
-           this.$.pt.validate();
+           /*this.$.pt.validate();
            this.$.dist.validate();
            this.$.mstppickseq.validate();
-           this.$.mstpdropseq.validate();
+           this.$.mstpdropseq.validate();*/
+           alert('Pease Enter all the fields');
         }
   else
         {
