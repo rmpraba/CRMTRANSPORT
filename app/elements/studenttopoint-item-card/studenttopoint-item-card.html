@@ -163,6 +163,7 @@
       },
       droproute:function(e){
         droproute = (e.target.selectedItem.value);
+        // alert(e.target.selectedItem.value+" "+droproute);
         this.selectid=droproute;
         this.routedroppointurl = sessionStorage.getItem("addrinfo")+"/routedroppoint";
         var obj={"routedroppt":"","studid":"","schol":"","schooltype":"","academic_year":""};
