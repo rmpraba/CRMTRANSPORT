@@ -1121,9 +1121,9 @@ app.post('/fneditthepicuproot-service',  urlencodedParser,function (req, res)
 {  
        
                         
-      console.log("update point set point_name='"+req.query.points+"',pickup_time='"+req.query.picktime+"',drop_time='"+req.query.droptime+"',pickup_seq='"+req.query.pickseq+"',drop_seq='"+req.query.dropseq+"' where school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and pickup_seq='"+req.query.pickseq+"' and drop_seq='"+req.query.dropseq+"' and academic_year='"+req.query.academic_year+"'");
+      console.log("update point set point_name='"+req.query.points+"',distance_from_school='"+req.query.distance+"',pickup_time='"+req.query.picktime+"',drop_time='"+req.query.droptime+"',pickup_seq='"+req.query.pickseq+"',drop_seq='"+req.query.dropseq+"' where school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and pickup_seq='"+req.query.pickseq+"' and drop_seq='"+req.query.dropseq+"' and academic_year='"+req.query.academic_year+"'");
 
-  connection.query("update point set point_name='"+req.query.points+"',pickup_time='"+req.query.picktime+"',drop_time='"+req.query.droptime+"',pickup_seq='"+req.query.pickseq+"',drop_seq='"+req.query.dropseq+"' where school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and academic_year='"+req.query.academic_year+"'",
+  connection.query("update point set point_name='"+req.query.points+"',distance_from_school='"+req.query.distance+"',pickup_time='"+req.query.picktime+"',drop_time='"+req.query.droptime+"',pickup_seq='"+req.query.pickseq+"',drop_seq='"+req.query.dropseq+"' where school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and academic_year='"+req.query.academic_year+"'",
     function(err, rows)
     {
     if(!err)
@@ -1162,7 +1162,8 @@ var qur="DELETE FROM  point where point_name='"+req.query.points+"'and pickup_ti
 app.post('/fndeletethepicuproot-service' ,  urlencodedParser,function (req, res)
 {  
  
-      var qur1="DELETE FROM  point where point_name='"+req.query.points+"'and pickup_time='"+req.query.picktime+"'and drop_time='"+req.query.droptime+"' and school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and  pickup_seq='"+req.query.pickseq+"' and drop_seq='"+req.query.dropseq+"' and academic_year='"+req.query.academic_year+"'";
+      var qur1="DELETE FROM  point where point_name='"+req.query.points+"'and distance_from_school='"+req.query.distance+"' and pickup_time='"+req.query.picktime+"'and drop_time='"+req.query.droptime+"' and school_id='"+req.query.schol+"' and id='"+req.query.pointid+"'and route_id='"+req.query.routid+"' and  pickup_seq='"+req.query.pickseq+"' and drop_seq='"+req.query.dropseq+"' and academic_year='"+req.query.academic_year+"'";
+      console.log(qur1);
 connection.query('select * from student_point where school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'" and drop_point="'+req.query.pointid+'" or pickup_point="'+req.query.pointid+'"',
   function(err, rows)
     {
@@ -5136,3 +5137,4 @@ var server = app.listen(8081, function () {
   var port = server.address().port
   console.log("Example app listening at http://%s:%s", host, port)
 })
+ 
