@@ -3471,7 +3471,10 @@ app.post('/geteditcheque',  urlencodedParser,function (req, res)
 app.post('/getclasspass',  urlencodedParser,function (req, res)
 {
     var query='Select * from student_point where  student_id in (select id from student_details where class="'+req.query.grade+'" and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'") and school_id="'+req.query.schol+'" and academic_year="'+req.query.academic_year+'"';
-
+console.log('-------------------------------------------------------');
+console.log('--------------------Pass info fecth--------------------');
+console.log(query);
+console.log('-------------------------------------------------------');
 connection.query(query,
     function(err, rows){
       if(!err){ 
@@ -3645,7 +3648,12 @@ app.post('/getpasssec',  urlencodedParser,function (req, res)
 {
   //console.log('In server..');
   var role={"id":req.query.stid};
-  connection.query("select sd.student_name,(select class from class_details where id=sd.class and school_id='"+req.query.schol+"') as standard,(select zone_name from md_zone where id=sf.zone_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as zone_name,(select route_name from route where id=sp.pickup_route_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pickup_route_id,(select route_name from route where id=sp.drop_route_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as drop_route_id,(select point_name from point where id=sp.pickup_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pickup_point,(select point_name from point where id=sp.drop_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as drop_point,p.parent_name,p.mobile,p.address1,p.address2,p.address3,p.city,p.pincode from student_details sd join student_fee sf on (sd.id=sf.student_id) join student_point sp on(sf.student_id=sp.student_id) join mlzscrm.parent p on(p.student_id=sp.student_id) where sp.student_id='"+req.query.stid+"' and sp.school_id='"+req.query.schol+"'  and sp.academic_year='"+req.query.academic_year+"' and p.school_id='"+req.query.schol+"'",
+  var qur="select sd.student_name,(select class from class_details where id=sd.class and school_id='"+req.query.schol+"') as standard,(select zone_name from md_zone where id=sf.zone_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as zone_name,(select route_name from route where id=sp.pickup_route_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pickup_route_id,(select route_name from route where id=sp.drop_route_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as drop_route_id,(select point_name from point where id=sp.pickup_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pickup_point,(select point_name from point where id=sp.drop_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as drop_point,p.parent_name,p.mobile,p.address1,p.address2,p.address3,p.city,p.pincode from student_details sd join student_fee sf on (sd.id=sf.student_id) join student_point sp on(sf.student_id=sp.student_id) join mlzscrm.parent p on(p.student_id=sp.student_id) where sp.student_id='"+req.query.stid+"' and sp.school_id='"+req.query.schol+"'  and sp.academic_year='"+req.query.academic_year+"' and p.school_id='"+req.query.schol+"'";
+  console.log('-----------------------------------------------------');
+  console.log('-----------------------------------------------------');
+  console.log(qur);
+  console.log('-----------------------------------------------------');
+  connection.query(qur,
     function(err, rows){
     if(!err){
       if(rows.length>0)

@@ -61,8 +61,8 @@
 <div id="passtemp">
        <template  is="dom-repeat" items="{{passarr1}}" as="view">
       <div class="itemcards">
-        <passtemplate-get-item-card schoolname="{{view.schoolname}}" schooladdr="{{view.schooladdr}}" sid="{{view.stid}}" studname="{{view.stname}}" stnd="{{view.stnd}}" sec="{{view.sec}}" zone="{{view.zonename}}" parent="{{view.dad1}}" address1="{{view.add1}}" address2="{{view.add2}}" address3="{{view.add3}}" town="{{view.add4}}" pin="{{view.pin}}" pickuprout="{{view.pickr}}" pickup="{{view.pickp}}" droprout="{{view.dropr}}" drop="{{view.dropp}}" mobno="{{view.mob}}" coorno="{{view.coorno}}">
-       </passtemplate-get-item-card>
+        <passtemplate-card schoolname="{{view.schoolname}}" schooladdr="{{view.schooladdr}}" sid="{{view.stid}}" studname="{{view.stname}}" stnd="{{view.stnd}}" sec="{{view.sec}}" zone="{{view.zonename}}" parent="{{view.dad1}}" address1="{{view.add1}}" address2="{{view.add2}}" address3="{{view.add3}}" town="{{view.add4}}" pin="{{view.pin}}" pickuprout="{{view.pickr}}" pickup="{{view.pickp}}" droprout="{{view.dropr}}" drop="{{view.dropp}}" mobno="{{view.mob}}" coorno="{{view.coorno}}">
+       </passtemplate-card>
       </div>
     </template>
 </div>
@@ -124,7 +124,7 @@
      <transport-service id="root"></transport-service>
      <mapstudenttopoint-service id="maps"></mapstudenttopoint-service>
 
-     <iron-ajax
+     <!-- <iron-ajax
         auto
         id="numberreadajax"
         url="../../configfile/coordinator.json"
@@ -134,7 +134,7 @@
         on-response="numberreadResponse"
         debounce-duration="300"
         >
-    </iron-ajax>
+    </iron-ajax> -->
   </template>
 
 
@@ -147,6 +147,7 @@
     'use strict';
     var namearr=[];
     var num;
+    
     Polymer({
       is: 'studentpass-card',
     ready:function(){
@@ -183,6 +184,9 @@
           this.$.pass.hidden=false;
           document.querySelector("#checkbox").checked=false;
            this.$.text.hidden=false;
+           this.passarr1=[];
+           this.studname="";
+       
       },
        email:function(e){
               //alert('sending email');
@@ -326,17 +330,16 @@ this.$.selectclass.hidden=true;
     }
   },
   class:function(e){
-
+    this.passarr1="";
     var val=(e.target.selectedItem.textContent).trim();
      for(var i=0;i<this.classarr.length;i++){
             if(this.classarr[i].class==val)
               this.seltripsz=this.classarr[i].tripidz;
           } 
-          document.querySelector('passtemplate-card').fnsetclear();
+          // document.querySelector('passtemplate-card').fnsetclear();
     this.$.maps.getgradedata(this.seltripsz,val);
   }
-
-
+  
 
     });
   })();
