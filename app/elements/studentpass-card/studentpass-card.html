@@ -60,10 +60,9 @@
       </div>
 <div id="passtemp">
        <template  is="dom-repeat" items="{{passarr1}}" as="view">
-       <div> {{view.stname}}</div>
       
       <div class="itemcards">
-        <passtemplate-card schoolname="{{view.schoolname}}" schooladdr="{{view.schooladdr}}" sid="{{view.stid}}" studname="{{view.stname}}" stnd="{{view.stnd}}" sec="{{view.sec}}" zone="{{view.zonename}}" parent="{{view.dad1}}" address1="{{view.add1}}" address2="{{view.add2}}" address3="{{view.add3}}" town="{{view.add4}}" pin="{{view.pin}}" pickuprout="{{view.pickr}}" pickup="{{view.pickp}}" droprout="{{view.dropr}}" drop="{{view.dropp}}" mobno="{{view.mob}}" coorno="{{view.coorno}}">
+        <passtemplate-card schoolname="{{view.schoolname}}" schooladdr="{{view.schooladdr}}" sid="{{view.stid}}" studname="{{view.stname}}" stnd="{{view.stnd}}" sec="{{view.sec}}" zone="{{view.zonename}}" parent="{{view.dad1}}" address1="{{view.add1}}" address2="{{view.add2}}" address3="{{view.add3}}" town="{{view.add4}}" pin="{{view.pin}}" pickuprout="{{view.pickr}}" pickup="{{view.pickp}}" droprout="{{view.dropr}}" drop="{{view.dropp}}" mobno="{{view.mob}}" conumber="{{view.conumber}}" classidz="{{val}}">
        </passtemplate-card>
       </div>
     </template>
@@ -86,9 +85,9 @@
             <img style="min-height: 12%;min-width: 18%; margin-top: 5%; height: 18%; width: 27%;border: 1px solid;"src="images/{{sid}}.jpg" alt="Paste photo here"/>
           </div>
           <div class="studetail"> 
-          <p style="font-size: 16px;">{{studname}}</p>
-          <p style="font-size: 16px;">{{stnd}} - {{sec}}</p>
-          <p style="font-size: 16px;">Zone- {{zone}}</p>
+          <p style="font-size: 14px;">{{studname}}</p>
+          <p style="font-size: 12px;">Class-{{classid}}</p>
+          <p style="font-size: 12px;">Zone- {{zone}}</p>
             </div>
         </div>
   </div>
@@ -333,13 +332,14 @@ this.$.selectclass.hidden=true;
   },
   class:function(e){
     this.passarr1="";
-    var val=(e.target.selectedItem.textContent).trim();
+    this.val=(e.target.selectedItem.textContent).trim();
      for(var i=0;i<this.classarr.length;i++){
-            if(this.classarr[i].class==val)
+            if(this.classarr[i].class==this.val)
               this.seltripsz=this.classarr[i].tripidz;
           } 
+          alert(this.val)
           // document.querySelector('passtemplate-card').fnsetclear();
-    this.$.maps.getgradedata(this.seltripsz,val);
+    this.$.maps.getgradedata(this.seltripsz,this.val);
   }
   
 

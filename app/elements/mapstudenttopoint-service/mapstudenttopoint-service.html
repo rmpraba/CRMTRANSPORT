@@ -446,7 +446,6 @@
        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
      
       this.getclasspassparams=obj;
-      //alert(JSON.stringify(obj));
       this.$.getclasspassajax.generateRequest();
       },
       getclasspassResponse:function(e) {
@@ -540,14 +539,20 @@
       droppoint=e.detail.response.returnval[0].drop_point;
       dad1=e.detail.response.returnval[0].parent_name;
       mob=e.detail.response.returnval[0].mobile;
-      add1=e.detail.response.returnval[0].address1;
-      add2=e.detail.response.returnval[0].address2;
-      add3=e.detail.response.returnval[0].address3;
+     if(e.detail.response.returnval[0].address1!='null'|| e.detail.response.returnval[0].address1!=""){
+         add1=e.detail.response.returnval[0].address1;
+          }
+           if(e.detail.response.returnval[0].address2!='null'|| e.detail.response.returnval[0].address2!=""){
+          add2=e.detail.response.returnval[0].address2;
+            }
+     if(e.detail.response.returnval[0].address3!='null'|| e.detail.response.returnval[0].address3!=""){
+           add3=e.detail.response.returnval[0].address3;
+       }
       add4=e.detail.response.returnval[0].city;
       pin=e.detail.response.returnval[0].pincode;
-
+      conumber=e.detail.response.returnval[0].conumber;
     
-var obj={"stname":"","stnd":"","sec":"","pickp":"","pickr":"","dropp":"","dropr":"","dad1":"","add1":"","add2":"","add3":"","add4":"","pin":"","mob":"","coorno":"","schoolname":"","schooladdr":"","zonename":""}
+var obj={"stname":"","stnd":"","sec":"","pickp":"","pickr":"","dropp":"","dropr":"","dad1":"","add1":"","add2":"","add3":"","add4":"","pin":"","mob":"","conumber":"","schoolname":"","schooladdr":"","zonename":""}
       obj.stname=stname;
         obj.stnd=standard;
         obj.sec=section;
@@ -562,7 +567,7 @@ var obj={"stname":"","stnd":"","sec":"","pickp":"","pickr":"","dropp":"","dropr"
         obj.add4=add4;
         obj.pin=pin;
         obj.mob=mob;
-        obj.coorno=coor;
+        obj.conumber=conumber;
         obj.zonename=zonename;
         obj.schoolname=sessionStorage.getItem("schoolname");
         obj.schooladdr=sessionStorage.getItem("schooladdr");

@@ -3083,7 +3083,7 @@ app.post('/getparentinfo',  urlencodedParser,function (req, res)
 {
   var schoolx={"school_id":req.query.schol};
   var date4={"student_id":req.query.stid};
-      connection.query('Select * from parent where ? and ? and academic_year="'+req.query.academic_year+'"',[date4,schoolx],
+      connection.query('Select * from mlzscrm.parent where ? and ?',[date4,schoolx],
         function(err, rows){
     if(!err){
       if(rows.length>0)
@@ -3646,7 +3646,7 @@ app.post('/getpasssec',  urlencodedParser,function (req, res)
 {
   //console.log('In server..');
   var role={"id":req.query.stid};
-  var qur="select sd.student_name,(select class from class_details where id=sd.class and school_id='"+req.query.schol+"') as standard,(select zone_name from md_zone where id=sf.zone_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as zone_name,(select route_name from route where id=sp.pickup_route_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pickup_route_id,(select route_name from route where id=sp.drop_route_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as drop_route_id,(select point_name from point where id=sp.pickup_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pickup_point,(select point_name from point where id=sp.drop_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as drop_point,p.parent_name,p.mobile,p.address1,p.address2,p.address3,p.city,p.pincode from student_details sd join student_fee sf on (sd.id=sf.student_id) join student_point sp on(sf.student_id=sp.student_id) join mlzscrm.parent p on(p.student_id=sp.student_id) where sp.student_id='"+req.query.stid+"' and sp.school_id='"+req.query.schol+"'  and sp.academic_year='"+req.query.academic_year+"' and p.school_id='"+req.query.schol+"'";
+  var qur="select sd.student_name,sd.school_id,(select cordinator_no from transport_coordinator where school_id=sd.school_id)as conumber,(select class from class_details where class=sd.class and school_id='"+req.query.schol+"') as standard,(select zone_name from md_zone where id=sf.zone_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as zone_name,(select route_name from route where id=sp.pickup_route_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pickup_route_id,(select route_name from route where id=sp.drop_route_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as drop_route_id,(select point_name from point where id=sp.pickup_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pickup_point,(select point_name from point where id=sp.drop_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as drop_point,p.parent_name,p.mobile,p.address1,p.address2,p.address3,p.city,p.pincode from student_details sd join student_fee sf on (sd.id=sf.student_id) join student_point sp on(sf.student_id=sp.student_id) join mlzscrm.parent p on(p.student_id=sp.student_id) where sp.student_id='"+req.query.stid+"' and sp.school_id='"+req.query.schol+"'  and sp.academic_year='"+req.query.academic_year+"' and sd.school_id='"+req.query.schol+"'  and sd.academic_year='"+req.query.academic_year+"' and sf.academic_year='"+req.query.academic_year+"' and p.school_id='"+req.query.schol+"'";
   console.log('-----------------------------------------------------');
   console.log('-----------------------------------------------------');
   console.log(qur);
@@ -3656,7 +3656,6 @@ app.post('/getpasssec',  urlencodedParser,function (req, res)
     if(!err){
       if(rows.length>0)
       {
-        //console.log(rows);
         res.status(200).json({'returnval': rows});
       } else {
         console.log(err);

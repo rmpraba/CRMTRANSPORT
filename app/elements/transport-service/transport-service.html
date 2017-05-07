@@ -2734,16 +2734,17 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
 
       getpassnameResponse:function(e){
           var idst=e.detail.response.returnval[0].id;
-          var classid=e.detail.response.returnval[0].class_id;
+          var classid=e.detail.response.returnval[0].class;
           var bloodgp=e.detail.response.returnval[0].blood_group;
           document.querySelector('studentpass-card').blood=bloodgp;
           document.querySelector('studentpass-card').sid=idst;
+          document.querySelector('studentpass-card').classid=classid;
+     
           //alert('st d '+idst);
           this.getpassdetailurl=sessionStorage.getItem("addrinfo")+"/getpassdetail";
           var obj={"stid":"","schol":"","academic_year":""}
           obj.stid=idst;
-             obj.academic_year=localStorage.getItem("curr_sess_academicyear");
-         
+          obj.academic_year=localStorage.getItem("curr_sess_academicyear");
           obj.schol=sessionStorage.getItem("sch");
           this.getpassdetailparam=obj;
           this.$.getpassdetailajax.generateRequest();
@@ -2756,9 +2757,11 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
 
 
           this.getpassclassurl=sessionStorage.getItem("addrinfo")+"/getpassclass";
-          var obj3={"class":"","schol":""}
+          var obj3={"class":"","schol":"","academic_year":""}
           obj3.class=classid;
           obj3.schol=sessionStorage.getItem("sch");
+          obj3.academic_year=localStorage.getItem("curr_sess_academicyear");
+    
           this.getpassclassparam=obj3;
           this.$.getpassclassajax.generateRequest();
       },
@@ -2778,7 +2781,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
 
           this.getdpnameurl=sessionStorage.getItem("addrinfo")+"/getpointname";
           var obj2={"point":"","schol":"","academic_year":""}
-          obj2.point=dp;
+            obj2.point=dp;
             obj2.academic_year=localStorage.getItem("curr_sess_academicyear");
             obj2.schol=sessionStorage.getItem("sch");
           this.getdpnameparam=obj2;
@@ -2819,13 +2822,15 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             document.querySelector('studentpass-card').droprout=droproute;
         },
         getpassclassResponse:function(e){
+            alert(JSON.stringify(e.detail.response.returnval));
+
             var standard=e.detail.response.returnval[0].class;
             var section=e.detail.response.returnval[0].section;
             document.querySelector('studentpass-card').stnd=standard;
             document.querySelector('studentpass-card').sec=section;
         },
         getparentinfoResponse:function(e){
-
+    alert(JSON.stringify(e.detail.response.returnval));
           var dad1=e.detail.response.returnval[0].parent_name;
             var add1=e.detail.response.returnval[0].address1;
             var add2=e.detail.response.returnval[0].address2;
