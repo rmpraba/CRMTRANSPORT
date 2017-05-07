@@ -290,7 +290,7 @@ margin-left: 2%;
         obj0.schol = sessionStorage.getItem("sch");
         obj0.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.getpasssecparam =obj0;
-       alert(JSON.stringify(obj0));
+      // alert(JSON.stringify(obj0));
         this.$.getpasssecajax.generateRequest();
        this.$.numberreadajax.generateRequest();
       
@@ -310,7 +310,7 @@ margin-left: 2%;
       },
      getpasssecResponse:function(e){
       //alert('2');
-     alert(JSON.stringify(e.detail.response.returnval));
+    // alert(JSON.stringify(e.detail.response.returnval));
       stname=e.detail.response.returnval[0].student_name;
       standard=e.detail.response.returnval[0].standard;
       section=e.detail.response.returnval[0].section;
