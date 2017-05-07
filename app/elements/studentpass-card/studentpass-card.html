@@ -44,9 +44,9 @@
         </template>
       </paper-listbox>
 
-      <paper-checkbox id="checkbox" class="checkbox" on-change="changehandler">Select by Grade</paper-checkbox>
+      <paper-checkbox id="selectgradebox" class="checkbox" on-change="changehandler">Select by Grade</paper-checkbox>
 
-      <div id="selectclass" >
+      <div id="selectclass">
         <paper-dropdown-menu   label="Select Grade">
           <paper-menu class="dropdown-content" id="gradeselect" on-iron-select="class" attr-for-selected="value" >
               <template is="dom-repeat" items="{{classarr}}" as="item">
@@ -68,56 +68,145 @@
     </template>
 </div>
 
-    <div id="pass" class="pass">
+
+<div id="pass" class="pass">
   <div id="canvas" style="background-image:url(fimage/1.jpg)">
-<div class="horlayout">
+    <div class="horlayout">
       <div class="front">
         <div class="header">
-        <div class="logo"><img style="width: 18%; height: 12%; margin-top: 5%;" src="../../images/zeesouth.png"/></div>
-        <div class="heading">
-          <div class="title">{{schoolname}}</div>
-          <div class="address">{{schooladdr}}</div>
+          <div class="logo"><img style="width: 18%; height: 12%; margin-top: 5%;" src="../../images/zeesouth.png"/>
+          </div>
+          <div class="heading">
+            <div class="title">{{schoolname}}</div>
+            <div class="address">{{schooladdr}}</div>
+          </div>
         </div>
-        </div>
-         <hr></hr>
         <div class="body2">
           <div class="studimg">
-            <img style="min-height: 12%;min-width: 18%; margin-top: 5%; height: 18%; width: 27%;border: 1px solid;"src="images/{{sid}}.jpg" alt="Paste photo here"/>
+            <img style="min-height: 12%;min-width: 18%; margin-top: 5%; height: 18%; width: 27%;border: 1px solid;" src="images/{{sid}}.jpg" alt="Paste photo here"/>
           </div>
           <div class="studetail"> 
           <p style="font-size: 14px;">{{studname}}</p>
           <p style="font-size: 12px;">Class-{{classid}}</p>
           <p style="font-size: 12px;">Zone- {{zone}}</p>
-            </div>
+          </div>
         </div>
-  </div>
+      </div>
 
       <div class="back">
-         <div class="body3">
-        <div class="backimg">
-        <div class="backdetails">
-                  <p style="font-size: 13px;"><strong>Address:</strong>
+        <div class="body3">
+          <div class="backimg">
+            <div class="backdetails">
+              <p style="font-size: 13px;"><strong>Address:</strong>
                   S/O,{{parent}} ,
                   {{address1}},
                   {{address2}},
                   {{address3}}, 
-                  {{town}}-{{pin}}.</p>
-                  <hr></hr>
-                  <div><p style="margin: 4px 0 4px 0; display: inline;font-size: 13px;font-weight: bold;">Pickup Route:</p><p style="margin: 4px 0 4px 0;text-transform: capitalize; display: inline;font-size: 12px;">{{pickuprout}}</p></div>
-                  <div><p style="margin: 4px 0 4px 0; display: inline;font-weight: bold;font-size: 13px;">Pickup Point:</p><p style="margin: 4px 0 4px 0;text-transform: capitalize; display: inline;font-size: 12px;">{{pickup}}</p></div>
-                  <div><p style="margin: 4px 0 4px 0; display: inline;font-weight: bold;font-size: 13px;">Drop Route:</p><p style="margin: 4px 0 4px 0;text-transform: capitalize; display: inline;font-size: 12px;">{{droprout}}</p></div>
-                  <div><p style="margin: 4px 0 4px 0; display: inline;font-weight: bold;font-size: 13px;">Drop Point:</p><p style="margin: 4px 0 4px 0;text-transform: capitalize; display: inline;font-size: 12px;">{{drop}}</p></div>
-                  <hr></hr>
-                  <div><strong>Parents Mob:</strong> {{mobno}}</div>
-                  <hr></hr>
-                  <div><strong>Transport Coordinator no: </strong><br>{{coorno}}</div>
+                  {{town}}-{{pin}}.
+              </p>
+                <hr>
+              <div>
+                <p style="margin: 4px 0 4px 0; display: inline;font-size: 13px;font-weight: bold;">Pickup Route:</p>
+                <p style="margin: 4px 0 4px 0;text-transform: capitalize; display: inline;font-size: 12px;">{{pickuprout}}</p>
+              </div>
+              <div>
+                <p style="margin: 4px 0 4px 0; display: inline;font-weight: bold;font-size: 13px;">Pickup Point:</p>
+                <p style="margin: 4px 0 4px 0;text-transform: capitalize; display: inline;font-size: 12px;">{{pickup}}</p>
+              </div>
+              <div>
+                <p style="margin: 4px 0 4px 0; display: inline;font-weight: bold;font-size: 13px;">Drop Route:</p>
+                <p style="margin: 4px 0 4px 0;text-transform: capitalize; display: inline;font-size: 12px;">{{droprout}}</p>
+              </div>
+              <div>
+                <p style="margin: 4px 0 4px 0; display: inline;font-weight: bold;font-size: 13px;">Drop Point:</p>
+                <p style="margin: 4px 0 4px 0;text-transform: capitalize; display: inline;font-size: 12px;">{{drop}}</p>
+              </div>
+                <hr>
+                <div>
+                  <strong>Parents Mob:</strong> {{mobno}}
+                </div>
+                  <hr>
+                <div>
+                  <strong>Transport Coordinator no: </strong>{{coorno}}
+                </div>
+>>>>>>> origin/master
+            </div>
+          </div>
         </div>
-        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  <!-- <div id="pass" class="pass">
+    <div id="canvas" style="background-image:url(fimage/1.jpg)">
+      <div class="horlayout">
+        <div class="front">
+          <div class="header">
+            <div class="logo"><img style="width: 18%; height: 12%; margin-top: 5%;" src="../../images/zeesouth.png"/></div>
+            <div class="heading">
+              <div class="title">{{schoolname}}</div>
+              <div class="address">{{schooladdr}}</div>
+            </div>
+          </div>
+            <hr></hr>
+          <div class="body2">
+            <div class="studimg">
+              <img style="min-height: 12%;min-width: 18%; margin-top: 5%; height: 18%; width: 27%;border: 1px solid;" src="images/{{sid}}.jpg" alt="Paste photo here"/>
+            </div>
+            <div class="studetail"> 
+              <p style="font-size: 16px;">{{studname}}</p>
+              <p style="font-size: 16px;">{{stnd}} - {{sec}}</p>
+              <p style="font-size: 16px;">Zone - {{zone}}</p>
+            </div>
+          </div>
         </div>
 
+
+      <div class="back">
+        <div class="body3">
+          <div class="backimg">
+            <div class="backdetails">
+                <p style="font-size: 13px;"><strong>Address:</strong>
+                  S/O,{{parent}} ,
+                  {{address1}},
+                  {{address2}},
+                  {{address3}}, 
+                  {{town}}-{{pin}}.
+                </p>
+                  <hr></hr>
+                <div>
+                <p style="margin: 4px 0 4px 0; display: inline;font-size: 13px;font-weight: bold;">Pickup Route:</p><p style="margin: 4px 0 4px 0;text-transform: capitalize; display: inline;font-size: 12px;">{{pickuprout}}
+                </p>
+                </div>
+                <div>
+                  <p style="margin: 4px 0 4px 0; display: inline;font-weight: bold;font-size: 13px;">Pickup Point:</p><p style="margin: 4px 0 4px 0;text-transform: capitalize; display: inline;font-size: 12px;">{{pickup}}
+                  </p>
+                </div>
+                <div>
+                  <p style="margin: 4px 0 4px 0; display: inline;font-weight: bold;font-size: 13px;">Drop Route:</p><p style="margin: 4px 0 4px 0;text-transform: capitalize; display: inline;font-size: 12px;">{{droprout}}
+                  </p>
+                </div>
+                <div>
+                  <p style="margin: 4px 0 4px 0; display: inline;font-weight: bold;font-size: 13px;">Drop Point:</p><p style="margin: 4px 0 4px 0;text-transform: capitalize; display: inline;font-size: 12px;">{{drop}}
+                  </p>
+                </div>
+                  <hr></hr>
+                <div><strong>Parents Mob:</strong> {{mobno}}</div>
+                  <hr></hr>
+                <div><strong>Transport Coordinator no: </strong><br>{{coorno}}</div>
+            </div>
+          </div>
+        </div>
       </div>
+
       </div>
-    </div></div>
+    </div></div> -->
     <div class="buttons">
          <paper-button style="margin-top: 3%"class="button" id="print" on-click="print">Print</paper-button>
       </div>
@@ -166,7 +255,7 @@
         var no=e.detail.response
         this.coorno=no[0].conumber;
       },
-      FnClear:function(){
+      Fnrefresh:function(){
         this.studname="";
         this.stnd="";
         this.sec="";
@@ -183,8 +272,10 @@
         this.pickup="";
         this.drop="";
           this.$.pass.hidden=false;
-          document.querySelector("#checkbox").checked=false;
+          document.querySelector('#selectgradebox').checked=false;
            this.$.text.hidden=false;
+            document.querySelector('#gradeselect').selected=-1;
+          this.zone="";
            this.passarr1=[];
            this.studname="";
        
@@ -195,11 +286,12 @@
             var link = 'mailto:kartiksubu.krs@gmail.com?subject=skr2903krr@gmail.com'+document.getElementById('canvas').value+'&body='+document.getElementById('canvas').value;
               window.location.href = link;
         },
-        print:function(){
+        print:function()
+        {
           this.$.print.hidden=true;
-this.$.text.hidden=true;
-this.$.checkbox.hidden=true;
-this.$.selectclass.hidden=true;
+          this.$.text.hidden=true;
+          this.$.selectgradebox.hidden=true;
+          this.$.selectclass.hidden=true;
             if (!window.print){
             alert("You need NS4.x to use this print button!")
             return
@@ -207,7 +299,7 @@ this.$.selectclass.hidden=true;
             window.print();
             this.$.print.hidden=false;
             this.$.text.hidden=false;
-            this.$.checkbox.hidden=false;
+            this.$.selectgradebox.hidden=false;
             this.$.selectclass.hidden=false;
         },
          autocompletearr:function(autocompletearr)
@@ -307,6 +399,7 @@ this.$.selectclass.hidden=true;
     this.value=this.studid;
     this.$.root.getpassdetail(this.studid);
     this.$.root.getzonedetail(this.studid);
+    document.querySelector('#selectgradebox').checked=false;
   },
  /* passarrgetarr:function(arr){
    this.passarr1=arr;
@@ -341,7 +434,6 @@ this.$.selectclass.hidden=true;
           // document.querySelector('passtemplate-card').fnsetclear();
     this.$.maps.getgradedata(this.seltripsz,this.val);
   }
-  
 
     });
   })();
