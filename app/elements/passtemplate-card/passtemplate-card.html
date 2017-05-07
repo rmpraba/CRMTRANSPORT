@@ -176,79 +176,10 @@ margin-left: 2%;
     </div>
     
 <mapstudenttopoint-service id="maps"></mapstudenttopoint-service>
-
-    <iron-ajax
-    auto 
-      method="post"
-      id="getpasssecajax"
-      url="{{getpasssecurl}}"
-      params="{{getpasssecparam}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="getpasssecResponse"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-    
-    <iron-ajax
-    auto
-      method="post"
-      id="getparentinfoajax"
-      url="{{getparentinfourl}}"
-      params="{{getparentinfoparam}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="getparentinfoResponse"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-    <iron-ajax
-    auto
-      method="post"
-      id="getstudpointoajax"
-      url="{{getstudpointurl}}"
-      params="{{getstudpointparam}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="getstudpointResponse"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-    <iron-ajax
-          auto      
-        id="numberreadajax"
-        url="../../configfile/coordinator.json"
-        params="{{numberreadparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="numberreadResponse"
-        debounce-duration="300"
-        >
-    </iron-ajax>
   </template>
   <script>
   (function() {
     'use strict';
-    var sid;
-    var passarr=[];
-    var stname;
-    var pickupoint;
-    var droppoint;
-    var pickuproute;
-    var droproute;
-    var dad1;
-    var add1;
-    var add2;
-    var add3;
-    var add4;
-    var pin;
-    var mob;
-    var standard;
-    var section;
-    var len;
-    var c=0;
-    var coor;
-    var zonename;
     Polymer({
       is: 'passtemplate-card',
 
@@ -364,6 +295,7 @@ var obj={"stname":"","stnd":"","sec":"","pickp":"","pickr":"","dropp":"","dropr"
   // alert(JSON.stringify(passarr));
         
       },
+
       
 
     });

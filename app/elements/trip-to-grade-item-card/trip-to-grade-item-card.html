@@ -62,7 +62,7 @@ var obj={"schoolid":"","academic_year":"","tripid":"","gradename":"","id":""}
           obj.id=this.id;
          this.rtipretriveparam=obj;
 
-         alert(JSON.stringify(obj));
+       //  alert(JSON.stringify(obj));
         this.$.rtipretriveajax.generateRequest();
     
        }  
@@ -85,7 +85,7 @@ var obj={"schoolid":"","academic_year":"","tripid":"","gradename":"","id":""}
       }
        },
        rtipretriveResponse:function(e){
-         alert(JSON.stringify(e.detail.response.returnval));
+         //alert(JSON.stringify(e.detail.response.returnval));
          if(e.detail.response.returnval=='empty'){
             var obj={"gradename":"","tripid":""};
             obj.gradename=this.gradename;
@@ -94,13 +94,13 @@ var obj={"schoolid":"","academic_year":"","tripid":"","gradename":"","id":""}
          document.querySelector('trip-to-grade-card').triptograde(triparr);
         }
       else{
-          alert("all Ready mapping this grade in trip");
+          alert("Already mapped this grade to trip");
              document.querySelector('#'+m).checked=false;
             
        }
       },
    triptograde1:function(){
-    alert('1');
+  //  alert('1');
      var obj={};
     triparr.splice(obj); 
     triparr=[];
