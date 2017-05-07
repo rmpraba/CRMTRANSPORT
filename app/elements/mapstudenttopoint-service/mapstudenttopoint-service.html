@@ -539,17 +539,24 @@
       droppoint=e.detail.response.returnval[0].drop_point;
       dad1=e.detail.response.returnval[0].parent_name;
       mob=e.detail.response.returnval[0].mobile;
-     if(e.detail.response.returnval[0].address1!='null'|| e.detail.response.returnval[0].address1!=""){
-         add1=e.detail.response.returnval[0].address1;
+      add1=e.detail.response.returnval[0].address1;
+     var er1=e.detail.response.returnval[0].address2;
+     var er2=e.detail.response.returnval[0].address3;
+      var er3=e.detail.response.returnval[0].city;
+      var er4=e.detail.response.returnval[0].pincode;
+    if(er1==null||er1==""){
+      add2=e.detail.response.returnval[0].address2;
           }
-           if(e.detail.response.returnval[0].address2!='null'|| e.detail.response.returnval[0].address2!=""){
-          add2=e.detail.response.returnval[0].address2;
-            }
-     if(e.detail.response.returnval[0].address3!='null'|| e.detail.response.returnval[0].address3!=""){
-           add3=e.detail.response.returnval[0].address3;
+     if(er2==null||er1==""){
+       add3=e.detail.response.returnval[0].address3;
+     }
+      if(er3==null||er1==""){
+        add4=e.detail.response.returnval[0].city;
+      }
+      if(er4==null||er1==""){
+         pin=e.detail.response.returnval[0].pincode;
        }
-      add4=e.detail.response.returnval[0].city;
-      pin=e.detail.response.returnval[0].pincode;
+  
       conumber=e.detail.response.returnval[0].conumber;
     
 var obj={"stname":"","stnd":"","sec":"","pickp":"","pickr":"","dropp":"","dropr":"","dad1":"","add1":"","add2":"","add3":"","add4":"","pin":"","mob":"","conumber":"","schoolname":"","schooladdr":"","zonename":""}

@@ -3060,10 +3060,9 @@ app.post('/getzonedetail',  urlencodedParser,function (req, res)
 
 app.post('/getpassclass',  urlencodedParser,function (req, res)
 {
-
   var date5={"id":req.query.class};
   var schoolx={"school_id":req.query.schol};
-      connection.query('Select * from class_details where ? and ?',[date5,schoolx],
+      connection.query('Select  cordinator_no from transport_coordinator where school_id="'+req.query.schol+'"',
         function(err, rows){
     if(!err){
       if(rows.length>0)

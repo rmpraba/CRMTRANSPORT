@@ -2139,8 +2139,11 @@
         this.$.getzonedetailajax.generateRequest();
       },
       getzonedetailResponse:function(e){
+       //alert(JSON.stringify(e.detail.response.returnval)); 
         var zonename=e.detail.response.returnval[0].zone_name;
+       // var conumber=e.detail.response.returnval[0].conumber;
         document.querySelector('studentpass-card').zone=zonename.toLowerCase();
+         document.querySelector('studentpass-card').conumber=conumber;
 
       },
       getfeedetailResponse:function(e)
@@ -2822,29 +2825,42 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             document.querySelector('studentpass-card').droprout=droproute;
         },
         getpassclassResponse:function(e){
-            alert(JSON.stringify(e.detail.response.returnval));
+//            alert(JSON.stringify(e.detail.response.returnval));
 
-            var standard=e.detail.response.returnval[0].class;
-            var section=e.detail.response.returnval[0].section;
-            document.querySelector('studentpass-card').stnd=standard;
-            document.querySelector('studentpass-card').sec=section;
+            var cordinatono=e.detail.response.returnval[0].cordinator_no;
+            document.querySelector('studentpass-card').cordinatono=cordinatono;
         },
         getparentinfoResponse:function(e){
-    alert(JSON.stringify(e.detail.response.returnval));
+   //alert(JSON.stringify(e.detail.response.returnval));
           var dad1=e.detail.response.returnval[0].parent_name;
-            var add1=e.detail.response.returnval[0].address1;
-            var add2=e.detail.response.returnval[0].address2;
-            var add3=e.detail.response.returnval[0].address3;
+            var  add1=e.detail.response.returnval[0].address1;
+            var  add2=e.detail.response.returnval[0].address2; 
+            var  add3=e.detail.response.returnval[0].address3; 
             var add4=e.detail.response.returnval[0].city;
             var pin=e.detail.response.returnval[0].pincode;
+           document.querySelector('studentpass-card').address1=add1;
+          
+               if(add2==null||add2==""){
+                  document.querySelector('studentpass-card').address2=add2;
+          
+            }
+           if(add3==null||add3==""){
+              document.querySelector('studentpass-card').address3=add3;
+          
+            }
+           if(add4==null||add4==""){
+               document.querySelector('studentpass-card').town=add4;
+         
+            }
+           if(pin==null||pin==""){
+                document.querySelector('studentpass-card').pin=pin;
+        
+            }
+        
+        
             var mob=e.detail.response.returnval[0].mobile;
 
             document.querySelector('studentpass-card').parent=dad1;
-            document.querySelector('studentpass-card').address1=add1;
-            document.querySelector('studentpass-card').address2=add2;
-            document.querySelector('studentpass-card').address3=add3;
-            document.querySelector('studentpass-card').town=add4;
-            document.querySelector('studentpass-card').pin=pin;
             document.querySelector('studentpass-card').mobno=mob;
 
         },
