@@ -15,9 +15,9 @@
       }
     </style>
     <div class="card"> 
-      <div class="headtabs" id="tabs1">
+      <!-- <div class="headtabs" id="tabs1">
         <paper-tabs selected="0">
-          <paper-tab>Route ID</paper-tab>
+         
           <paper-tab>Route Name</paper-tab>
           <paper-tab>Bus ID & Name</paper-tab>
           <paper-tab>Driver Name</paper-tab>
@@ -30,7 +30,33 @@
       <template  is="dom-repeat" items="{{busreportarr}}" as="view">
         <bus-report-card routeid="{{view.route_id}}" routename="{{view.route_name}}" trip="{{view.trip}}" busid="{{view.bus_id}}" busmodel="{{view.bus_model}}" driverfirstname="{{view.driver_firstname}}" driverlastname="{{view.driver_lastname}}" drivermobile="{{view.driver_mobile}}" attenderfirstname="{{view.attender_firstname}}" attenderlastname="{{view.attender_lastname}}" attendermobile="{{view.attender_mobile}}"></bus-report-card>
       </template>
-     </div> 
+     </div>  -->
+        <table id="testTable2" border="1" style="margin-left: 10%; width: 80%;">
+      <tr id="tableheading">
+      <th><paper-tab>Route ID</paper-tab></th>
+      <th><paper-tab>Route Name</paper-tab></th>
+       <th><paper-tab>TRIP</paper-tab></th>
+     
+      <th> <paper-tab>Bus ID & Name</paper-tab></th>
+      <th><paper-tab>Driver Name</paper-tab></th>
+      <th><paper-tab>Driver Mobile</paper-tab></th>
+      <th><paper-tab>Attender Name</paper-tab></th>
+      <th><paper-tab>Attender Mobile</paper-tab></th>
+      </tr>
+      <template  is="dom-repeat" items="{{busreportarr}}" as="view">
+      
+        <tr>
+        <td>{{view.route_id}}</td>
+        <td>{{view.route_name}}</td>
+        <td>{{view.trip}}</td>
+        <td>{{view.bus_id}}-{{view.bus_model}}</td>
+        <td>{{view.driver_firstname}}{{view.driver_lastname}}</td>
+        <td>{{view.driver_mobile}}</td>
+        <td>{{view.attender_firstname}}{{view.attender_lastname}}</td>
+        <td>{{view.attender_mobile}}</td>
+      </tr>
+      </template>
+      </table>
     </div>
   </template>
   <script>
