@@ -49,29 +49,34 @@
 
             <paper-icon-button class="iconbutton" src="../../images/triptograde.jpg" on-click="triptograde"></paper-icon-button>
 
+            <!-- <div class="driver1">  -->  
+              <paper-icon-button class="iconbutton" src="../../images/driver.png" on-click="driver"></paper-icon-button>
+            <!-- </div> -->
+
+            <!-- <div class="bus1"> -->
+              <paper-icon-button class="iconbutton"  src="../../images/bus.png"  on-click="bus"></paper-icon-button>
+            <!-- </div> -->
+
+            <!-- <div class="busroutemap"> -->
+              <paper-icon-button class="iconbutton" src="../../images/busroute.png" on-click="busroute"></paper-icon-button>
+            <!-- </div> -->
+
+            <!-- <div class="attender1" hidden$="{{attender1}}"> -->
+              <paper-icon-button class="iconbutton"  src="../../images/attender.png" on-click="attender"></paper-icon-button>
+            <!-- </div> -->
+
 
             <div class="attend1" hidden$="{{Attendence}}">
               <paper-icon-button class="iconbutton" src="../../images/add_attendance.png" on-click="addattendence"></paper-icon-button>
             </div>
 
-            <div class="driver1" hidden$="{{Driver}}">   
-              <paper-icon-button class="iconbutton" src="../../images/driver.png" on-click="driver"></paper-icon-button>
-            </div>
-
-            <div class="bus1" hidden$="{{bus}}">
-              <paper-icon-button class="iconbutton"  src="../../images/bus.png"  on-click="bus"></paper-icon-button>
-            </div>
-            <div class="busroutemap" hidden$="{{busroutemap}}">
-              <paper-icon-button class="iconbutton" src="../../images/busroute.png" on-click="busroute"></paper-icon-button>
-            </div>
+            
 
             <div class="staffpoint" hidden$="{{staffpoint}}">
               <paper-icon-button class="iconbutton" src="../../images/staff_route.png" on-click="staffroute"></paper-icon-button>
             </div>
 
-            <div class="attender1" hidden$="{{attender1}}">
-              <paper-icon-button class="iconbutton"  src="../../images/attender.png" on-click="attender"></paper-icon-button>
-            </div>
+            
       
 
     </div>
@@ -102,11 +107,11 @@
     ready:function()
     {
       this.Attendence=true;  
-      this.bus=true;
-      this.Driver=true;
-      this.busroutemap=true;
+      //this.bus=true;
+      //this.Driver=true;
+      //this.busroutemap=true;
       this.staffpoint=true;
-      this.attender1=true;
+      //this.attender1=true;
     },
     FnSelectacademicyear:function(e)
     { 
