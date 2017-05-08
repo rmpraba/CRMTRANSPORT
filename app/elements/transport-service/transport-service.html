@@ -2825,10 +2825,8 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             document.querySelector('studentpass-card').droprout=droproute;
         },
         getpassclassResponse:function(e){
-//            alert(JSON.stringify(e.detail.response.returnval));
-
-            var cordinatono=e.detail.response.returnval[0].cordinator_no;
-            document.querySelector('studentpass-card').cordinatono=cordinatono;
+          var cordinatono=e.detail.response.returnval[0].cordinator_no;
+          document.querySelector('studentpass-card').cordinatono=cordinatono;
         },
         getparentinfoResponse:function(e){
    //alert(JSON.stringify(e.detail.response.returnval));

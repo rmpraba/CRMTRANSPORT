@@ -3062,7 +3062,7 @@ app.post('/getpassclass',  urlencodedParser,function (req, res)
 {
   var date5={"id":req.query.class};
   var schoolx={"school_id":req.query.schol};
-      connection.query('Select  cordinator_no from transport_coordinator where school_id="'+req.query.schol+'"',
+      connection.query('Select  cordinator_no from transport_coordinator where school_id"'+req.query.schol+'"',
         function(err, rows){
     if(!err){
       if(rows.length>0)
@@ -3580,7 +3580,7 @@ connection.query('select * from route where school_id="'+req.query.schol+'" and 
 app.post('/driver_count' ,  urlencodedParser,function (req, res)
 {
   var scho={"school_id":req.query.schol};
-  connection.query('select driver_count from sequence_bus where ?',[scho],
+  connection.query('select driver_count from sequence where ?',[scho],
       function(err, rows){
         if(!err){
           if(rows.length>0)
@@ -3709,7 +3709,7 @@ app.post('/driver',  urlencodedParser,function (req, res){
 app.post('/attender_count' ,  urlencodedParser,function (req, res)
 {
   var scho={"school_id":req.query.schol};
-  connection.query('select attender_count from sequence_bus where ?',[scho],
+  connection.query('select attender_count from sequence where ?',[scho],
       function(err, rows){
         if(!err){
           if(rows.length>0)
@@ -3747,7 +3747,7 @@ app.post('/increasedriverid' ,  urlencodedParser,function (req, res)
      var scho={"school_id":req.query.schol};
      var tempseq=parseInt(req.query.driver_id)+1;
 
-    connection.query('update sequence_bus set driver_count=? WHERE ?',[tempseq,scho],
+    connection.query('update sequence set driver_count=? WHERE ?',[tempseq,scho],
     function(err, rows)
     {
       if(!err)
@@ -3774,7 +3774,7 @@ app.post('/increaseattenderid' ,  urlencodedParser,function (req, res)
   var scho={"school_id":req.query.schol};
         var tempseq=parseInt(req.query.attender_id)+1;
  
-  connection.query('update sequence_bus set attender_count=? WHERE ?',[tempseq,scho],
+  connection.query('update sequence set attender_count=? WHERE ?',[tempseq,scho],
     function(err, rows)
     {
       if(!err)
@@ -3799,7 +3799,7 @@ app.post('/increaseattenderid' ,  urlencodedParser,function (req, res)
 app.post('/bus_count' ,  urlencodedParser,function (req, res)
 {
   var scho={"school_id":req.query.schol};
-  connection.query('select bus_count from sequence_bus where ?',[scho],
+  connection.query('select bus_count from sequence where ?',[scho],
     function(err, rows){
       if(!err){
         if(rows.length>0)
@@ -3820,7 +3820,7 @@ app.post('/increasebusid' ,  urlencodedParser,function (req, res)
   var scho={"school_id":req.query.schol};
        var tempseq=parseInt(req.query.bus_id)+1;
        
-  connection.query('update sequence_bus set bus_count=? WHERE ?',[tempseq,scho],
+  connection.query('update sequence set bus_count=? WHERE ?',[tempseq,scho],
     function(err, rows)
     {
       if(!err)
