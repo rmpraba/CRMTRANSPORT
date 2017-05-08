@@ -4610,8 +4610,8 @@ app.post('/getstudentsforattendancepickup',  urlencodedParser,function (req, res
  });
   
  app.post('/attsubmiturl',  urlencodedParser,function (req, res){
-   var collection={"school_id":req.query.schol,"student_id":req.query.studentid,"student_name":req.query.student_name,"route_id":req.query.routeid,"mode_of_travel":req.query.pickupordrop,"trip":req.query.trip,"att_date":req.query.date,"status":req.query.status};
-   //console.log(collection);
+   var collection={"school_id":req.query.schol,"student_id":req.query.studentid,"student_name":req.query.student_name,"route_id":req.query.routeid,"mode_of_travel":req.query.pickupordrop,"trip":req.query.trip,"att_date":req.query.date,"status":req.query.status,"academic_year":req.query.academic_year};
+   console.log(collection);
    connection.query('insert into attendance set ?',[collection],
      function(err, rows){
  

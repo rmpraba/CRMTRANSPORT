@@ -60,11 +60,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
       <div class="contain-atten">
         <paper-input hidden value="{{studentid}}"></paper-input>
+         <paper-input hidden value="{{}}"></paper-input>
+       
         <div class="attenphoto">
           <img src="../../images/{{studentid}}.jpg" onerror="this.src='../../images/student_avatar.png'" />
         </div>
         <div class="attname"><p>{{student}}</p></div>
-        <div class="attencheck"><paper-checkbox  id="{{studentid}}" on-change="changeHandler"></paper-checkbox></div>
+        <div class="attencheck"><paper-checkbox  id="{{id}}" on-change="changeHandler"></paper-checkbox></div>
       </div>
   </template>
   <script>
@@ -75,13 +77,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'addattendance-item-card',
 
       changeHandler:function(event){
-        // alert(document.querySelector("#"+this.studentid));
-        var studentid = document.querySelector("#"+this.studentid);
+        alert(this.id);
+         alert(document.querySelector("#"+this.id));
+        var studentid = document.querySelector("#"+this.id);
         if(studentid.checked==true)
         {
-        //alert('hi');
         document.querySelector('addattendence-card').FnGetItemsz(this.studentid, this.student);
-        //alert(this.studentid);
 
         }
         else

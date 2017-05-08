@@ -98,7 +98,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       <template is="dom-repeat" items="{{attendancearr}}" as="view">
         <div class="students-atten">
-          <addattendance-item-card student="{{view.name}}" studentid="{{view.student_id}}" ></addattendance-item-card>
+          <addattendance-item-card student="{{view.name}}" studentid="{{view.student_id}}"  id="ENR{{view.studentidz}}"></addattendance-item-card>
         </div>  
       </template>
       <div class="button" style="margin-top: 4%;">
@@ -135,16 +135,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.service.getstudentsforattendance(routeid,trip,pickupordrop);
         this.$.headatt.hidden=false;
         this.$.submitatten.hidden=false;
-        this.$.drop.hidden=true;
+        //this.$.drop.hidden=true;
         //this.$.service.studentroutereport(routeid,trip,pickupordrop);
       },
       FnGetItemsz:function(studentid, student_name)
            {
             var today = new Date();
+           // alert(today);
             var dd = today.getDate();
             var mm = today.getMonth()+1;
             var yyyy = today.getFullYear();
-            if(dd<10) {
+            if(dd<10){
               dd='0'+dd
             }
             if(mm<10) {
@@ -159,25 +160,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             obj.date=today;
             obj.pickupordrop = pickupordrop;
             itemarray.push(obj);
-            //alert(JSON.stringify(itemarray));
+            alert(JSON.stringify(itemarray));
             //this.$.submitbutton.disabled=false;
             //document.getElementById("submitbutton").style.background="black";
           },
           removestud:function(std){
+
             for(var i=0;i<itemarray.length;i++){
               if(std==itemarray[i].studentid){
                 itemarray.splice(i,1);
               }
             }
-          //this.$.submitbutton.disabled=true;
-          //document.getElementById("submitbutton").style.background="grey";
            },
           click:function(){
+            alert(JSON.stringify(itemarray));
             this.$.service.submitattendance(itemarray);
-            //itemarray=[];
-            //document.querySelector('#gradeselect').selected=-1;
             this.value="";
-            // this.$.submitbutton.hidden=true;
+            itemarray=[];
           },
           FnClear:function(){
             document.querySelector('#sets0sa').selected=-1;

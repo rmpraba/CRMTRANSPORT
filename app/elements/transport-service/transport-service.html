@@ -3366,8 +3366,9 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
       },
       attendancereportResponse:function(e)
       {
-        //alert(JSON.stringify(e.detail.response.returnval));
+        alert(JSON.stringify(e.detail.response.returnval));
         var attendancearr=e.detail.response.returnval;
+                   var obj={};
         document.querySelector('attendance-card').attendancearr=attendancearr;
 
       }, 
@@ -3402,9 +3403,18 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
 
             alert('Error! Attendance marked for this trip or No students Mapped');
         } else {
-           // alert(JSON.stringify(result));
+             var temarr=[];
+              for( var i=0;i<result.length;i++){
+               var obj={"student_id":"","name":"","studentidz":""};
+               obj.student_id=result[i].student_id;
+               obj.name=result[i].name;
+                var studentidz=result[i].student_id;
+               obj.studentidz=studentidz.replace(/[^\w\s]/gi,'');
+               temarr.push(obj);}
+             alert(JSON.stringify(temarr));
+          
 
-            document.querySelector('addattendence-card').attendancearr=result;
+            document.querySelector('addattendence-card').attendancearr=temarr;
         }
       },
       getstudentsforattendancedropResponse:function(e)
@@ -3413,7 +3423,18 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         if(result=='invalid'){
             alert('Error! Attendance marked for this trip or No students Mapped');
         } else {
-            document.querySelector('addattendence-card').attendancearr=result;
+          var temarr=[];
+               for( var i=0;i<result.length;i++){
+            var obj={"student_id":"","name":"","studentidz":""};
+               obj.student_id=result[i].student_id;
+               obj.name=result[i].name;
+                var studentidz=result[i].student_id;
+                obj.studentidz=studentidz.replace(/[^\w\s]/gi,'');;
+               temarr.push(obj);
+           }
+             alert(JSON.stringify(temarr));
+          
+       document.querySelector('addattendence-card').attendancearr=temarr;
         }
       },
       submitattendance:function(itemarr){
@@ -3422,17 +3443,18 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         var obj={"studentid":"","student_name":"","routeid":"","trip":"","pickupordrop":"","date":"","status":"","schol":""};
         for(var i=0;i<itemarr.length;i++){
             obj.studentid=itemarr[i].studentid;
-            obj.student_name = itemarr[i].student_name;
+            obj.student_name=itemarr[i].student_name;
             obj.routeid=itemarr[i].routeid;
             obj.trip=itemarr[i].trip;
             obj.pickupordrop=itemarr[i].pickupordrop;
             obj.date=itemarr[i].date;
             obj.status=1;
-            obj.schol=sessionStorage.getItem("sch");;
+            obj.schol=sessionStorage.getItem("sch");
+            obj.academic_year=localStorage.getItem("curr_sess_academicyear");
             this.submitattendanceurl=sessionStorage.getItem("addrinfo")+"/attsubmiturl";
             this.submitattendanceparam=obj;
             this.$.submitattendanceajax.generateRequest();
-            //alert(JSON.stringify(obj));
+            alert(JSON.stringify(obj));
         }
     },
     submitattendanceResponse:function(e){
