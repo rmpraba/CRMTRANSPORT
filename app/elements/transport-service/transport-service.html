@@ -1628,8 +1628,7 @@
       {
         var routereportresult=e.detail.response.returnval;
         var no_of_student = routereportresult.length;
-       // alert(JSON.stringify(routereportresult));
-  if(routereportresult!='empty'){
+     if(routereportresult!='empty'){
        document.querySelector('gradewiseroute-report').reportarr=routereportresult;
         document.querySelector('gradewiseroute-report').no_of_student=no_of_student;
     }

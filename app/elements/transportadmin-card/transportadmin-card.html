@@ -69,15 +69,17 @@
             <!-- </div> -->
 
 
-            <!-- <div class="attend1" hidden$="{{Attendence}}"> -->
+            <div class="attend1" hidden$="{{Attendence}}">
               <paper-icon-button class="iconbutton" src="../../images/add_attendance.png" on-click="addattendence"></paper-icon-button>
-            <!-- </div> -->
+            </div>
 
             
 
             <div class="staffpoint" hidden$="{{staffpoint}}">
               <paper-icon-button class="iconbutton" src="../../images/staff_route.png" on-click="staffroute"></paper-icon-button>
             </div>
+
+             
 
             
       
@@ -110,12 +112,9 @@
     ready:function()
     {
       this.staffroutereport=true;
-      //this.Attendence=true;  
-      //this.bus=true;
-      //this.Driver=true;
-      //this.busroutemap=true;
       this.staffpoint=true;
       //this.attender1=true;
+      this.Attendence=true;
     },
     FnSelectacademicyear:function(e)
     { 

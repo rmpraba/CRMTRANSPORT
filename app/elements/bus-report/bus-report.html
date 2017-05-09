@@ -33,7 +33,7 @@
      </div>  -->
         <table id="testTable2" border="1" style="margin-left: 10%; width: 80%;">
       <tr id="tableheading">
-      <th><paper-tab>Route ID</paper-tab></th>
+      <th hidden><paper-tab>Route ID</paper-tab></th>
       <th><paper-tab>Route Name</paper-tab></th>
        <th><paper-tab>TRIP</paper-tab></th>
      
@@ -46,7 +46,7 @@
       <template  is="dom-repeat" items="{{busreportarr}}" as="view">
       
         <tr>
-        <td>{{view.route_id}}</td>
+        <td hidden>{{view.route_id}}</td>
         <td>{{view.route_name}}</td>
         <td>{{view.trip}}</td>
         <td>{{view.bus_id}}-{{view.bus_model}}</td>
