@@ -51,7 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'trip-to-grade-item-card',
   fnsettrip:function(e){
-        if(document.querySelector('#'+this.id).checked==true){
+        if(document.querySelector('#'+(this.id).replace(' ','')).checked==true){
            m=this.id;
      this.rtipretriveurl=sessionStorage.getItem("addrinfo")+"/rtipretrive-service";
 var obj={"schoolid":"","academic_year":"","tripid":"","gradename":"","id":""}
@@ -66,7 +66,7 @@ var obj={"schoolid":"","academic_year":"","tripid":"","gradename":"","id":""}
         this.$.rtipretriveajax.generateRequest();
     
        }  
-            if(document.querySelector('#'+this.id).checked==false){
+            if(document.querySelector('#'+(this.id).replace(' ','')).checked==false){
               
                 this.rtipretrive1url=sessionStorage.getItem("addrinfo")+"/rtipretrive1-service";
           var obj={"schoolid":"","academic_year":"","tripid":"","gradename":"","id":""}
@@ -95,7 +95,7 @@ var obj={"schoolid":"","academic_year":"","tripid":"","gradename":"","id":""}
         }
       else{
           alert("Already mapped this grade to trip");
-             document.querySelector('#'+m).checked=false;
+             document.querySelector('#'+(m).replace(' ','')).checked=false;
             
        }
       },
