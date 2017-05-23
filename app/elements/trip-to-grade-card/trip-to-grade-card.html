@@ -44,7 +44,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <template is="dom-repeat" items="{{view}}" as="v">
                
                <td >
-              <trip-to-grade-item-card id="ENRtripz{{v.class}}" gradename="{{v.class}}"  tripid="{{v.tripid}}" check="{{v.check}}" ></trip-to-grade-item-card></td>
+              <trip-to-grade-item-card idd="ENRtripzz{{v.classid}}" id="ENRtripz{{v.class}}" gradename="{{v.class}}"  tripid="{{v.tripid}}" check="{{v.check}}" ></trip-to-grade-item-card></td>
                 
         </template>
         </tr>
@@ -179,7 +179,11 @@ var res=e.detail.response.returnval;
     
          }
 
-
+        // alert(JSON.stringify(overall));
+        for(var i=0;i<res1.length;i++){
+          // alert(res1[i].class);
+          res1[i].classid=(res1[i].class).replace(' ','');
+        }
        var overall=[];
         var temp=[];
         for(var i=0;i<res1.length;i++){
@@ -197,6 +201,8 @@ var res=e.detail.response.returnval;
              overall.push(temp); 
            } 
         }
+
+
         
 this.finaltrip=overall;
 //alert(JSON.stringify(this.finaltrip));
@@ -220,6 +226,10 @@ this.finaltrip=overall;
                  } 
     
       }
+      for(var i=0;i<res1.length;i++){
+          // alert(res1[i].class);
+          res1[i].classid=(res1[i].class).replace(' ','');
+        }
          var overall=[];
         var temp=[];
         for(var i=0;i<res1.length;i++){
