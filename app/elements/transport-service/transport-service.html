@@ -1568,25 +1568,16 @@
         //alert(JSON.stringify(obj));
         this.$.routereportajax.generateRequest();
       },
-
+    
       routereportResponse:function(e){
         //alert(JSON.stringify(e.detail.response.returnval));
         var routereportresult=e.detail.response.returnval;
         document.querySelector('routereport-card').reportarr=routereportresult;
       },
-      studentroutereport:function(routeid,tripid,pickordrop)
+      studentroutereport:function(routeid,tripid)
       {
-        if(pickordrop=="Pickup"){
-        this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickroute-report-card";
-        var obj={"routeid":"","tripid":"","schol":"","academic_year":""}
-        obj.schol=sessionStorage.getItem("sch");
-        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
-        obj.routeid=routeid;
-        obj.tripid=tripid;
-        this.studentpickroutereportparam=obj;
-        this.$.studentpickroutereportajax.generateRequest();
-      } else {
-        this.studentdroproutereporturl=sessionStorage.getItem("addrinfo")+"/studentdroproute-report-card";
+      
+       this.studentdroproutereporturl=sessionStorage.getItem("addrinfo")+"/studentdroproute-report-card";
         var obj={"routeid":"","tripid":"","schol":"","academic_year":""}
         obj.schol=sessionStorage.getItem("sch");
         obj.routeid=routeid;
@@ -1594,13 +1585,12 @@
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
         this.studentdroproutereportparam=obj;
         this.$.studentdroproutereportajax.generateRequest();
-      }
+     
       },
 
-      gradewiseroutereport:function(routeid,tripid,pickordrop, grade)
+      gradewiseroutereport:function(routeid,tripid,grade)
       {
-        if(pickordrop=="Pickup"){
-        this.gradewisepickroutereporturl=sessionStorage.getItem("addrinfo")+"/gradewisepickroute-report-card";
+     this.gradewisepickroutereporturl=sessionStorage.getItem("addrinfo")+"/gradewisepickroute-report-card";
         var obj={"routeid":"","tripid":"","schol":"","grade":"","academic_year":""}
         obj.schol=sessionStorage.getItem("sch");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear");
@@ -1609,21 +1599,9 @@
         obj.grade=grade;
         this.gradewisepickroutereportparam=obj;
         //alert(JSON.stringify(obj));
-        //alert(JSON.stringify(obj));
         //alert('hi');
         this.$.gradewisepickroutereportajax.generateRequest();
-      } else {
-        this.gradewisedroproutereporturl=sessionStorage.getItem("addrinfo")+"/gradewisedroproute-report-card";
-        var obj={"routeid":"","tripid":"","schol":"","grade":"","academic_year":""}
-        obj.schol=sessionStorage.getItem("sch");
-        obj.academic_year=localStorage.getItem("curr_sess_academicyear");
-        obj.routeid=routeid;
-        obj.tripid=tripid;
-        obj.grade=grade;
-        this.gradewisedroproutereportparam=obj;
-        this.$.gradewisedroproutereportajax.generateRequest();
-      }
-      },
+       },
       gradewisepickroutereportResponse:function(e)
       {
         var routereportresult=e.detail.response.returnval;
@@ -2127,8 +2105,7 @@
               this.getfeeofzonechangeparam=obj;
               this.$.getfeeofzonechangeajax.generateRequest();
       },
-
-      getzonedetail:function(studid){
+  getzonedetail:function(studid){
         this.getzonedetailurl=sessionStorage.getItem("addrinfo")+"/getzonedetail";
         var obj={"stid":"","schol":"","academic_year":""}
         obj.stid=studid;

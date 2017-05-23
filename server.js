@@ -40,16 +40,14 @@ var server  = email.server.connect({
    ssl:     true
 
 });
-// send the message and get a callback with an error or details of the message that was sent
-server.send({
-   text:    "FEE RECEIPT/ACKNOWLEDGEMENT",
-   from:    "samsidhgroup@yahoo.com",
-   to:      parentemail,
+   server.send({
+   text: "FEE RECEIPT/ACKNOWLEDGEMENT",
+   from: "samsidhgroup@yahoo.com",
+   to: parentemail,
    subject: "FEE RECEIPT/ACKNOWLEDGEMENT",
-    attachment:
-
-      [
-        {data:"<html><body class='receipt'><table><caption style='text-align: center;'><strong>FEE "+receipttitle+"</strong></caption></caption>" +
+   attachment:
+   [
+      {data:"<html><body class='receipt'><table><caption style='text-align: center;'><strong>FEE "+receipttitle+"</strong></caption></caption>" +
         "<tr><td class='left1' style='width: 230px;'><strong>Receipt No : </strong>"+receiptno+"</td><td style='width: 42px;' class='center1'></td><td style='width: 170px;' class='right1'><strong>Receipt Date : </strong>"+today+"</td></tr>" +
         "<tr><td class='left1'><strong>Student Name : </strong>"+studname+"</td><td class='center1'></td><td class='right1'><strong>Class : </strong>"+classname+"</td></tr>" +
         "<tr><td class='left1'><strong>Parent Name : </strong>"+parentname+"</td><td class='center1'></td><td class='right1'><strong>Session : </strong>"+session+"</td></tr></table>" +
@@ -68,7 +66,6 @@ server.send({
    ]
 }, function(err, message) { console.log(err || message); });
 res.status(200).json('mail sent');
-
 });
 app.post('/checkschool-card',  urlencodedParser,function (req, res)
 {
@@ -1884,12 +1881,12 @@ app.post('/route-report-card',  urlencodedParser,function (req, res){
 });
 
 
-app.post('/studentpickroute-report-card',  urlencodedParser,function (req, res){
+/*app.post('/studentpickroute-report-card',  urlencodedParser,function (req, res){
   var tripid={"school_type":req.query.tripid};
   var schoolx={"school_id":req.query.schol};
        var route_id={"pickup_route_id":req.query.routeid};
-        var query="SELECT p.student_id,(select  (select first_name from driver where id=driver_id) as driverid from route_bus  where trip='"+req.query.tripid+"'  and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and route_id='"+req.query.routeid+"'  )as drivername,(select  (select first_name from attender where id=attender_id) as attenderid from route_bus  where trip='"+req.query.tripid+"'  and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and route_id='"+req.query.routeid+"'  )as attendername,(select  (select mobile_no from attender where id=attender_id) as attenderid from route_bus  where trip='"+req.query.tripid+"'  and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and route_id='"+req.query.routeid+"')as attendermobile,(select  (select mobile_no from driver where id=driver_id) as mobile from route_bus  where trip='"+req.query.tripid+"'  and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and route_id='"+req.query.routeid+"'  )as drivermobile,(select student_name from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as name ,(select class from student_details where id=p.student_id and school_id='"+req.query.schol+"') as std,(select m.mobile from mlzscrm.parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' ) as mobile,(select parent_name from mlzscrm.parent where student_id=p.student_id and school_id='"+req.query.schol+"') as pname, (select point_name from point where id=p.pickup_point and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"') as pick from student_point p where p.pickup_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"' and p.academic_year='"+req.query.academic_year+"'";
-   
+        var query="SELECT p.student_id,(select student_name from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as name ,(select class from student_details where id=p.student_id and school_id='"+req.query.schol+"') as std,(select m.mobile from mlzscrm.parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' ) as mobile,(select parent_name from mlzscrm.parent where student_id=p.student_id and school_id='"+req.query.schol+"') as pname, (select point_name from point where id=p.pickup_point and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"') as pick from student_point p where p.pickup_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"' and p.academic_year='"+req.query.academic_year+"'";
+   console.log(query);
     connection.query(query,
     function(err, rows){
     if(!err){
@@ -1905,14 +1902,16 @@ app.post('/studentpickroute-report-card',  urlencodedParser,function (req, res){
     }
   });
 });
-
+*/
 app.post('/studentdroproute-report-card',  urlencodedParser,function (req, res){
   var tripid={"school_type":req.query.tripid};
   var schoolx={"school_id":req.query.schol};
   var route_id={"drop_route_id":req.query.routeid};
 
 
- var qur="SELECT p.student_id,(select  (select first_name from driver where id=driver_id) as driverid from route_bus  where trip='"+req.query.tripid+"'  and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and route_id='"+req.query.routeid+"'  )as drivername,(select  (select first_name from attender where id=attender_id) as attenderid from route_bus  where trip='"+req.query.tripid+"'  and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and route_id='"+req.query.routeid+"'  )as attendername,(select  (select mobile_no from attender where id=attender_id) as attenderid from route_bus  where trip='"+req.query.tripid+"'  and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and route_id='"+req.query.routeid+"')as attendermobile,(select  (select mobile_no from driver where id=driver_id) as mobile from route_bus  where trip='"+req.query.tripid+"'  and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and route_id='"+req.query.routeid+"'  )as drivermobile,(select student_name from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as name ,(select class from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as std,(select m.mobile from mlzscrm.parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' ) as mobile,(select parent_name from  mlzscrm.parent where student_id=p.student_id and school_id='"+req.query.schol+"') as pname, (select point_name from point where id=p.drop_point and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"') as pick from student_point p where p.drop_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"' and p.academic_year='"+req.query.academic_year+"'";
+ /*var qur="SELECT p.student_id,(select student_name from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as name ,(select class from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as std,(select m.mobile from mlzscrm.parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' ) as mobile,(select parent_name from  mlzscrm.parent where student_id=p.student_id and school_id='"+req.query.schol+"') as pname, (select point_name from point where id=p.drop_point and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"') as pick from student_point p where p.drop_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"' and p.academic_year='"+req.query.academic_year+"'";
+*/
+ var qur="SELECT p.student_id,(select student_name from student_details where id=p.student_id and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as name ,(select class from student_details where id=p.student_id and school_id='"+req.query.schol+"') as std,(select m.mobile from mlzscrm.parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' ) as mobile,(select parent_name from mlzscrm.parent where student_id=p.student_id and school_id='"+req.query.schol+"') as pname, (select point_name from point where id=p.pickup_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"'  and route_id='"+req.query.routeid+"' ) as pick, (select point_name from point where id=p.drop_point and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"' and route_id='"+req.query.routeid+"' ) as dropid from student_point p where p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"' and p.academic_year='"+req.query.academic_year+"'and (p.pickup_route_id='"+req.query.routeid+"' or p.drop_route_id='"+req.query.routeid+"')";
 
     connection.query(qur,
     function(err, rows){
@@ -4394,7 +4393,9 @@ app.post('/gradewisepickroute-report-card',  urlencodedParser,function (req, res
   var schoolx={"school_id":req.query.schol};
   var grade = {"class":req.query.grade};
     var route_id={"pickup_route_id":req.query.routeid};
-  var query="SELECT p.student_id ,(select d.student_name from student_details d where id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"')as name,(select  (select first_name from driver where id=driver_id) as driverid from route_bus  where trip='"+req.query.tripid+"'  and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and route_id='"+req.query.routeid+"'  )as drivername,(select  (select first_name from attender where id=attender_id) as attenderid from route_bus  where trip='"+req.query.tripid+"'  and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and route_id='"+req.query.routeid+"'  )as attendername,(select  (select mobile_no from attender where id=attender_id) as attenderid from route_bus  where trip='"+req.query.tripid+"'  and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and route_id='"+req.query.routeid+"')as attendermobile,(select  (select mobile_no from driver where id=driver_id) as mobile from route_bus  where trip='"+req.query.tripid+"'  and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"' and route_id='"+req.query.routeid+"'  )as drivermobile,(select zone_name from md_zone where id =(select f.zone_id from student_fee f where student_id=p.student_id and f.school_id='"+req.query.schol+"' and f.academic_year='"+req.query.academic_year+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as zone,(select m.mobile from mlzscrm.parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' ) as mobile ,(select d.class from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"') as std ,(select parent_name from mlzscrm.parent where student_id=p.student_id and school_id='"+req.query.schol+"') as pname,(select point_name from point where id=p.pickup_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pick from student_point p where p.pickup_route_id='r726' and p.school_type='"+req.query.tripid+"'  and p.school_id='"+req.query.schol+"'  and  p.academic_year='"+req.query.academic_year+"'and student_id in (select id from student_details where class='Grade-4' and school_id='SCH002' and academic_year='"+req.query.academic_year+"')";
+ 
+  var query="SELECT p.student_id ,(select d.student_name from student_details d where id=p.student_id and d.school_id='"+req.query.schol+"'  and d.academic_year='"+req.query.academic_year+"')as name,(select zone_name from md_zone where id =(select f.zone_id from student_fee f where student_id=p.student_id and f.school_id='"+req.query.schol+"' and f.academic_year='"+req.query.academic_year+"') and school_id='"+req.query.schol+"'  and academic_year='"+req.query.academic_year+"')as zone,(select m.mobile from mlzscrm.parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"'  ) as mobile ,(select d.class from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"'  and d.academic_year='AY-2017-2018') as std ,(select parent_name from mlzscrm.parent where student_id=p.student_id and school_id='"+req.query.schol+"' ) as pname,(select point_name from point where id=p.drop_point and school_id='"+req.query.schol+"'  and academic_year='"+req.query.academic_year+"' and route_id='"+req.query.routeid+"') as pick, (select point_name from point where id=p.pickup_point and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schol+"'  and route_id='"+req.query.routeid+"' ) as dropid from student_point p where  p.school_type='"+req.query.tripid+"'  and p.school_id='"+req.query.schol+"'   and  p.academic_year='"+req.query.academic_year+"' and student_id in (select id from student_details where class='"+req.query.grade+"' and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')  and (p.pickup_route_id='"+req.query.routeid+"' or p.drop_route_id='"+req.query.routeid+"')";
+  console.log(query);
 
 
 
@@ -4410,9 +4411,6 @@ app.post('/gradewisepickroute-report-card',  urlencodedParser,function (req, res
 
 
 
-    /*  var qur="SELECT p.student_id ,(select d.student_name from student_details d where id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"')as name,(select  (select first_name from driver where id=driver_id) as driverid from route_bus  where trip='"+req.query.tripid+"' and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"'and route_id='"+req.query.routeid"'  )as drivername,(select  (select first_name from attender where id=attender_id) as attenderid from route_bus  where  trip='"+req.query.tripid+"' and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"'and route_id='"+req.query.routeid"' )as attendername,(select  (select mobile_no from attender where id=attender_id) as attenderidz from route_bus  trip='"+req.query.tripid+"' and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"'and route_id='"+req.query.routeid"' )as attendermobile,(select  (select mobile_no from driver where id=driver_id) as mobile from route_bus  where  trip='"+req.query.tripid+"' and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"'and route_id='"+req.query.routeid"'  )as drivermobile,(select zone_name from md_zone where id =(select f.zone_id from student_fee f where student_id=p.student_id and f.school_id='"+req.query.schol+"' and f.academic_year='"+req.query.academic_year+"') and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')as zone,(select m.mobile from mlzscrm.parent m where student_id=p.student_id and m.school_id='"+req.query.schol+"' ) as mobile ,(select d.class from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.academic_year='"+req.query.academic_year+"') as std ,(select parent_name from mlzscrm.parent where student_id=p.student_id and school_id='"+req.query.schol+"') as pname,(select point_name from point where id=p.pickup_point and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"') as pick from student_point p where p.pickup_route_id='"+req.query.routeid+"' and p.school_type='"+req.query.tripid+"' and p.school_id='"+req.query.schol+"'  and  p.academic_year='"+req.query.academic_year+"'and student_id in (select id from student_details where class='"+req.query.grade+"' and school_id='"+req.query.schol+"' and academic_year='"+req.query.academic_year+"')";
-      console.log(qur);
-*/
     connection.query(query,
     function(err, rows){
     if(!err){

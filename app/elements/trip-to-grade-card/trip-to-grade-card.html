@@ -30,9 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="tb1">
        <div style="margin-top: 1%">
           <label><b>SELECT THE TRIP</b></label></br>
-      
-    
-        <paper-checkbox  value="{{trip1}}" id="tripidz" on-change="fnsetvalue">TRIP1</paper-checkbox>
+          <paper-checkbox  value="{{trip1}}" id="tripidz" on-change="fnsetvalue">TRIP1</paper-checkbox>
          <paper-checkbox  value="{{trip2}}" id="tripidz1"  on-change="fnsetvalue1" id="tripidz2">TRIP2</paper-checkbox>
          </div> 
       <div id="set1">
@@ -162,7 +160,7 @@ var res=e.detail.response.returnval;
    },
       rtip2Response:function(e){
      var res=e.detail.response.triparr;
-      var res1=e.detail.response.gradearr;
+     var res1=e.detail.response.gradearr;
         for(var j=0;j<res1.length;j++){
              var flag=0;
                     res1[j].tripid='2';
