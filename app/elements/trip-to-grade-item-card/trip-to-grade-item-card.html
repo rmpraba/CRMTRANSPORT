@@ -18,7 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <div> 
-    <paper-checkbox checked="{{check}}" tripid="{{tripid}}" id="{{id}}" on-change="fnsettrip">{{gradename}}</paper-checkbox>
+    <paper-checkbox checked="{{check}}" tripid="{{tripid}}" value="{{id}}" id="{{idd}}" on-change="fnsettrip">{{gradename}}</paper-checkbox>
   </div>
      <iron-ajax
       method="post"
@@ -51,10 +51,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'trip-to-grade-item-card',
   fnsettrip:function(e){
-        if(document.querySelector('#'+this.id).checked==true){
-           m=this.id;
-     this.rtipretriveurl=sessionStorage.getItem("addrinfo")+"/rtipretrive-service";
-var obj={"schoolid":"","academic_year":"","tripid":"","gradename":"","id":""}
+    // alert(this.idd);
+        if(document.querySelector('#'+(this.idd).replace(' ','')).checked==true){
+           m=this.idd;
+        this.rtipretriveurl=sessionStorage.getItem("addrinfo")+"/rtipretrive-service";
+        var obj={"schoolid":"","academic_year":"","tripid":"","gradename":"","id":""}
          obj.academic_year=localStorage.getItem("curr_sess_academicyear");
          obj.schoolid=sessionStorage.getItem("sch");
          obj.gradename=this.gradename;
@@ -62,13 +63,13 @@ var obj={"schoolid":"","academic_year":"","tripid":"","gradename":"","id":""}
           obj.id=this.id;
          this.rtipretriveparam=obj;
 
-       //  alert(JSON.stringify(obj));
+         // alert(JSON.stringify(obj));
         this.$.rtipretriveajax.generateRequest();
     
        }  
-            if(document.querySelector('#'+this.id).checked==false){
+        if(document.querySelector('#'+(this.idd).replace(' ','')).checked==false){
               
-                this.rtipretrive1url=sessionStorage.getItem("addrinfo")+"/rtipretrive1-service";
+          this.rtipretrive1url=sessionStorage.getItem("addrinfo")+"/rtipretrive1-service";
           var obj={"schoolid":"","academic_year":"","tripid":"","gradename":"","id":""}
          obj.academic_year=localStorage.getItem("curr_sess_academicyear");
          obj.schoolid=sessionStorage.getItem("sch");
@@ -95,7 +96,7 @@ var obj={"schoolid":"","academic_year":"","tripid":"","gradename":"","id":""}
         }
       else{
           alert("Already mapped this grade to trip");
-             document.querySelector('#'+m).checked=false;
+             document.querySelector('#'+(m).replace(' ','')).checked=false;
             
        }
       },

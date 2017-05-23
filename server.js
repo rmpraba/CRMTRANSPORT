@@ -5,7 +5,12 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
-  database : 'transport'
+  database : 'cloudtransport'
+  // host     : 'localhost',
+  // port     : '60841',
+  // user     : 'admin8k1QrR9',
+  // password : 'gBH5PqAxBWjL',
+  // database : 'transport'
 });
 var bodyParser = require('body-parser'); 
  var app = express();
